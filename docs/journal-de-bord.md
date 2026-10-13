@@ -24,3 +24,14 @@
 - US-2.4 : fiche produit en deux colonnes (image / infos), prix en jaune, onglets dans une carte beige.
 - Figma : couleurs, arrondis et espacements des maquettes reliés aux variables, styles de texte appliqués.
 - À faire : US-2.2 (catégories et produits en local), test de la Boutique et de la fiche produit, mise en production.
+
+## Reste à faire – Figma (avant de passer uniquement au dev)
+- [ ] Checkout desktop et mobile (coordonnées, retrait, paiement, « Instructions pour le retrait », case CGV) → US-6, US-22.3
+- [ ] Confirmation de commande desktop et mobile → US-6.2, US-9.2
+- [ ] Connexion / Inscription et Mon compte (tableau de bord, historique des commandes) → US-7, US-9
+- [ ] E-mail de commande aux couleurs de Pepe Chicken → US-8
+- [ ] Accueil : section « Nos nouveautés » (3 derniers produits) et produit star → US-16, US-W
+- [ ] Pages Mentions légales et CGV → US-22
+- [ ] Prototype : « Valider ma commande » → Checkout → Confirmation
+- [ ] Lancer le plugin Design System (Cooper Black / Myriad Pro, styles titre et menu)
+- [ ] Dupliquer le fichier Figma en v1.0
