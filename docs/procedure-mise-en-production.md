@@ -42,6 +42,8 @@ Les mots de passe ne sont pas notés ici.
    git push
    ```
 3. Envoyer le dossier `pepe-chicken` (sans `.git` ni `docs`) dans `wordpress/wp-content/themes/` avec FileZilla (écraser les fichiers).
+   Le thème contient : `style.css`, `functions.php` et le dossier `woocommerce/` (modèles WooCommerce surchargés, ex. `archive-product.php` pour la page Boutique). Ne pas oublier ce dossier.
+4. Vider le cache du navigateur (Ctrl + F5) pour voir le nouveau CSS.
 
 ### 2. Nouvelle extension ou mise à jour d'extension
 1. L'installer / la mettre à jour en dev.
