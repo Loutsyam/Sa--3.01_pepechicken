@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design System – Pepe Chicken</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header (composant) -->
+  <header class="header">
+    <nav class="header__nav" aria-label="Menu principal">
+      <ul>
+        <li><a href="#">Le concept</a></li>
+        <li><a href="#">Le menu</a></li>
+        <li><a href="#">Où nous trouver</a></li>
+      </ul>
+    </nav>
+    <a class="logo" href="#">
+      <span class="logo__pepe">PEPE</span>
+      <span class="logo__chicken">Chicken®</span>
+    </a>
+    <div class="header__actions">
+      <a class="btn btn--rouge" href="#">Commander</a>
+      <a class="panier" href="#">Panier <span class="panier__nombre">2</span></a>
+    </div>
+    <button class="burger" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
+  </header>
+
+  <main class="page">
+    <h1 class="titre-h1">Design System</h1>
+    <p class="intro">Couleurs, typographie, espacements et composants du site click &amp; collect Pepe Chicken.</p>
+
+    <!-- Couleurs -->
+    <section class="section">
+      <h2 class="titre-h2">Couleurs</h2>
+      <div class="couleurs">
+        <div class="couleur"><span class="couleur__pastille" style="background: var(--rouge)"></span><b>Rouge</b><code>#D81F2A</code></div>
+        <div class="couleur"><span class="couleur__pastille" style="background: var(--rouge-hover)"></span><b>Rouge hover</b><code>#B81822</code></div>
+        <div class="couleur"><span class="couleur__pastille" style="background: var(--jaune)"></span><b>Jaune</b><code>#FFC700</code></div>
+        <div class="couleur"><span class="couleur__pastille" style="background: var(--jaune-hover)"></span><b>Jaune hover</b><code>#E6B300</code></div>
+        <div class="couleur"><span class="couleur__pastille" style="background: var(--beige)"></span><b>Beige</b><code>#FFECD9</code></div>
+        <div class="couleur"><span class="couleur__pastille" style="background: var(--beige-hover)"></span><b>Beige hover</b><code>#F5DCC4</code></div>
+        <div class="couleur"><span class="couleur__pastille" style="background: var(--brun)"></span><b>Brun (texte)</b><code>#3D2120</code></div>
+        <div class="couleur"><span class="couleur__pastille" style="background: var(--blanc)"></span><b>Blanc</b><code>#FFFFFF</code></div>
+      </div>
+    </section>
+
+    <!-- Typographie -->
+    <section class="section">
+      <h2 class="titre-h2">Typographie</h2>
+      <div class="carte-blanche">
+        <div class="typo"><span class="typo__nom">Titre H1 · Cooper Black 48px</span><p class="titre-h1">Découvre toute la carte</p></div>
+        <div class="typo"><span class="typo__nom">Titre H2 · Cooper Black 36px</span><p class="titre-h2">Poulets frits</p></div>
+        <div class="typo"><span class="typo__nom">Titre H3 · Cooper Black 24px</span><p class="titre-h3">Sweet Honey Burger</p></div>
+        <div class="typo"><span class="typo__nom">Texte · Myriad Pro 16px</span><p class="texte">Poulet frit croustillant mariné 24h, cheddar fondant.</p></div>
+        <div class="typo"><span class="typo__nom">Petit texte · Myriad Pro 14px</span><p class="petit-texte">Allergènes : gluten, lait, œuf</p></div>
+      </div>
+    </section>
+
+    <!-- Espacements et arrondis -->
+    <section class="section">
+      <h2 class="titre-h2">Espacements et arrondis</h2>
+      <div class="carte-blanche espacements">
+        <div class="espacement"><span style="width: var(--espace-xxs)"></span>4px</div>
+        <div class="espacement"><span style="width: var(--espace-xs)"></span>8px</div>
+        <div class="espacement"><span style="width: var(--espace-sm)"></span>12px</div>
+        <div class="espacement"><span style="width: var(--espace-md)"></span>16px</div>
+        <div class="espacement"><span style="width: var(--espace-lg)"></span>24px</div>
+        <div class="espacement"><span style="width: var(--espace-xl)"></span>32px</div>
+        <div class="espacement"><span style="width: var(--espace-3xl)"></span>48px</div>
+        <div class="espacement"><span style="width: var(--espace-4xl)"></span>64px</div>
+      </div>
+      <div class="arrondis">
+        <div class="arrondi" style="border-radius: var(--rayon-xs)">8px</div>
+        <div class="arrondi" style="border-radius: var(--rayon-sm)">12px</div>
+        <div class="arrondi" style="border-radius: var(--rayon-md)">16px</div>
+        <div class="arrondi" style="border-radius: var(--rayon-lg)">20px</div>
+        <div class="arrondi" style="border-radius: var(--rayon-xl)">24px</div>
+        <div class="arrondi" style="border-radius: var(--rayon-pilule)">pilule</div>
+      </div>
+    </section>
+
+    <!-- Boutons -->
+    <section class="section">
+      <h2 class="titre-h2">Boutons</h2>
+      <div class="ligne">
+        <a class="btn btn--rouge" href="#">Commander</a>
+        <a class="btn btn--beige" href="#">Voir la carte</a>
+        <a class="btn btn--jaune" href="#">Ajouter au panier</a>
+        <button class="btn-plus" aria-label="Ajouter au panier">+</button>
+      </div>
+      <p class="petit-texte aide">Survole les boutons pour voir l'état hover.</p>
+    </section>
+
+    <!-- Badges et options -->
+    <section class="section">
+      <h2 class="titre-h2">Badges et options</h2>
+      <div class="ligne">
+        <span class="badge badge--jaune">Nouveau</span>
+        <span class="badge badge--beige">● En stock</span>
+        <span class="badge badge--jaune">⭐ Produit star</span>
+      </div>
+      <div class="ligne">
+        <button class="option option--active">Menu +3,50 €</button>
+        <button class="option">Burger seul</button>
+        <button class="option option--active">Creamy BBQ</button>
+        <button class="option">Sauce Verte</button>
+        <button class="option">Hot Sauce</button>
+      </div>
+    </section>
+
+    <!-- Cartes produit -->
+    <section class="section">
+      <h2 class="titre-h2">Cartes produit</h2>
+      <div class="grille">
+        <article class="carte-produit">
+          <div class="carte-produit__photo">Photo</div>
+          <h3 class="carte-produit__nom">Sweet Honey Burger</h3>
+          <div class="carte-produit__bas">
+            <span class="prix">10,90 €</span>
+            <button class="btn-plus" aria-label="Ajouter Sweet Honey Burger">+</button>
+          </div>
+        </article>
+        <article class="carte-produit">
+          <div class="carte-produit__photo">Photo</div>
+          <h3 class="carte-produit__nom">Pepe Tenders</h3>
+          <div class="carte-produit__bas">
+            <span class="prix">8,90 €</span>
+            <button class="btn-plus" aria-label="Ajouter Pepe Tenders">+</button>
+          </div>
+        </article>
+        <article class="carte-produit">
+          <div class="carte-produit__photo">Photo</div>
+          <h3 class="carte-produit__nom">Frites de Patates Douces</h3>
+          <div class="carte-produit__bas">
+            <span class="prix">4,50 €</span>
+            <button class="btn-plus" aria-label="Ajouter Frites de Patates Douces">+</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Formulaire et récapitulatif -->
+    <section class="section">
+      <h2 class="titre-h2">Formulaire et récapitulatif</h2>
+      <div class="deux-colonnes">
+        <form class="carte-beige">
+          <h3 class="titre-h3">Mes coordonnées</h3>
+          <label class="champ">Prénom<input type="text" placeholder="Prénom"></label>
+          <label class="champ">E-mail<input type="email" placeholder="prenom@exemple.fr"></label>
+          <label class="case"><input type="checkbox" checked> J'accepte les conditions générales de vente</label>
+          <button class="btn btn--jaune" type="button">Passer la commande</button>
+        </form>
+        <div class="carte-beige recap">
+          <h3 class="titre-h3">Récapitulatif</h3>
+          <p class="recap__ligne"><span>Sous-total</span><span>36,50 €</span></p>
+          <p class="recap__ligne"><span>Réduction (PEPE10)</span><span>-3,65 €</span></p>
+          <p class="recap__ligne"><span>Frais de préparation</span><span>Offerts</span></p>
+          <p class="recap__ligne recap__total"><span>Total</span><span>32,85 €</span></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer (composant) -->
+  <footer class="footer">
+    <div class="footer__colonnes">
+      <div>
+        <h3>Accès rapide</h3>
+        <ul><li><a href="#">Le concept</a></li><li><a href="#">Le menu</a></li><li><a href="#">Où nous trouver</a></li><li><a href="#">FAQ</a></li></ul>
+      </div>
+      <div>
+        <h3>Services consommateurs</h3>
+        <ul><li><a href="#">Informations allergènes</a></li><li><a href="#">Origine des viandes</a></li></ul>
+      </div>
+      <a class="logo" href="#"><span class="logo__pepe">PEPE</span><span class="logo__chicken">Chicken®</span></a>
+      <div>
+        <h3>Informations légales</h3>
+        <ul><li><a href="#">Mentions légales</a></li><li><a href="#">CGV</a></li></ul>
+      </div>
+    </div>
+    <p class="footer__sante">Pour votre santé, pratiquez une activité physique régulière : <a href="https://www.mangerbouger.fr">www.mangerbouger.fr</a></p>
+  </footer>
+
+</body>
+</html>
