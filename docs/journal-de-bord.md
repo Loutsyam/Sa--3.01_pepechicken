@@ -1,6 +1,6 @@
 # Journal de bord – SAÉ 3.01 Pepe Chicken
 
-## 12/10/2026 – Conception (Figma)
+## 13/10/2026 – Conception (Figma)
 - Analyse de la charte Pepe Chicken et benchmark McDonald’s / KFC / Five Guys.
 - Maquettes desktop : Accueil, Boutique, Fiche produit, Panier.
 - Maquettes mobile : Accueil, Boutique, Fiche produit, Panier.
