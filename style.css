@@ -1,0 +1,31 @@
+/*
+Theme Name:   Pepe Chicken
+Description:  Thème enfant Storefront – Click & collect Pepe Chicken (SAÉ 3.01)
+Author:       Sanchez--Perrault Loutsyam
+Template:     storefront
+Version:      1.0.0
+Text Domain:  pepe-chicken
+*/
+
+:root {
+  --rouge: #D81F2A;
+  --rouge-hover: #B81822;
+  --jaune: #FFC700;
+  --jaune-hover: #E6B300;
+  --beige: #FFECD9;
+  --beige-hover: #F5DCC4;
+  --brun: #3D2120;
+  --blanc: #FFFFFF;
+  --police-titre: "Cooper Black", "Cooper Std", Georgia, serif;
+  --police-texte: "Myriad Pro", "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+  background: var(--rouge);
+  color: var(--brun);
+  font-family: var(--police-texte);
+}
+
+h1, h2, h3, .site-title {
+  font-family: var(--police-titre);
+}
