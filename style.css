@@ -1,5 +1,7 @@
 /*
    Design System Pepe Chicken – HTML / CSS statique
+   Présentation inspirée des pages « Design System Analysis » :
+   une planche claire, des sections numérotées et les vrais composants.
    Mêmes variables et mêmes noms de classes (BEM, préfixe pepe-) que le thème WordPress.
    Les classes ds-… servent uniquement à la mise en page de cette planche.
 */
@@ -65,14 +67,18 @@
   --ombre: 0 3px 0 var(--brun);
 }
 
-/* ---------- Base ---------- */
+/* Base de la planche (fond clair pour lire la documentation) */
 * {
   box-sizing: border-box;
 }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
 body {
   margin: 0;
-  background: var(--rouge);
-  color: var(--beige);
+  background: var(--blanc);
+  color: var(--brun);
   font-family: var(--police-texte);
   font-size: var(--taille-texte);
   line-height: 1.5;
@@ -83,7 +89,350 @@ a {
 img {
   max-width: 100%;
 }
+code {
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: 0.85em;
+}
+:focus-visible {
+  outline: 3px solid var(--jaune);
+  outline-offset: 2px;
+}
 
+/* ---------- Barre du haut ---------- */
+.ds-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--blanc);
+  border-bottom: 1px solid var(--beige-hover);
+}
+.ds-topbar__inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: var(--espace-sm) var(--espace-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--espace-xl);
+}
+.ds-topbar__marque {
+  font-family: var(--police-titre);
+  color: var(--rouge);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: var(--espace-xs);
+}
+.ds-topbar__tag {
+  font-family: var(--police-texte);
+  font-size: 0.75rem;
+  color: var(--brun);
+  border: 1px solid var(--beige-hover);
+  border-radius: var(--rayon-pilule);
+  padding: 2px var(--espace-xs);
+}
+.ds-topbar__nav {
+  display: flex;
+  gap: var(--espace-lg);
+  font-size: var(--taille-petit);
+  font-weight: 600;
+}
+.ds-topbar__nav a {
+  text-decoration: none;
+}
+.ds-topbar__nav a:hover {
+  color: var(--rouge);
+}
+.ds-topbar__cta {
+  margin-left: auto;
+  font-size: var(--taille-petit);
+  padding: var(--espace-xs) var(--espace-md);
+}
+
+/* ---------- Mise en page ---------- */
+main {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 var(--espace-lg);
+}
+.ds-hero {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: var(--espace-3xl);
+  align-items: center;
+  padding: var(--espace-4xl) 0;
+}
+.ds-hero__titre {
+  font-family: var(--police-titre);
+  font-weight: normal;
+  font-size: var(--taille-h1);
+  line-height: 1.1;
+  margin: 0 0 var(--espace-lg);
+  color: var(--rouge);
+}
+.ds-hero__intro {
+  margin: 0 0 var(--espace-xl);
+  max-width: 520px;
+}
+.ds-hero__apercu {
+  background: var(--rouge);
+  border-radius: var(--rayon-xl);
+  padding: var(--espace-3xl);
+  display: grid;
+  place-items: center;
+}
+.ds-hero__carte {
+  width: 100%;
+  max-width: 280px;
+  color: var(--beige);
+}
+.ds-section {
+  padding: var(--espace-4xl) 0;
+  border-top: 1px solid var(--beige-hover);
+}
+.ds-section__numero {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--rouge);
+  margin: 0 0 var(--espace-sm);
+}
+.ds-section__titre {
+  font-family: var(--police-titre);
+  font-weight: normal;
+  font-size: var(--taille-h3);
+  line-height: 1.2;
+  margin: 0 0 var(--espace-md);
+}
+.ds-section__intro {
+  max-width: 640px;
+  margin: 0 0 var(--espace-xl);
+  font-size: var(--taille-petit);
+}
+.ds-groupe {
+  font-size: var(--taille-petit);
+  font-weight: 700;
+  margin: var(--espace-xl) 0 var(--espace-sm);
+}
+.ds-ligne {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espace-sm);
+}
+.ds-ligne + .ds-ligne {
+  margin-top: var(--espace-sm);
+}
+.ds-fond-rouge {
+  background: var(--rouge);
+  color: var(--beige);
+  border-radius: var(--rayon-xl);
+  padding: var(--espace-xl);
+}
+.ds-cadre {
+  border: 1px solid var(--beige-hover);
+  border-radius: var(--rayon-lg);
+  overflow: hidden;
+}
+
+/* ---------- Couleurs ---------- */
+.ds-couleurs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--espace-md);
+}
+.ds-couleur {
+  border: 1px solid var(--beige-hover);
+  border-radius: var(--rayon-md);
+  overflow: hidden;
+  background: var(--blanc);
+}
+.ds-couleur__pastille {
+  display: block;
+  height: 80px;
+  border-bottom: 1px solid var(--beige-hover);
+}
+.ds-couleur__infos {
+  padding: var(--espace-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-xxs);
+  font-size: var(--taille-petit);
+}
+.ds-couleur__infos code {
+  opacity: 0.7;
+}
+.ds-couleur__infos p {
+  margin: 0;
+}
+
+/* ---------- Typographie ---------- */
+.ds-typo {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: var(--espace-lg);
+  align-items: center;
+  padding: var(--espace-md) 0;
+  border-bottom: 1px solid var(--beige-hover);
+}
+.ds-typo__nom {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.75rem;
+}
+.ds-typo__nom b {
+  font-size: var(--taille-petit);
+}
+.ds-typo__nom span {
+  opacity: 0.7;
+}
+
+/* ---------- Cartes de démonstration ---------- */
+.ds-cartes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--espace-md);
+}
+.ds-cartes--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.ds-demo {
+  border: 1px solid var(--beige-hover);
+  border-radius: var(--rayon-md);
+  padding: var(--espace-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espace-sm);
+}
+.ds-demo--ombre {
+  box-shadow: var(--ombre);
+}
+.ds-demo__nom {
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin: 0;
+}
+.ds-demo__note {
+  font-size: 0.75rem;
+  opacity: 0.75;
+  margin: 0;
+}
+.ds-grille {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--espace-3xl);
+}
+.ds-deux-colonnes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--espace-lg);
+  align-items: start;
+}
+
+/* ---------- Espacements et arrondis ---------- */
+.ds-espacements {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--espace-lg);
+}
+.ds-espacement {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espace-xs);
+  font-size: 0.75rem;
+}
+.ds-espacement span {
+  display: block;
+  height: 28px;
+  background: var(--rouge);
+  border-radius: 4px;
+}
+.ds-arrondis {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espace-md);
+}
+.ds-arrondi {
+  width: 88px;
+  height: 88px;
+  display: grid;
+  place-items: center;
+  background: var(--beige);
+  border: 1px solid var(--beige-hover);
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.75rem;
+}
+
+/* ---------- Responsive ---------- */
+.ds-tableau-conteneur {
+  overflow-x: auto;
+}
+.ds-tableau {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--taille-petit);
+}
+.ds-tableau th {
+  text-align: left;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.ds-tableau th,
+.ds-tableau td {
+  padding: var(--espace-sm);
+  border-bottom: 1px solid var(--beige-hover);
+  vertical-align: top;
+}
+.ds-ecrans {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--espace-md);
+  margin-top: var(--espace-xl);
+}
+.ds-ecran {
+  background: var(--beige);
+  border: 1px solid var(--beige-hover);
+  border-radius: var(--rayon-sm);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.75rem;
+}
+.ds-ecran--mobile {
+  width: 52px;
+  height: 100px;
+}
+.ds-ecran--tablette {
+  width: 100px;
+  height: 130px;
+}
+.ds-ecran--desktop {
+  width: 220px;
+  height: 140px;
+}
+.ds-liste {
+  font-size: var(--taille-petit);
+  padding-left: var(--espace-lg);
+  margin: 0;
+}
+.ds-credits {
+  background: var(--brun);
+  color: var(--beige);
+  text-align: center;
+  font-size: 0.75rem;
+  padding: var(--espace-lg);
+}
+.ds-credits p {
+  margin: var(--espace-xxs) 0;
+}
+
+/* Composants (mêmes classes que le thème WordPress) */
 .pepe-titre {
   font-family: var(--police-titre);
   font-weight: normal;
@@ -108,29 +457,6 @@ img {
   font-size: var(--taille-petit);
   margin: 0;
 }
-
-.ds-page {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: var(--espace-3xl) var(--espace-lg) var(--espace-5xl);
-}
-.ds-intro {
-  margin: var(--espace-sm) 0 var(--espace-3xl);
-}
-.ds-section {
-  margin-bottom: var(--espace-4xl);
-}
-.ds-ligne {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--espace-md);
-  margin-bottom: var(--espace-md);
-}
-.ds-aide {
-  opacity: 0.8;
-}
-
 .pepe-carte {
   color: var(--brun);
   border-radius: var(--rayon-lg);
@@ -145,88 +471,6 @@ img {
   flex-direction: column;
   gap: var(--espace-md);
 }
-
-/* ---------- Couleurs ---------- */
-.ds-couleurs {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--espace-md);
-}
-.ds-couleur {
-  background: var(--blanc);
-  color: var(--brun);
-  border-radius: var(--rayon-md);
-  padding: var(--espace-sm);
-  display: flex;
-  flex-direction: column;
-  gap: var(--espace-xxs);
-}
-.ds-couleur__pastille {
-  display: block;
-  height: 70px;
-  border-radius: var(--rayon-sm);
-  border: 1px solid var(--beige-hover);
-  margin-bottom: var(--espace-xs);
-}
-.ds-couleur code {
-  font-size: var(--taille-petit);
-  opacity: 0.7;
-}
-
-/* ---------- Typographie ---------- */
-.ds-typo {
-  padding: var(--espace-md) 0;
-  border-bottom: 1px solid var(--beige-hover);
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  align-items: center;
-  gap: var(--espace-lg);
-}
-.ds-typo:last-child {
-  border-bottom: 0;
-}
-.ds-typo__nom {
-  font-size: var(--taille-petit);
-  opacity: 0.7;
-}
-
-/* ---------- Espacements et arrondis ---------- */
-.ds-espacements {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--espace-lg);
-  align-items: flex-end;
-  margin-bottom: var(--espace-md);
-}
-.ds-espacement {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--espace-xs);
-  font-size: var(--taille-petit);
-}
-.ds-espacement span {
-  display: block;
-  height: 24px;
-  background: var(--rouge);
-  border-radius: 4px;
-}
-.ds-arrondis {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--espace-md);
-}
-.ds-arrondi {
-  width: 90px;
-  height: 90px;
-  background: var(--jaune);
-  color: var(--brun);
-  display: grid;
-  place-items: center;
-  font-size: var(--taille-petit);
-}
-
-/* ---------- Boutons ---------- */
 .pepe-btn {
   display: inline-block;
   font-family: var(--police-titre);
@@ -266,7 +510,6 @@ img {
 .pepe-btn--jaune:hover {
   background: var(--jaune-hover);
 }
-
 .pepe-btn-plus {
   width: 40px;
   height: 40px;
@@ -283,8 +526,6 @@ img {
 .pepe-btn-plus:hover {
   background: var(--jaune-hover);
 }
-
-/* ---------- Badges et options ---------- */
 .pepe-badge {
   font-family: var(--police-titre);
   font-size: var(--taille-petit);
@@ -299,7 +540,6 @@ img {
   background: var(--beige);
   color: var(--brun);
 }
-
 .pepe-option {
   font-family: var(--police-texte);
   font-weight: 600;
@@ -318,13 +558,6 @@ img {
   background: var(--rouge);
   border-color: var(--beige);
   color: var(--beige);
-}
-
-/* ---------- Cartes produit ---------- */
-.ds-grille {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--espace-3xl);
 }
 .pepe-carte-produit {
   display: flex;
@@ -356,14 +589,6 @@ img {
   font-family: var(--police-titre);
   font-size: 1.15rem;
   color: var(--jaune);
-}
-
-/* ---------- Formulaire et récapitulatif ---------- */
-.ds-deux-colonnes {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--espace-lg);
-  align-items: start;
 }
 .pepe-champ {
   display: flex;
@@ -410,8 +635,6 @@ img {
 .pepe-recap__ligne--total span:last-child {
   color: var(--rouge);
 }
-
-/* ---------- Header ---------- */
 .pepe-header {
   background: var(--beige);
   padding: var(--espace-md) var(--espace-lg);
@@ -515,8 +738,6 @@ img {
   background: var(--rouge);
   border-radius: 2px;
 }
-
-/* ---------- Footer ---------- */
 .pepe-footer {
   background: var(--beige);
   color: var(--brun);
@@ -559,9 +780,52 @@ img {
   text-decoration: underline;
   font-size: 0.75rem;
 }
+.pepe-titre--menu {
+  font-size: var(--taille-texte);
+  color: var(--rouge);
+}
+.pepe-carte-produit__photo {
+  position: relative;
+}
+.pepe-carte-produit__badge {
+  position: absolute;
+  top: var(--espace-sm);
+  left: var(--espace-sm);
+}
+.pepe-footer__logo {
+  align-self: start;
+}
+.pepe-categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--espace-xs);
+}
+.pepe-categories__lien {
+  font-family: var(--police-titre);
+  padding: var(--espace-xs) var(--espace-md);
+  border: 2px solid var(--beige);
+  border-radius: var(--rayon-pilule);
+  color: var(--beige);
+  text-decoration: none;
+}
+.pepe-categories__lien:hover {
+  background: rgba(255, 236, 217, 0.15);
+}
+.pepe-categories__lien--actif {
+  background: var(--beige);
+  color: var(--rouge);
+}
+.pepe-carte-produit__nom {
+  color: var(--beige);
+}
+.ds-typos .pepe-titre--h1,
+.ds-typos .pepe-titre--h2 {
+  margin: 0;
+}
 
-/* ---------- Mobile ---------- */
-@media (max-width: 768px) {
+/* Mobile (même point de rupture que Storefront : 768 px) */
+@media (max-width: 767px) {
   :root {
     --taille-h1: 1.875rem;
     --taille-h2: 1.75rem;
@@ -569,24 +833,38 @@ img {
     --taille-texte: 0.9375rem;
     --taille-petit: 0.8125rem;
   }
-
-  .pepe-header {
-    grid-template-columns: auto 1fr auto;
+  .ds-topbar__inner {
+    flex-wrap: wrap;
+    gap: var(--espace-sm);
+    padding: var(--espace-sm) var(--espace-md);
   }
-  .pepe-header__nav,
-  .pepe-header__actions .pepe-btn {
-    display: none;
+  .ds-topbar__nav {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    gap: var(--espace-md);
   }
-  .pepe-burger {
-    display: block;
-    order: -1;
+  main {
+    padding: 0 var(--espace-md);
   }
-  .pepe-logo__pepe {
-    font-size: 1.9rem;
+  .ds-hero {
+    grid-template-columns: 1fr;
+    padding: var(--espace-2xl) 0;
   }
-
-  .ds-couleurs {
-    grid-template-columns: repeat(2, 1fr);
+  .ds-hero__apercu {
+    padding: var(--espace-lg);
+  }
+  .ds-section {
+    padding: var(--espace-2xl) 0;
+  }
+  .ds-couleurs,
+  .ds-cartes,
+  .ds-cartes--2 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .ds-cartes--2,
+  .ds-deux-colonnes {
+    grid-template-columns: 1fr;
   }
   .ds-typo {
     grid-template-columns: 1fr;
@@ -596,10 +874,41 @@ img {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--espace-lg);
   }
-  .ds-deux-colonnes {
-    grid-template-columns: 1fr;
+  .ds-fond-rouge {
+    padding: var(--espace-md);
+  }
+  .pepe-header {
+    grid-template-columns: auto 1fr auto;
+    padding: var(--espace-sm) var(--espace-md);
+  }
+  .pepe-header__nav,
+  .pepe-header__actions .pepe-btn {
+    display: none;
+  }
+  .pepe-header__actions {
+    gap: var(--espace-xxs);
+  }
+  .pepe-header__compte {
+    width: 40px;
+    height: 40px;
+  }
+  .pepe-burger {
+    display: block;
+    order: -1;
+  }
+  .pepe-logo__pepe {
+    font-size: 1.9rem;
+  }
+  .pepe-btn-plus {
+    width: 32px;
+    height: 32px;
+    font-size: 1.1rem;
   }
   .pepe-footer__colonnes {
     flex-direction: column;
+  }
+  .pepe-footer__logo {
+    order: -1;
+    align-items: flex-start;
   }
 }

@@ -1,6 +1,6 @@
 # Design System – Pepe Chicken (HTML / CSS)
 
-Page statique regroupant les couleurs, la typographie, les espacements et les principaux composants
+Page statique (présentée comme une « analyse de Design System » : planche claire, sections numérotées) regroupant les couleurs, la typographie, les espacements et les principaux composants
 du site click & collect Pepe Chicken (SAÉ 3.01). HTML et CSS uniquement, sans framework, validés avec le validateur W3C.
 
 ## Conventions
@@ -19,9 +19,10 @@ du site click & collect Pepe Chicken (SAÉ 3.01). HTML et CSS uniquement, sans f
 | Logo | `pepe-logo`, `pepe-logo__pepe`, `pepe-logo__chicken` |
 | Boutons | `pepe-btn` + `pepe-btn--rouge` / `--beige` / `--jaune`, `pepe-btn-plus` |
 | Panier | `pepe-panier`, `pepe-panier__nombre` |
+| Catégories | `pepe-categories`, `pepe-categories__lien`, `pepe-categories__lien--actif` |
 | Badges | `pepe-badge` + `pepe-badge--jaune` / `--beige` |
 | Options | `pepe-option`, `pepe-option--actif` |
-| Carte produit | `pepe-carte-produit` (`__photo`, `__nom`, `__bas`, `__prix`) |
+| Carte produit | `pepe-carte-produit` (`__photo`, `__badge`, `__nom`, `__bas`, `__prix`) |
 | Formulaire | `pepe-champ`, `pepe-case` |
 | Récapitulatif | `pepe-recap`, `pepe-recap__ligne`, `pepe-recap__ligne--total` |
 | Cartes | `pepe-carte` + `pepe-carte--beige` / `--blanche` |

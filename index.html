@@ -4,281 +4,402 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Design System – Pepe Chicken</title>
+    <meta name="description" content="Design System du click &amp; collect Pepe Chicken : couleurs, typographie, composants et règles responsive (SAÉ 3.01).">
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <!-- Header (composant) -->
-    <header class="pepe-header">
-      <nav class="pepe-header__nav" aria-label="Menu principal">
-        <ul class="pepe-header__menu">
-          <li class="pepe-header__element"><a class="pepe-header__lien" href="#">Le concept</a></li>
-          <li class="pepe-header__element"><a class="pepe-header__lien" href="#">Le menu</a></li>
-          <li class="pepe-header__element"><a class="pepe-header__lien" href="#">Où nous trouver</a></li>
-        </ul>
-      </nav>
-      <a class="pepe-logo" href="#">
-        <span class="pepe-logo__pepe">PEPE</span>
-        <span class="pepe-logo__chicken">Chicken®</span>
-      </a>
-      <div class="pepe-header__actions">
-        <a class="pepe-btn pepe-btn--rouge" href="#">Commander</a>
-        <a class="pepe-header__compte" href="#" aria-label="Se connecter"
-          ><svg class="pepe-header__icone" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" focusable="false"><circle cx="10" cy="5" r="4"></circle><path d="M2 19v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2z"></path></svg
-        ></a>
-        <a class="pepe-panier" href="#"
-          >Panier <span class="pepe-panier__nombre">2</span></a
-        >
+    <!-- Barre de navigation de la documentation -->
+    <header class="ds-topbar">
+      <div class="ds-topbar__inner">
+        <a class="ds-topbar__marque" href="#haut">Pepe Chicken <span class="ds-topbar__tag">Design System</span></a>
+        <nav class="ds-topbar__nav" aria-label="Sections du Design System">
+          <a href="#couleurs">Couleurs</a>
+          <a href="#typographie">Typographie</a>
+          <a href="#composants">Composants</a>
+          <a href="#responsive">Responsive</a>
+        </nav>
+        <a class="pepe-btn pepe-btn--rouge ds-topbar__cta" href="#composants">Voir les composants</a>
       </div>
-      <button class="pepe-burger" aria-label="Ouvrir le menu">
-        <span class="pepe-burger__trait"></span><span class="pepe-burger__trait"></span><span class="pepe-burger__trait"></span>
-      </button>
     </header>
 
-    <main class="ds-page">
-      <h1 class="pepe-titre pepe-titre--h1">Design System</h1>
-      <p class="ds-intro">
-        Couleurs, typographie, espacements et composants du site click &amp;
-        collect Pepe Chicken.
-      </p>
+    <main id="haut">
+      <!-- Introduction -->
+      <section class="ds-hero">
+        <div class="ds-hero__texte">
+          <h1 class="ds-hero__titre">Design System de Pepe Chicken</h1>
+          <p class="ds-hero__intro">
+            Un click &amp; collect rouge et gourmand : un fond rouge Pepe, des cartes beige et un jaune
+            réservé aux prix et aux actions d'ajout. Les titres en Cooper Black donnent le ton « cartoon »,
+            le texte en Myriad Pro reste sobre. Boutons en pilule et petite ombre brune décalée vers le bas.
+          </p>
+          <div class="ds-ligne">
+            <a class="pepe-btn pepe-btn--jaune" href="#composants">Commander</a>
+            <a class="pepe-btn pepe-btn--beige" href="#couleurs">Voir la palette</a>
+          </div>
+        </div>
+        <div class="ds-hero__apercu">
+          <article class="pepe-carte-produit ds-hero__carte">
+            <div class="pepe-carte-produit__photo">
+              <span class="pepe-badge pepe-badge--jaune pepe-carte-produit__badge">Nouveau</span>
+              Photo
+            </div>
+            <h2 class="pepe-carte-produit__nom">Sweet Honey Burger</h2>
+            <div class="pepe-carte-produit__bas">
+              <span class="pepe-carte-produit__prix">9,90 €</span>
+              <button class="pepe-btn-plus" type="button" aria-label="Ajouter Sweet Honey Burger au panier">+</button>
+            </div>
+          </article>
+        </div>
+      </section>
 
-      <!-- Couleurs -->
-      <section class="ds-section">
-        <h2 class="pepe-titre pepe-titre--h2">Couleurs</h2>
+      <!-- 01 Couleurs -->
+      <section class="ds-section" id="couleurs">
+        <p class="ds-section__numero">01 — Palette de couleurs</p>
+        <h2 class="ds-section__titre">Rouge Pepe, beige et une touche de jaune</h2>
+        <p class="ds-section__intro">
+          Trois couleurs de marque, et une variante « hover » uniquement pour le survol. Le rouge sert de fond
+          à tout le site, le beige aux cartes et au header, le jaune aux prix et aux boutons d'ajout.
+        </p>
+
+        <h3 class="ds-groupe">Marque</h3>
         <div class="ds-couleurs">
           <div class="ds-couleur">
-            <span
-              class="ds-couleur__pastille"
-              style="background: var(--rouge)"
-            ></span
-            ><b>Rouge</b><code>#D81F2A</code>
+            <span class="ds-couleur__pastille" style="background: var(--rouge)"></span>
+            <div class="ds-couleur__infos"><b>rouge</b><code>#D81F2A · --rouge</code><p>Fond du site, boutons principaux, liens du header.</p></div>
           </div>
           <div class="ds-couleur">
-            <span
-              class="ds-couleur__pastille"
-              style="background: var(--rouge-hover)"
-            ></span
-            ><b>Rouge hover</b><code>#B81822</code>
+            <span class="ds-couleur__pastille" style="background: var(--rouge-hover)"></span>
+            <div class="ds-couleur__infos"><b>rouge-hover</b><code>#B81822 · --rouge-hover</code><p>Survol des boutons et liens rouges.</p></div>
           </div>
           <div class="ds-couleur">
-            <span
-              class="ds-couleur__pastille"
-              style="background: var(--jaune)"
-            ></span
-            ><b>Jaune</b><code>#FFC700</code>
+            <span class="ds-couleur__pastille" style="background: var(--jaune)"></span>
+            <div class="ds-couleur__infos"><b>jaune</b><code>#FFC700 · --jaune</code><p>Prix, bouton « + », badges « Nouveau » et « Produit star ».</p></div>
           </div>
           <div class="ds-couleur">
-            <span
-              class="ds-couleur__pastille"
-              style="background: var(--jaune-hover)"
-            ></span
-            ><b>Jaune hover</b><code>#E6B300</code>
+            <span class="ds-couleur__pastille" style="background: var(--jaune-hover)"></span>
+            <div class="ds-couleur__infos"><b>jaune-hover</b><code>#E6B300 · --jaune-hover</code><p>Survol des boutons jaunes.</p></div>
+          </div>
+        </div>
+
+        <h3 class="ds-groupe">Surfaces</h3>
+        <div class="ds-couleurs">
+          <div class="ds-couleur">
+            <span class="ds-couleur__pastille" style="background: var(--beige)"></span>
+            <div class="ds-couleur__infos"><b>beige</b><code>#FFECD9 · --beige</code><p>Header, footer, cartes et texte sur fond rouge.</p></div>
           </div>
           <div class="ds-couleur">
-            <span
-              class="ds-couleur__pastille"
-              style="background: var(--beige)"
-            ></span
-            ><b>Beige</b><code>#FFECD9</code>
+            <span class="ds-couleur__pastille" style="background: var(--beige-hover)"></span>
+            <div class="ds-couleur__infos"><b>beige-hover</b><code>#F5DCC4 · --beige-hover</code><p>Survol des éléments beige, bordures des champs.</p></div>
           </div>
           <div class="ds-couleur">
-            <span
-              class="ds-couleur__pastille"
-              style="background: var(--beige-hover)"
-            ></span
-            ><b>Beige hover</b><code>#F5DCC4</code>
+            <span class="ds-couleur__pastille" style="background: var(--blanc)"></span>
+            <div class="ds-couleur__infos"><b>blanc</b><code>#FFFFFF · --blanc</code><p>Champs de formulaire, bouton panier et compte.</p></div>
+          </div>
+        </div>
+
+        <h3 class="ds-groupe">Texte</h3>
+        <div class="ds-couleurs">
+          <div class="ds-couleur">
+            <span class="ds-couleur__pastille" style="background: var(--brun)"></span>
+            <div class="ds-couleur__infos"><b>brun</b><code>#3D2120 · --brun</code><p>Texte sur fond beige ou blanc, ombre « cartoon ».</p></div>
           </div>
           <div class="ds-couleur">
-            <span
-              class="ds-couleur__pastille"
-              style="background: var(--brun)"
-            ></span
-            ><b>Brun (texte)</b><code>#3D2120</code>
-          </div>
-          <div class="ds-couleur">
-            <span
-              class="ds-couleur__pastille"
-              style="background: var(--blanc)"
-            ></span
-            ><b>Blanc</b><code>#FFFFFF</code>
+            <span class="ds-couleur__pastille" style="background: var(--beige)"></span>
+            <div class="ds-couleur__infos"><b>texte sur rouge</b><code>#FFECD9 · --beige</code><p>Titres et textes posés directement sur le fond rouge.</p></div>
           </div>
         </div>
       </section>
 
-      <!-- Typographie -->
-      <section class="ds-section">
-        <h2 class="pepe-titre pepe-titre--h2">Typographie</h2>
-        <div class="pepe-carte pepe-carte--blanche">
+      <!-- 02 Typographie -->
+      <section class="ds-section" id="typographie">
+        <p class="ds-section__numero">02 — Échelle typographique</p>
+        <h2 class="ds-section__titre">Cooper Black pour le ton, Myriad Pro pour lire</h2>
+        <p class="ds-section__intro">
+          Les titres utilisent Cooper Black en graisse normale, le texte Myriad Pro. Les tailles passent
+          en valeurs mobiles sous 768&nbsp;px (mode « Mobile » des variables Figma).
+        </p>
+        <div class="ds-typos">
           <div class="ds-typo">
-            <span class="ds-typo__nom">Titre H1 · Cooper Black 48px</span>
+            <div class="ds-typo__nom"><b>titre</b><span>48 px / 30 px mobile · Cooper Black</span></div>
             <p class="pepe-titre pepe-titre--h1">Découvre toute la carte</p>
           </div>
           <div class="ds-typo">
-            <span class="ds-typo__nom">Titre H2 · Cooper Black 36px</span>
+            <div class="ds-typo__nom"><b>Titre H2</b><span>36 px / 28 px mobile · Cooper Black</span></div>
             <p class="pepe-titre pepe-titre--h2">Poulets frits</p>
           </div>
           <div class="ds-typo">
-            <span class="ds-typo__nom">Titre H3 · Cooper Black 24px</span>
+            <div class="ds-typo__nom"><b>Titre H3</b><span>24 px / 19 px mobile · Cooper Black</span></div>
+            <p class="pepe-titre pepe-titre--h3">Récapitulatif</p>
+          </div>
+          <div class="ds-typo">
+            <div class="ds-typo__nom"><b>Titre produits</b><span>24 px · Cooper Black</span></div>
             <p class="pepe-titre pepe-titre--h3">Sweet Honey Burger</p>
           </div>
           <div class="ds-typo">
-            <span class="ds-typo__nom">Texte · Myriad Pro 16px</span>
-            <p class="pepe-texte">
-              Poulet frit croustillant mariné 24h, cheddar fondant.
-            </p>
+            <div class="ds-typo__nom"><b>menu</b><span>16 px · Cooper Black</span></div>
+            <p class="pepe-titre pepe-titre--menu">Le concept · Le menu · À propos</p>
           </div>
           <div class="ds-typo">
-            <span class="ds-typo__nom">Petit texte · Myriad Pro 14px</span>
-            <p class="pepe-texte pepe-texte--petit">Allergènes : gluten, lait, œuf</p>
+            <div class="ds-typo__nom"><b>Texte</b><span>16 px / 15 px mobile · Myriad Pro</span></div>
+            <p class="pepe-texte">Poulet frit croustillant mariné 24 h, cheddar fondant et sauce miel-moutarde.</p>
+          </div>
+          <div class="ds-typo">
+            <div class="ds-typo__nom"><b>Petit texte</b><span>14 px / 13 px mobile · Myriad Pro</span></div>
+            <p class="pepe-texte pepe-texte--petit">Allergènes : gluten, lait, œuf · Retrait aujourd'hui dès 12:00</p>
           </div>
         </div>
       </section>
 
-      <!-- Espacements et arrondis -->
-      <section class="ds-section">
-        <h2 class="pepe-titre pepe-titre--h2">Espacements et arrondis</h2>
-        <div class="pepe-carte pepe-carte--blanche ds-espacements">
-          <div class="ds-espacement">
-            <span style="width: var(--espace-xxs)"></span>4px
-          </div>
-          <div class="ds-espacement">
-            <span style="width: var(--espace-xs)"></span>8px
-          </div>
-          <div class="ds-espacement">
-            <span style="width: var(--espace-sm)"></span>12px
-          </div>
-          <div class="ds-espacement">
-            <span style="width: var(--espace-md)"></span>16px
-          </div>
-          <div class="ds-espacement">
-            <span style="width: var(--espace-lg)"></span>24px
-          </div>
-          <div class="ds-espacement">
-            <span style="width: var(--espace-xl)"></span>32px
-          </div>
-          <div class="ds-espacement">
-            <span style="width: var(--espace-3xl)"></span>48px
-          </div>
-          <div class="ds-espacement">
-            <span style="width: var(--espace-4xl)"></span>64px
-          </div>
-        </div>
-        <div class="ds-arrondis">
-          <div class="ds-arrondi" style="border-radius: var(--rayon-xs)">8px</div>
-          <div class="ds-arrondi" style="border-radius: var(--rayon-sm)">12px</div>
-          <div class="ds-arrondi" style="border-radius: var(--rayon-md)">16px</div>
-          <div class="ds-arrondi" style="border-radius: var(--rayon-lg)">20px</div>
-          <div class="ds-arrondi" style="border-radius: var(--rayon-xl)">24px</div>
-          <div class="ds-arrondi" style="border-radius: var(--rayon-pilule)">
-            pilule
-          </div>
-        </div>
-      </section>
-
-      <!-- Boutons -->
-      <section class="ds-section">
-        <h2 class="pepe-titre pepe-titre--h2">Boutons</h2>
-        <div class="ds-ligne">
-          <a class="pepe-btn pepe-btn--rouge" href="#">Commander</a>
-          <a class="pepe-btn pepe-btn--beige" href="#">Voir la carte</a>
-          <a class="pepe-btn pepe-btn--jaune" href="#">Ajouter au panier</a>
-          <button class="pepe-btn-plus" aria-label="Ajouter au panier">+</button>
-        </div>
-        <p class="pepe-texte pepe-texte--petit ds-aide">
-          Survole les boutons pour voir l'état hover.
+      <!-- 03 Boutons -->
+      <section class="ds-section" id="composants">
+        <p class="ds-section__numero">03 — Boutons</p>
+        <h2 class="ds-section__titre">Pilules en Cooper Black, ombre brune</h2>
+        <p class="ds-section__intro">
+          Tous les boutons sont en forme de pilule (<code>--rayon-pilule</code>) avec l'ombre
+          <code>0 3px 0 brun</code>. Le rouge pour l'action principale, le jaune pour ajouter au panier.
         </p>
-      </section>
-
-      <!-- Badges et options -->
-      <section class="ds-section">
-        <h2 class="pepe-titre pepe-titre--h2">Badges et options</h2>
-        <div class="ds-ligne">
-          <span class="pepe-badge pepe-badge--jaune">Nouveau</span>
-          <span class="pepe-badge pepe-badge--beige">● En stock</span>
-          <span class="pepe-badge pepe-badge--jaune">⭐ Produit star</span>
-        </div>
-        <div class="ds-ligne">
-          <button class="pepe-option pepe-option--actif">Menu +3,50 €</button>
-          <button class="pepe-option">Burger seul</button>
-          <button class="pepe-option pepe-option--actif">Creamy BBQ</button>
-          <button class="pepe-option">Sauce Verte</button>
-          <button class="pepe-option">Hot Sauce</button>
-        </div>
-      </section>
-
-      <!-- Cartes produit -->
-      <section class="ds-section">
-        <h2 class="pepe-titre pepe-titre--h2">Cartes produit</h2>
-        <div class="ds-grille">
-          <article class="pepe-carte-produit">
-            <div class="pepe-carte-produit__photo">Photo</div>
-            <h3 class="pepe-carte-produit__nom">Sweet Honey Burger</h3>
-            <div class="pepe-carte-produit__bas">
-              <span class="pepe-carte-produit__prix">10,90 €</span>
-              <button class="pepe-btn-plus" aria-label="Ajouter Sweet Honey Burger">
-                +
-              </button>
-            </div>
-          </article>
-          <article class="pepe-carte-produit">
-            <div class="pepe-carte-produit__photo">Photo</div>
-            <h3 class="pepe-carte-produit__nom">Pepe Tenders</h3>
-            <div class="pepe-carte-produit__bas">
-              <span class="pepe-carte-produit__prix">8,90 €</span>
-              <button class="pepe-btn-plus" aria-label="Ajouter Pepe Tenders">
-                +
-              </button>
-            </div>
-          </article>
-          <article class="pepe-carte-produit">
-            <div class="pepe-carte-produit__photo">Photo</div>
-            <h3 class="pepe-carte-produit__nom">Frites de Patates Douces</h3>
-            <div class="pepe-carte-produit__bas">
-              <span class="pepe-carte-produit__prix">4,50 €</span>
-              <button
-                class="pepe-btn-plus"
-                aria-label="Ajouter Frites de Patates Douces"
-              >
-                +
-              </button>
-            </div>
-          </article>
+        <div class="ds-cartes">
+          <div class="ds-demo">
+            <p class="ds-demo__nom">pepe-btn--rouge</p>
+            <a class="pepe-btn pepe-btn--rouge" href="#composants">Commander</a>
+            <p class="ds-demo__note">Action principale du header.</p>
+          </div>
+          <div class="ds-demo">
+            <p class="ds-demo__nom">pepe-btn--jaune</p>
+            <button class="pepe-btn pepe-btn--jaune" type="button">Ajouter au panier</button>
+            <p class="ds-demo__note">Fiche produit, checkout.</p>
+          </div>
+          <div class="ds-demo">
+            <p class="ds-demo__nom">pepe-btn--beige</p>
+            <button class="pepe-btn pepe-btn--beige" type="button">Voir la carte</button>
+            <p class="ds-demo__note">Action secondaire sur fond rouge.</p>
+          </div>
+          <div class="ds-demo">
+            <p class="ds-demo__nom">pepe-btn-plus</p>
+            <button class="pepe-btn-plus" type="button" aria-label="Ajouter au panier">+</button>
+            <p class="ds-demo__note">Ajout rapide depuis une carte produit (40 px).</p>
+          </div>
+          <div class="ds-demo">
+            <p class="ds-demo__nom">pepe-panier</p>
+            <a class="pepe-panier" href="#composants">Panier <span class="pepe-panier__nombre">2</span></a>
+            <p class="ds-demo__note">Lien panier du header avec compteur.</p>
+          </div>
+          <div class="ds-demo">
+            <p class="ds-demo__nom">pepe-header__compte</p>
+            <a class="pepe-header__compte" href="#composants" aria-label="Se connecter"><svg class="pepe-header__icone" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" focusable="false"><circle cx="10" cy="5" r="4"></circle><path d="M2 19v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2z"></path></svg></a>
+            <p class="ds-demo__note">Connexion / Mon compte.</p>
+          </div>
         </div>
       </section>
 
-      <!-- Formulaire et récapitulatif -->
+      <!-- 04 Header -->
       <section class="ds-section">
-        <h2 class="pepe-titre pepe-titre--h2">Formulaire et récapitulatif</h2>
+        <p class="ds-section__numero">04 — Header</p>
+        <h2 class="ds-section__titre">Menu à gauche, logo au centre, actions à droite</h2>
+        <p class="ds-section__intro">
+          Fond beige, trois liens en Cooper Black rouge. Sous 768&nbsp;px, les liens passent dans un menu burger
+          et le bouton « Commander » disparaît : il reste le logo, le compte et le panier.
+        </p>
+        <div class="ds-cadre">
+          <header class="pepe-header">
+            <nav class="pepe-header__nav" aria-label="Menu principal (exemple)">
+              <ul class="pepe-header__menu">
+                <li class="pepe-header__element"><a class="pepe-header__lien" href="#composants">Le concept</a></li>
+                <li class="pepe-header__element"><a class="pepe-header__lien" href="#composants">Le menu</a></li>
+                <li class="pepe-header__element"><a class="pepe-header__lien" href="#composants">À propos</a></li>
+              </ul>
+            </nav>
+            <a class="pepe-logo" href="#haut"><span class="pepe-logo__pepe">PEPE</span><span class="pepe-logo__chicken">Chicken®</span></a>
+            <div class="pepe-header__actions">
+              <a class="pepe-btn pepe-btn--rouge" href="#composants">Commander</a>
+              <a class="pepe-header__compte" href="#composants" aria-label="Se connecter"><svg class="pepe-header__icone" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" focusable="false"><circle cx="10" cy="5" r="4"></circle><path d="M2 19v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2z"></path></svg></a>
+              <a class="pepe-panier" href="#composants">Panier <span class="pepe-panier__nombre">2</span></a>
+            </div>
+            <button class="pepe-burger" type="button" aria-label="Ouvrir le menu"><span class="pepe-burger__trait"></span><span class="pepe-burger__trait"></span><span class="pepe-burger__trait"></span></button>
+          </header>
+        </div>
+      </section>
+
+      <!-- 05 Catégories -->
+      <section class="ds-section">
+        <p class="ds-section__numero">05 — Onglets de catégories</p>
+        <h2 class="ds-section__titre">Filtrer la carte en un clic</h2>
+        <p class="ds-section__intro">
+          Sous le titre de la Boutique : une rangée de pilules bordées de beige. La catégorie active est pleine.
+        </p>
+        <div class="ds-fond-rouge">
+          <nav class="pepe-categories" aria-label="Catégories (exemple)">
+            <a class="pepe-categories__lien pepe-categories__lien--actif" href="#composants" aria-current="page">Tout</a>
+            <a class="pepe-categories__lien" href="#composants">Poulet frit</a>
+            <a class="pepe-categories__lien" href="#composants">Burgers</a>
+            <a class="pepe-categories__lien" href="#composants">Sides</a>
+            <a class="pepe-categories__lien" href="#composants">Sauces</a>
+            <a class="pepe-categories__lien" href="#composants">Boissons</a>
+          </nav>
+        </div>
+      </section>
+
+      <!-- 06 Cartes produit -->
+      <section class="ds-section">
+        <p class="ds-section__numero">06 — Cartes produit</p>
+        <h2 class="ds-section__titre">Photo d'abord, prix en jaune</h2>
+        <p class="ds-section__intro">
+          Photo au format presque carré arrondie à 16&nbsp;px, nom en Cooper Black, puis le prix et le bouton « + ».
+          3 colonnes en desktop, 2 en mobile.
+        </p>
+        <div class="ds-fond-rouge">
+          <div class="ds-grille">
+            <article class="pepe-carte-produit">
+              <div class="pepe-carte-produit__photo"><span class="pepe-badge pepe-badge--jaune pepe-carte-produit__badge">⭐ Produit star</span>Photo</div>
+              <h3 class="pepe-carte-produit__nom">The Smoky One</h3>
+              <div class="pepe-carte-produit__bas"><span class="pepe-carte-produit__prix">10,90 €</span><button class="pepe-btn-plus" type="button" aria-label="Ajouter The Smoky One">+</button></div>
+            </article>
+            <article class="pepe-carte-produit">
+              <div class="pepe-carte-produit__photo">Photo</div>
+              <h3 class="pepe-carte-produit__nom">Pepe Tenders</h3>
+              <div class="pepe-carte-produit__bas"><span class="pepe-carte-produit__prix">8,90 €</span><button class="pepe-btn-plus" type="button" aria-label="Ajouter Pepe Tenders">+</button></div>
+            </article>
+            <article class="pepe-carte-produit">
+              <div class="pepe-carte-produit__photo"><span class="pepe-badge pepe-badge--jaune pepe-carte-produit__badge">Nouveau</span>Photo</div>
+              <h3 class="pepe-carte-produit__nom">Mac'n Cheese Balls</h3>
+              <div class="pepe-carte-produit__bas"><span class="pepe-carte-produit__prix">5,50 €</span><button class="pepe-btn-plus" type="button" aria-label="Ajouter Mac'n Cheese Balls">+</button></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 07 Badges et options -->
+      <section class="ds-section">
+        <p class="ds-section__numero">07 — Badges et options</p>
+        <h2 class="ds-section__titre">Sélecteur d'options de la fiche produit</h2>
+        <p class="ds-section__intro">
+          Les options (formule, sauce, piquant…) sont des pilules blanches. L'option choisie passe en rouge.
+          Les badges signalent les nouveautés et le produit star.
+        </p>
+        <div class="ds-cartes ds-cartes--2">
+          <div class="ds-demo">
+            <p class="ds-demo__nom">pepe-badge</p>
+            <div class="ds-ligne">
+              <span class="pepe-badge pepe-badge--jaune">Nouveau</span>
+              <span class="pepe-badge pepe-badge--jaune">⭐ Produit star</span>
+              <span class="pepe-badge pepe-badge--beige">● En stock</span>
+            </div>
+          </div>
+          <div class="ds-demo">
+            <p class="ds-demo__nom">pepe-option / pepe-option--actif</p>
+            <div class="ds-ligne">
+              <button class="pepe-option pepe-option--actif" type="button" aria-pressed="true">Menu +3,50 €</button>
+              <button class="pepe-option" type="button" aria-pressed="false">Burger seul</button>
+            </div>
+            <div class="ds-ligne">
+              <button class="pepe-option pepe-option--actif" type="button" aria-pressed="true">Creamy BBQ</button>
+              <button class="pepe-option" type="button" aria-pressed="false">Sauce Verte</button>
+              <button class="pepe-option" type="button" aria-pressed="false">Hot Sauce</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 08 Formulaire et récapitulatif -->
+      <section class="ds-section">
+        <p class="ds-section__numero">08 — Formulaire et récapitulatif</p>
+        <h2 class="ds-section__titre">Checkout en deux colonnes</h2>
+        <p class="ds-section__intro">
+          Champs blancs arrondis à 12&nbsp;px sur une carte beige, case CGV obligatoire. À droite, le récapitulatif
+          avec le total en rouge. Les deux colonnes passent l'une sous l'autre en mobile.
+        </p>
         <div class="ds-deux-colonnes">
-          <form class="pepe-carte pepe-carte--beige">
+          <form class="pepe-carte pepe-carte--beige" action="#composants">
             <h3 class="pepe-titre pepe-titre--h3">Mes coordonnées</h3>
-            <label class="pepe-champ"
-              >Prénom<input type="text" placeholder="Prénom"></label>
-            <label class="pepe-champ"
-              >E-mail<input type="email" placeholder="prenom@exemple.fr"></label>
-            <label class="pepe-case"
-              ><input type="checkbox" checked> J'accepte les conditions
-              générales de vente</label
-            >
-            <button class="pepe-btn pepe-btn--jaune" type="button">
-              Passer la commande
-            </button>
+            <label class="pepe-champ">Prénom<input type="text" name="prenom" placeholder="Prénom" autocomplete="given-name"></label>
+            <label class="pepe-champ">E-mail<input type="email" name="email" placeholder="prenom@exemple.fr" autocomplete="email"></label>
+            <label class="pepe-case"><input type="checkbox" checked> J'accepte les conditions générales de vente</label>
+            <button class="pepe-btn pepe-btn--jaune" type="button">Passer la commande</button>
           </form>
           <div class="pepe-carte pepe-carte--beige pepe-recap">
             <h3 class="pepe-titre pepe-titre--h3">Récapitulatif</h3>
-            <p class="pepe-recap__ligne">
-              <span>Sous-total</span><span>36,50 €</span>
-            </p>
-            <p class="pepe-recap__ligne">
-              <span>Réduction (PEPE10)</span><span>-3,65 €</span>
-            </p>
-            <p class="pepe-recap__ligne">
-              <span>Frais de préparation</span><span>Offerts</span>
-            </p>
-            <p class="pepe-recap__ligne pepe-recap__ligne--total">
-              <span>Total</span><span>32,85 €</span>
-            </p>
+            <p class="pepe-recap__ligne"><span>Sous-total</span><span>36,50 €</span></p>
+            <p class="pepe-recap__ligne"><span>Réduction (PEPE10)</span><span>-3,65 €</span></p>
+            <p class="pepe-recap__ligne"><span>Frais de préparation</span><span>Offerts</span></p>
+            <p class="pepe-recap__ligne pepe-recap__ligne--total"><span>Total</span><span>32,85 €</span></p>
           </div>
         </div>
+      </section>
+
+      <!-- 09 Espacements -->
+      <section class="ds-section">
+        <p class="ds-section__numero">09 — Espacements</p>
+        <h2 class="ds-section__titre">Une échelle de 4 à 80 px</h2>
+        <p class="ds-section__intro">Mêmes valeurs que les variables <code>espace/…</code> de Figma (<code>--espace-xxs</code> à <code>--espace-5xl</code>).</p>
+        <div class="ds-espacements">
+          <div class="ds-espacement"><span style="width: var(--espace-xxs)"></span>4 · xxs</div>
+          <div class="ds-espacement"><span style="width: var(--espace-xs)"></span>8 · xs</div>
+          <div class="ds-espacement"><span style="width: var(--espace-sm)"></span>12 · sm</div>
+          <div class="ds-espacement"><span style="width: var(--espace-md)"></span>16 · md</div>
+          <div class="ds-espacement"><span style="width: var(--espace-lg)"></span>24 · lg</div>
+          <div class="ds-espacement"><span style="width: var(--espace-xl)"></span>32 · xl</div>
+          <div class="ds-espacement"><span style="width: var(--espace-2xl)"></span>40 · 2xl</div>
+          <div class="ds-espacement"><span style="width: var(--espace-3xl)"></span>48 · 3xl</div>
+          <div class="ds-espacement"><span style="width: var(--espace-4xl)"></span>64 · 4xl</div>
+          <div class="ds-espacement"><span style="width: var(--espace-5xl)"></span>80 · 5xl</div>
+        </div>
+      </section>
+
+      <!-- 10 Arrondis -->
+      <section class="ds-section">
+        <p class="ds-section__numero">10 — Arrondis</p>
+        <h2 class="ds-section__titre">Généreux, comme le reste</h2>
+        <p class="ds-section__intro">Champs à 12&nbsp;px, cartes produit à 16&nbsp;px, grandes cartes à 20–24&nbsp;px, boutons en pilule.</p>
+        <div class="ds-arrondis">
+          <div class="ds-arrondi" style="border-radius: var(--rayon-xs)">8 · xs</div>
+          <div class="ds-arrondi" style="border-radius: var(--rayon-sm)">12 · sm</div>
+          <div class="ds-arrondi" style="border-radius: var(--rayon-md)">16 · md</div>
+          <div class="ds-arrondi" style="border-radius: var(--rayon-lg)">20 · lg</div>
+          <div class="ds-arrondi" style="border-radius: var(--rayon-xl)">24 · xl</div>
+          <div class="ds-arrondi" style="border-radius: var(--rayon-pilule)">pilule</div>
+        </div>
+      </section>
+
+      <!-- 11 Élévation -->
+      <section class="ds-section">
+        <p class="ds-section__numero">11 — Élévation</p>
+        <h2 class="ds-section__titre">Une seule ombre, « cartoon »</h2>
+        <p class="ds-section__intro">Pas de flou : une ombre brune pleine décalée de 3&nbsp;px vers le bas, réservée aux éléments cliquables.</p>
+        <div class="ds-cartes">
+          <div class="ds-demo"><p class="ds-demo__nom">À plat</p><p class="ds-demo__note">Fond rouge, header, footer, cartes beige : la majorité des surfaces.</p></div>
+          <div class="ds-demo ds-demo--ombre"><p class="ds-demo__nom">Ombre cartoon</p><p class="ds-demo__note"><code>--ombre</code> : boutons, bouton « + », mini-panier.</p></div>
+          <div class="ds-demo"><p class="ds-demo__nom">Arrondi des photos</p><p class="ds-demo__note">Les photos produits sont simplement arrondies, sans ombre.</p></div>
+        </div>
+      </section>
+
+      <!-- 12 Responsive -->
+      <section class="ds-section" id="responsive">
+        <p class="ds-section__numero">12 — Responsive</p>
+        <h2 class="ds-section__titre">Deux maquettes, un point de rupture</h2>
+        <p class="ds-section__intro">Le même point de rupture que le thème Storefront : 768&nbsp;px.</p>
+        <div class="ds-tableau-conteneur">
+          <table class="ds-tableau">
+            <thead>
+              <tr><th scope="col">Nom</th><th scope="col">Largeur</th><th scope="col">Changements</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Mobile</td><td>&lt; 768 px</td><td>Menu burger, « Commander » masqué, cartes produit sur 2 colonnes, checkout sur 1 colonne, tailles de texte mobiles.</td></tr>
+              <tr><td>Desktop</td><td>≥ 768 px</td><td>Menu complet dans le header, cartes produit sur 3 colonnes, checkout et fiche produit sur 2 colonnes.</td></tr>
+              <tr><td>Large</td><td>&gt; 1312 px</td><td>Le contenu est centré et ne dépasse pas 1312 px de large.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="ds-ecrans">
+          <div class="ds-ecran ds-ecran--mobile">390<br>mobile</div>
+          <div class="ds-ecran ds-ecran--tablette">768<br>tablette</div>
+          <div class="ds-ecran ds-ecran--desktop">1440<br>desktop</div>
+        </div>
+        <h3 class="ds-groupe">Zones tactiles</h3>
+        <ul class="ds-liste">
+          <li>Boutons principaux : 42 px de haut minimum.</li>
+          <li>Bouton « + » des cartes : 40 × 40 px (32 px en mobile, espacé de 12 px).</li>
+          <li>Boutons compte et panier : 40 × 40 px minimum en mobile.</li>
+        </ul>
       </section>
     </main>
 
@@ -288,35 +409,40 @@
         <div class="pepe-footer__colonne">
           <h2 class="pepe-footer__titre">Accès rapide</h2>
           <ul class="pepe-footer__liste">
-            <li class="pepe-footer__element"><a class="pepe-footer__lien" href="#">Le concept</a></li>
-            <li class="pepe-footer__element"><a class="pepe-footer__lien" href="#">Le menu</a></li>
-            <li class="pepe-footer__element"><a class="pepe-footer__lien" href="#">Où nous trouver</a></li>
-            <li class="pepe-footer__element"><a class="pepe-footer__lien" href="#">FAQ</a></li>
+            <li class="pepe-footer__element"><a class="pepe-footer__lien" href="#haut">Le concept</a></li>
+            <li class="pepe-footer__element"><a class="pepe-footer__lien" href="#haut">Le menu</a></li>
+            <li class="pepe-footer__element"><a class="pepe-footer__lien" href="#haut">À propos</a></li>
+            <li class="pepe-footer__element"><a class="pepe-footer__lien" href="#haut">Mon compte</a></li>
           </ul>
         </div>
         <div class="pepe-footer__colonne">
           <h2 class="pepe-footer__titre">Services consommateurs</h2>
           <ul class="pepe-footer__liste">
-            <li class="pepe-footer__element"><a class="pepe-footer__lien" href="#">Informations allergènes</a></li>
-            <li class="pepe-footer__element"><a class="pepe-footer__lien" href="#">Origine des viandes</a></li>
+            <li class="pepe-footer__element"><a class="pepe-footer__lien" href="#haut">Informations allergènes</a></li>
+            <li class="pepe-footer__element"><a class="pepe-footer__lien" href="#haut">Origine des viandes</a></li>
           </ul>
         </div>
-        <a class="pepe-logo pepe-footer__logo" href="#"
-          ><span class="pepe-logo__pepe">PEPE</span
-          ><span class="pepe-logo__chicken">Chicken®</span></a
-        >
+        <a class="pepe-logo pepe-footer__logo" href="#haut"><span class="pepe-logo__pepe">PEPE</span><span class="pepe-logo__chicken">Chicken®</span></a>
+        <div class="pepe-footer__colonne">
+          <h2 class="pepe-footer__titre">Contact</h2>
+          <ul class="pepe-footer__liste">
+            <li class="pepe-footer__element"><a class="pepe-footer__lien" href="#haut">Nous contacter</a></li>
+          </ul>
+        </div>
         <div class="pepe-footer__colonne">
           <h2 class="pepe-footer__titre">Informations légales</h2>
           <ul class="pepe-footer__liste">
-            <li class="pepe-footer__element"><a class="pepe-footer__lien" href="#">Mentions légales</a></li>
-            <li class="pepe-footer__element"><a class="pepe-footer__lien" href="#">CGV</a></li>
+            <li class="pepe-footer__element"><a class="pepe-footer__lien" href="#haut">Mentions légales</a></li>
+            <li class="pepe-footer__element"><a class="pepe-footer__lien" href="#haut">CGV</a></li>
           </ul>
         </div>
       </div>
-      <p class="pepe-footer__sante">
-        Pour votre santé, pratiquez une activité physique régulière :
-        <a class="pepe-footer__lien" href="https://www.mangerbouger.fr">www.mangerbouger.fr</a>
-      </p>
+      <p class="pepe-footer__sante">Pour votre santé, pratiquez une activité physique régulière : <a class="pepe-footer__lien" href="https://www.mangerbouger.fr">www.mangerbouger.fr</a></p>
     </footer>
+
+    <div class="ds-credits">
+      <p>Design System Pepe Chicken · SAÉ 3.01 – BUT MMI · Sanchez--Perrault Loutsyam</p>
+      <p>Mêmes variables et mêmes classes (BEM, préfixe <code>pepe-</code>) que le thème WordPress.</p>
+    </div>
   </body>
 </html>
