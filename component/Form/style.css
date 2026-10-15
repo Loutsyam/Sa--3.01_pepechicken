@@ -1,0 +1,35 @@
+/* Composant Form */
+.pepe-champ {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  font-weight: 600;
+  font-size: var(--fs-petit);
+
+  .pepe-champ input {
+    font: inherit;
+    font-weight: normal;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1.5px solid var(--color-beige-hover);
+    border-radius: var(--radius-sm);
+    background: var(--color-blanc);
+    color: var(--color-brun);
+  }
+
+  .pepe-champ input:focus {
+    outline: 0.125rem solid var(--color-rouge);
+  }
+}
+
+.pepe-case {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: var(--fs-petit);
+
+  .pepe-case input {
+    width: 1.25rem;
+    height: 1.25rem;
+    accent-color: var(--color-rouge);
+  }
+}

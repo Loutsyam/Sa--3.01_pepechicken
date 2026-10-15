@@ -1,30 +1,37 @@
 # Design System – Pepe Chicken (HTML / CSS)
 
-Page statique (présentée comme une « analyse de Design System » : planche claire, sections numérotées) regroupant les couleurs, la typographie, les espacements et les principaux composants
-du site click & collect Pepe Chicken (SAÉ 3.01). HTML et CSS uniquement, sans framework, validés avec le validateur W3C.
+Page statique regroupant les couleurs, la typographie, les espacements et les composants
+du site click & collect Pepe Chicken (SAÉ 3.01). HTML et CSS uniquement, sans framework, validés W3C.
+
+## Organisation des fichiers
+
+```
+index.html
+css/
+  base.css        feuille principale : importe tout le reste dans des couches (@layer)
+  reset.css       remise à zéro des styles du navigateur
+  variables.css   variables (mêmes valeurs que Figma)
+  global.css      styles des balises (html, body, a…)
+  layout.css      mise en page de la planche (classes ds-…)
+  utilities.css   petites classes réutilisables (.mt-lg, .bg-rouge…)
+component/
+  Button/style.css, Header/style.css, ProductCard/style.css… (un dossier par composant)
+```
+
+Ordre des couches : `reset < variables < global < components < layout < utilities`.
 
 ## Conventions
 
-- Les variables CSS reprennent celles du Design System Figma et du thème WordPress.
-- Les composants sont nommés en **BEM** (`bloc__element--modificateur`) avec le préfixe `pepe-`,
-  les mêmes noms que dans le thème enfant WordPress : `pepe-btn--rouge`, `pepe-carte-produit__prix`,
-  `pepe-header__actions`, `pepe-footer__colonnes`…
-- Les classes `ds-…` servent uniquement à la mise en page de cette planche (sections, grilles de démonstration).
+- **BEM** (`bloc__element--modificateur`) avec le préfixe `pepe-`, les mêmes classes que le thème WordPress.
+- **CSS natif imbriqué** : les éléments et modificateurs sont écrits dans le bloc (`&.pepe-btn--rouge`, `&:hover`).
+- **Unités en rem**, sauf la valeur « pilule » (999px).
+- **Variables** :
 
-## Composants
-
-| Composant | Classes |
+| Figma | CSS |
 |---|---|
-| Header | `pepe-header`, `pepe-header__nav`, `pepe-header__actions`, `pepe-header__compte`, `pepe-burger` |
-| Logo | `pepe-logo`, `pepe-logo__pepe`, `pepe-logo__chicken` |
-| Boutons | `pepe-btn` + `pepe-btn--rouge` / `--beige` / `--jaune`, `pepe-btn-plus` |
-| Panier | `pepe-panier`, `pepe-panier__nombre` |
-| Catégories | `pepe-categories`, `pepe-categories__lien`, `pepe-categories__lien--actif` |
-| Badges | `pepe-badge` + `pepe-badge--jaune` / `--beige` |
-| Options | `pepe-option`, `pepe-option--actif` |
-| Carte produit | `pepe-carte-produit` (`__photo`, `__badge`, `__nom`, `__bas`, `__prix`) |
-| Formulaire | `pepe-champ`, `pepe-case` |
-| Récapitulatif | `pepe-recap`, `pepe-recap__ligne`, `pepe-recap__ligne--total` |
-| Cartes | `pepe-carte` + `pepe-carte--beige` / `--blanche` |
-| Typographie | `pepe-titre` + `--h1` / `--h2` / `--h3`, `pepe-texte`, `pepe-texte--petit` |
-| Footer | `pepe-footer` (`__colonnes`, `__colonne`, `__titre`, `__liste`, `__lien`, `__logo`, `__sante`) |
+| couleur/rouge, jaune, beige, brun, blanc (+ hover) | `--color-rouge`, `--color-jaune`… |
+| Tokens (fond, texte, accent) | `--color-bg`, `--color-fg`, `--color-surface`, `--color-text`, `--color-accent` |
+| espace/xxs … 5xl | `--spacing-xxs` … `--spacing-5xl` |
+| rayon/xs … pilule | `--radius-xs` … `--radius-pilule` |
+| Typographie (Desktop / Mobile) | `--fs-h1`, `--fs-h2`, `--fs-h3`, `--fs-texte`, `--fs-petit` |
+| Polices | `--ff-titre`, `--ff-texte` |

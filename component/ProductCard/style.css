@@ -1,0 +1,50 @@
+/* Composant ProductCard */
+.pepe-carte-produit {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  text-align: center;
+
+  .pepe-carte-produit__photo {
+    aspect-ratio: 1 / 1.04;
+    background: var(--color-beige);
+    color: var(--color-brun);
+    border-radius: var(--radius-md);
+    display: grid;
+    place-items: center;
+    opacity: 0.9;
+  }
+
+  .pepe-carte-produit__nom {
+    font-family: var(--ff-titre);
+    font-weight: normal;
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
+  .pepe-carte-produit__bas {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .pepe-carte-produit__prix {
+    font-family: var(--ff-titre);
+    font-size: 1.15rem;
+    color: var(--color-jaune);
+  }
+
+  .pepe-carte-produit__photo {
+    position: relative;
+  }
+
+  .pepe-carte-produit__badge {
+    position: absolute;
+    top: var(--spacing-sm);
+    left: var(--spacing-sm);
+  }
+
+  .pepe-carte-produit__nom {
+    color: var(--color-beige);
+  }
+}
