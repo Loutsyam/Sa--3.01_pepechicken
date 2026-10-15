@@ -3,22 +3,17 @@
 Page statique regroupant les couleurs, la typographie, les espacements et les composants
 du site click & collect Pepe Chicken (SAÉ 3.01). HTML et CSS uniquement, sans framework, validés W3C.
 
-## Organisation des fichiers
+## Organisation
 
-```
-index.html
-css/
-  base.css        feuille principale : importe tout le reste dans des couches (@layer)
-  reset.css       remise à zéro des styles du navigateur
-  variables.css   variables (mêmes valeurs que Figma)
-  global.css      styles des balises (html, body, a…)
-  layout.css      mise en page de la planche (classes ds-…)
-  utilities.css   petites classes réutilisables (.mt-lg, .bg-rouge…)
-component/
-  Button/style.css, Header/style.css, ProductCard/style.css… (un dossier par composant)
-```
+Deux fichiers : `index.html` et `style.css`. La feuille est découpée en couches (`@layer`), dans cet ordre :
+`reset < variables < global < components < layout < utilities` (une couche plus bas l'emporte sur celles du dessus).
 
-Ordre des couches : `reset < variables < global < components < layout < utilities`.
+- **reset** : remise à zéro des styles du navigateur
+- **variables** : mêmes valeurs que Figma
+- **global** : styles des balises (html, body, a…)
+- **components** : un bloc BEM par composant (bouton, header, carte produit…)
+- **layout** : mise en page de la planche (classes `ds-…`)
+- **utilities** : petites classes réutilisables (`.mt-lg`, `.bg-rouge`…)
 
 ## Conventions
 
