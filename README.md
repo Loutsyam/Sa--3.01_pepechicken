@@ -15,7 +15,7 @@ du site click & collect Pepe Chicken (SAÉ 3.01). HTML et CSS uniquement, sans f
 
 | Composant | Classes |
 |---|---|
-| Header | `pepe-header`, `pepe-header__nav`, `pepe-header__actions`, `pepe-burger` |
+| Header | `pepe-header`, `pepe-header__nav`, `pepe-header__actions`, `pepe-header__compte`, `pepe-burger` |
 | Logo | `pepe-logo`, `pepe-logo__pepe`, `pepe-logo__chicken` |
 | Boutons | `pepe-btn` + `pepe-btn--rouge` / `--beige` / `--jaune`, `pepe-btn-plus` |
 | Panier | `pepe-panier`, `pepe-panier__nombre` |

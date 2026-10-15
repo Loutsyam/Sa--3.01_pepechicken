@@ -457,6 +457,22 @@ img {
   font-family: var(--police-titre);
   font-size: 1.1rem;
 }
+.pepe-header__compte {
+  display: inline-grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 2px solid var(--rouge);
+  border-radius: var(--rayon-pilule);
+  background: var(--blanc);
+  color: var(--rouge);
+}
+.pepe-header__compte:hover {
+  background: var(--beige-hover);
+}
+.pepe-header__icone {
+  fill: currentColor;
+}
 .pepe-panier {
   display: inline-flex;
   align-items: center;
