@@ -13,6 +13,10 @@
 
 Les mots de passe ne sont pas notés ici.
 
+La page Design System HTML/CSS est dans `docs/design-system/` et publiée avec GitHub Pages
+(réglage du dépôt : Settings → Pages → branche `main`, dossier `/docs`) :
+https://loutsyam.github.io/Sa--3.01_pepechicken/design-system/
+
 ## Accès au serveur
 
 - Connexion en **SFTP** avec FileZilla : hôte `sftp://mmi.unilim.fr`, port `22`, identifiant `sanchezperrau1`.
