@@ -1,0 +1,23 @@
+/* ==========================================================
+   Design System Pepe Chicken – feuille principale
+   Couches (@layer) dans l'ordre des imports : reset < variables < global < components < layout < utilities
+   (une couche importée plus bas l'emporte sur celles du dessus)
+   ========================================================== */
+@import "./reset.css" layer(reset);
+@import "./variables.css" layer(variables);
+@import "./global.css" layer(global);
+@import "../component/Typography/style.css" layer(components);
+@import "../component/Button/style.css" layer(components);
+@import "../component/Badge/style.css" layer(components);
+@import "../component/Option/style.css" layer(components);
+@import "../component/Card/style.css" layer(components);
+@import "../component/ProductCard/style.css" layer(components);
+@import "../component/Categories/style.css" layer(components);
+@import "../component/Form/style.css" layer(components);
+@import "../component/Recap/style.css" layer(components);
+@import "../component/Logo/style.css" layer(components);
+@import "../component/Header/style.css" layer(components);
+@import "../component/Footer/style.css" layer(components);
+
+@import "./layout.css" layer(layout);
+@import "./utilities.css" layer(utilities);

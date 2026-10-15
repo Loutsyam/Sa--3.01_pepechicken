@@ -1,0 +1,17 @@
+/* Composant Badge */
+.pepe-badge {
+  font-family: var(--ff-titre);
+  font-size: var(--fs-petit);
+  padding: var(--spacing-xxs) var(--spacing-sm);
+  border-radius: var(--radius-pilule);
+
+  &.pepe-badge--jaune {
+    background: var(--color-jaune);
+    color: var(--color-brun);
+  }
+
+  &.pepe-badge--beige {
+    background: var(--color-beige);
+    color: var(--color-brun);
+  }
+}
