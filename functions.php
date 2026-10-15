@@ -56,12 +56,17 @@ function storefront_site_branding() {
     <?php
 }
 
-/** Bouton Commander + panier Storefront (mini-panier et mise à jour AJAX inclus). */
+/** Bouton Commander + accès au compte + panier Storefront (mini-panier et mise à jour AJAX inclus). */
 function pepe_header_actions() {
     $boutique = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/' );
+    // Page « Mon compte » de WooCommerce : affiche la connexion si le visiteur n'est pas connecté
+    $compte   = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : wp_login_url();
     ?>
     <div class="pepe-header__actions">
         <a class="pepe-btn pepe-btn--rouge pepe-header__commander" href="<?php echo esc_url( $boutique ); ?>">Commander</a>
+        <a class="pepe-header__compte" href="<?php echo esc_url( $compte ); ?>" aria-label="<?php echo is_user_logged_in() ? 'Mon compte' : 'Se connecter'; ?>">
+            <svg class="pepe-header__icone" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" focusable="false"><circle cx="10" cy="5" r="4"/><path d="M2 19v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2z"/></svg>
+        </a>
         <?php
         if ( function_exists( 'storefront_header_cart' ) ) {
             storefront_header_cart();
@@ -112,6 +117,7 @@ function pepe_footer() {
             'Le concept'      => home_url( '/' ),
             'Le menu'         => $boutique,
             'Où nous trouver' => '#',
+            'Mon compte'      => function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : wp_login_url(),
             'FAQ'             => pepe_url_page( 'faq' ),
         ),
         'Services consommateurs' => array(
