@@ -1,137 +1,180 @@
 <?php
 /**
- * Thème enfant Pepe Chicken (Storefront)
+ * Thème enfant Pepe Chicken (parent : Storefront)
+ *
+ * Principe : on garde la structure et les fonctionnalités de Storefront
+ * (menu mobile, mini-panier, liens d'accessibilité, widgets) et on la
+ * complète avec nos propres éléments, nommés en BEM avec le préfixe « pepe- ».
+ *
+ * La feuille de style du thème enfant est chargée automatiquement par
+ * Storefront (handle « storefront-child-style »), pas besoin de l'ajouter ici.
  */
 
-// Styles : Storefront puis thème enfant
-add_action( 'wp_enqueue_scripts', function () {
-    wp_enqueue_style( 'storefront-style', get_template_directory_uri() . '/style.css' );
-    wp_enqueue_style( 'pepe-chicken-style', get_stylesheet_uri(), array( 'storefront-style' ), wp_get_theme()->get( 'Version' ) );
-} );
+defined( 'ABSPATH' ) || exit;
 
-// Header et footer personnalisés (remplacent ceux de Storefront)
+/* ==========================================================
+   Réglages des hooks Storefront
+   ========================================================== */
 add_action( 'init', function () {
-    remove_all_actions( 'storefront_header' );
-    remove_all_actions( 'storefront_footer' );
-    add_action( 'storefront_header', 'pepe_header' );
-    add_action( 'storefront_footer', 'pepe_footer' );
+    // Header : on retire la recherche et le menu secondaire (absents de la maquette)
+    remove_action( 'storefront_header', 'storefront_product_search', 40 );
+    remove_action( 'storefront_header', 'storefront_secondary_navigation', 30 );
+
+    // Panier Storefront déplacé dans notre bloc d'actions (avec le bouton Commander)
+    remove_action( 'storefront_header', 'storefront_header_cart', 60 );
+    add_action( 'storefront_header', 'pepe_header_actions', 60 );
+
+    // Footer : les zones de widgets Storefront restent, on remplace seulement les crédits
+    remove_action( 'storefront_footer', 'storefront_credit', 20 );
+    add_action( 'storefront_footer', 'pepe_footer', 20 );
 
     // Pas de barre latérale (la maquette n'en a pas)
     remove_action( 'storefront_sidebar', 'storefront_get_sidebar', 10 );
 } );
 
-// Menu de navigation du header (à remplir dans Apparence > Menus)
-add_action( 'after_setup_theme', function () {
-    register_nav_menus( array( 'pepe-header' => 'Menu header Pepe Chicken' ) );
-} );
+/* ==========================================================
+   Header
+   ========================================================== */
 
-function pepe_header() {
-    $boutique = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/' );
-    $panier   = function_exists( 'wc_get_cart_url' ) ? wc_get_cart_url() : home_url( '/' );
-    $nombre   = ( function_exists( 'WC' ) && WC()->cart ) ? WC()->cart->get_cart_contents_count() : 0;
+/**
+ * Logo : remplace celui de Storefront (fonction « pluggable »).
+ * Si un logo est défini dans Apparence > Personnaliser, il est utilisé.
+ */
+function storefront_site_branding() {
     ?>
-    <div class="pepe-header">
-        <nav class="pepe-nav" aria-label="Menu principal">
-            <?php
-            wp_nav_menu( array(
-                'theme_location' => 'pepe-header',
-                'container'      => false,
-                'fallback_cb'    => 'pepe_menu_par_defaut',
-                'depth'          => 1,
-            ) );
-            ?>
-        </nav>
-
-        <a class="pepe-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-            <?php if ( has_custom_logo() ) : ?>
-                <?php echo wp_get_attachment_image( get_theme_mod( 'custom_logo' ), 'full' ); ?>
-            <?php else : ?>
-                <span class="pepe-logo-pepe">PEPE</span>
-                <span class="pepe-logo-chicken">Chicken®</span>
-            <?php endif; ?>
-        </a>
-
-        <div class="pepe-actions">
-            <a class="pepe-btn pepe-btn--rouge" href="<?php echo esc_url( $boutique ); ?>">Commander</a>
-            <a class="pepe-panier" href="<?php echo esc_url( $panier ); ?>">
-                🛒 Panier <span class="pepe-panier-nombre"><?php echo (int) $nombre; ?></span>
+    <div class="site-branding pepe-logo">
+        <?php if ( has_custom_logo() ) : ?>
+            <?php the_custom_logo(); ?>
+        <?php else : ?>
+            <a class="pepe-logo__lien" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
+                <span class="pepe-logo__pepe">PEPE</span>
+                <span class="pepe-logo__chicken">Chicken®</span>
+                <span class="screen-reader-text"><?php bloginfo( 'name' ); ?></span>
             </a>
-        </div>
+        <?php endif; ?>
     </div>
     <?php
 }
 
-function pepe_menu_par_defaut() {
+/** Bouton Commander + panier Storefront (mini-panier et mise à jour AJAX inclus). */
+function pepe_header_actions() {
     $boutique = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/' );
-    echo '<ul class="menu">';
-    echo '<li><a href="' . esc_url( home_url( '/' ) ) . '">Le concept</a></li>';
-    echo '<li><a href="' . esc_url( $boutique ) . '">Le menu</a></li>';
-    echo '<li><a href="#">Où nous trouver</a></li>';
-    echo '</ul>';
+    ?>
+    <div class="pepe-header__actions">
+        <a class="pepe-btn pepe-btn--rouge pepe-header__commander" href="<?php echo esc_url( $boutique ); ?>">Commander</a>
+        <?php
+        if ( function_exists( 'storefront_header_cart' ) ) {
+            storefront_header_cart();
+        }
+        ?>
+    </div>
+    <?php
 }
 
-// Met à jour le nombre d'articles du panier sans recharger la page
-add_filter( 'woocommerce_add_to_cart_fragments', function ( $fragments ) {
-    $fragments['span.pepe-panier-nombre'] = '<span class="pepe-panier-nombre">' . (int) WC()->cart->get_cart_contents_count() . '</span>';
-    return $fragments;
+/**
+ * Menu par défaut tant qu'aucun menu n'est attribué aux emplacements
+ * Storefront « Primaire » et « Mobile » (Apparence > Menus).
+ */
+add_filter( 'wp_nav_menu_args', function ( $args ) {
+    if ( in_array( $args['theme_location'], array( 'primary', 'handheld' ), true ) && ! has_nav_menu( $args['theme_location'] ) ) {
+        $args['fallback_cb'] = 'pepe_menu_par_defaut';
+    }
+    return $args;
 } );
+
+function pepe_menu_par_defaut( $args ) {
+    $boutique = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/' );
+    $classe   = ! empty( $args['container_class'] ) ? $args['container_class'] : 'menu';
+    echo '<div class="' . esc_attr( $classe ) . '"><ul class="menu">';
+    echo '<li class="menu-item"><a href="' . esc_url( home_url( '/' ) ) . '">Le concept</a></li>';
+    echo '<li class="menu-item"><a href="' . esc_url( $boutique ) . '">Le menu</a></li>';
+    echo '<li class="menu-item"><a href="#">Où nous trouver</a></li>';
+    echo '</ul></div>';
+}
+
+/* ==========================================================
+   Footer
+   ========================================================== */
+
+/** URL d'une page à partir de son identifiant de lien (slug), « # » si elle n'existe pas encore. */
+function pepe_url_page( $slug ) {
+    $page = get_page_by_path( $slug );
+    return $page ? get_permalink( $page ) : '#';
+}
 
 function pepe_footer() {
+    $boutique = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/' );
+    $cgv      = function_exists( 'wc_terms_and_conditions_page_id' ) && wc_terms_and_conditions_page_id() ? get_permalink( wc_terms_and_conditions_page_id() ) : pepe_url_page( 'cgv' );
+    $vie_priv = get_privacy_policy_url() ? get_privacy_policy_url() : '#';
+
+    $colonnes = array(
+        'Accès rapide'           => array(
+            'Le concept'      => home_url( '/' ),
+            'Le menu'         => $boutique,
+            'Où nous trouver' => '#',
+            'FAQ'             => pepe_url_page( 'faq' ),
+        ),
+        'Services consommateurs' => array(
+            'Informations allergènes' => pepe_url_page( 'allergenes' ),
+            'Origine des viandes'     => pepe_url_page( 'origine-des-viandes' ),
+        ),
+        'Contact'                => array(
+            'Nous contacter' => pepe_url_page( 'contact' ),
+        ),
+        'Informations légales'   => array(
+            'Mentions légales'             => pepe_url_page( 'mentions-legales' ),
+            'CGV'                          => $cgv,
+            'Politique de confidentialité' => $vie_priv,
+        ),
+    );
     ?>
     <div class="pepe-footer">
-        <div class="pepe-footer-colonnes">
-            <div>
-                <h3>Accès rapide</h3>
-                <ul>
-                    <li><a href="<?php echo esc_url( home_url( '/' ) ); ?>">Le concept</a></li>
-                    <li><a href="<?php echo esc_url( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/' ) ); ?>">Le menu</a></li>
-                    <li><a href="#">Où nous trouver</a></li>
-                    <li><a href="#">Le shop</a></li>
-                    <li><a href="#">FAQ</a></li>
-                </ul>
-            </div>
-            <div>
-                <h3>Services consommateurs</h3>
-                <ul>
-                    <li><a href="#">Informations allergènes</a></li>
-                    <li><a href="#">Origine des viandes</a></li>
-                </ul>
-            </div>
-            <div class="pepe-footer-logo">
-                <span class="pepe-logo-pepe">PEPE</span>
-                <span class="pepe-logo-chicken">Chicken®</span>
-            </div>
-            <div>
-                <h3>Contact</h3>
-                <ul>
-                    <li><a href="#">Nous contacter</a></li>
-                </ul>
-            </div>
-            <div>
-                <h3>Informations légales</h3>
-                <ul>
-                    <li><a href="#">Mentions légales</a></li>
-                    <li><a href="#">CGV</a></li>
-                    <li><a href="#">Politique de confidentialité</a></li>
-                </ul>
-            </div>
+        <div class="pepe-footer__colonnes">
+            <?php
+            $i = 0;
+            foreach ( $colonnes as $titre => $liens ) :
+                if ( 2 === $i ) : // logo au centre, comme la maquette
+                    ?>
+                    <div class="pepe-footer__logo pepe-logo">
+                        <span class="pepe-logo__pepe">PEPE</span>
+                        <span class="pepe-logo__chicken">Chicken®</span>
+                    </div>
+                    <?php
+                endif;
+                ?>
+                <div class="pepe-footer__colonne">
+                    <h2 class="pepe-footer__titre"><?php echo esc_html( $titre ); ?></h2>
+                    <ul class="pepe-footer__liste">
+                        <?php foreach ( $liens as $texte => $url ) : ?>
+                            <li class="pepe-footer__element"><a class="pepe-footer__lien" href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $texte ); ?></a></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+                <?php
+                $i++;
+            endforeach;
+            ?>
         </div>
-        <p class="pepe-footer-sante">Pour votre santé, pratiquez une activité physique régulière : <a href="https://www.mangerbouger.fr" target="_blank" rel="noopener">www.mangerbouger.fr</a></p>
+        <p class="pepe-footer__sante">Pour votre santé, pratiquez une activité physique régulière : <a class="pepe-footer__lien" href="https://www.mangerbouger.fr" target="_blank" rel="noopener">www.mangerbouger.fr</a></p>
     </div>
     <?php
 }
 
-/* ---------- WooCommerce ---------- */
+/* ==========================================================
+   WooCommerce
+   ========================================================== */
 
 // 3 produits par ligne
-add_filter( 'loop_shop_columns', function () { return 3; } );
+add_filter( 'loop_shop_columns', function () {
+    return 3;
+} );
 
 // Titre de la page Boutique
 add_filter( 'woocommerce_page_title', function ( $titre ) {
     return is_shop() ? 'Découvre toute la carte<br>Pepe Chicken' : $titre;
 } );
 
-// Bouton d'ajout rapide "+" dans les grilles de produits
+// Bouton d'ajout rapide « + » dans les grilles de produits
 add_filter( 'woocommerce_product_add_to_cart_text', function ( $texte, $produit ) {
     if ( is_product() ) {
         return $texte;
@@ -139,39 +182,52 @@ add_filter( 'woocommerce_product_add_to_cart_text', function ( $texte, $produit 
     return $produit->is_type( 'simple' ) && $produit->is_purchasable() && $produit->is_in_stock() ? '+' : '→';
 }, 10, 2 );
 
-// Onglets de catégories sous le titre de la Boutique
-add_action( 'woocommerce_archive_description', function () {
-    if ( ! is_shop() && ! is_product_category() ) {
-        return;
-    }
+/** Catégories de produits affichées (sans « Non classé »). */
+function pepe_categories_produits() {
     $categories = get_terms( array(
         'taxonomy'   => 'product_cat',
         'hide_empty' => true,
         'exclude'    => array( get_option( 'default_product_cat' ) ),
     ) );
-    if ( empty( $categories ) || is_wp_error( $categories ) ) {
+    return is_wp_error( $categories ) ? array() : $categories;
+}
+
+// Onglets de catégories sous le titre de la Boutique
+add_action( 'woocommerce_archive_description', function () {
+    if ( ! is_shop() && ! is_product_category() ) {
+        return;
+    }
+    $categories = pepe_categories_produits();
+    if ( empty( $categories ) ) {
         return;
     }
     $courante = is_product_category() ? get_queried_object_id() : 0;
+
     echo '<nav class="pepe-categories" aria-label="Catégories">';
-    echo '<a class="' . ( $courante ? '' : 'is-active' ) . '" href="' . esc_url( wc_get_page_permalink( 'shop' ) ) . '">Tout</a>';
+    printf(
+        '<a class="pepe-categories__lien%s" href="%s"%s>Tout</a>',
+        $courante ? '' : ' pepe-categories__lien--actif',
+        esc_url( wc_get_page_permalink( 'shop' ) ),
+        $courante ? '' : ' aria-current="page"'
+    );
     foreach ( $categories as $categorie ) {
-        $classe = ( $courante === $categorie->term_id ) ? 'is-active' : '';
-        echo '<a class="' . $classe . '" href="' . esc_url( get_term_link( $categorie ) ) . '">' . esc_html( $categorie->name ) . '</a>';
+        $actif = ( $courante === $categorie->term_id );
+        printf(
+            '<a class="pepe-categories__lien%s" href="%s"%s>%s</a>',
+            $actif ? ' pepe-categories__lien--actif' : '',
+            esc_url( get_term_link( $categorie ) ),
+            $actif ? ' aria-current="page"' : '',
+            esc_html( $categorie->name )
+        );
     }
     echo '</nav>';
 }, 5 );
 
 // Page Boutique : produits regroupés par catégorie (comme la maquette)
 function pepe_boutique_par_categorie() {
-    $categories = get_terms( array(
-        'taxonomy'   => 'product_cat',
-        'hide_empty' => true,
-        'exclude'    => array( get_option( 'default_product_cat' ) ),
-    ) );
-    foreach ( $categories as $categorie ) {
+    foreach ( pepe_categories_produits() as $categorie ) {
         echo '<section class="pepe-section" id="' . esc_attr( $categorie->slug ) . '">';
-        echo '<h2 class="pepe-section-titre">' . esc_html( $categorie->name ) . '</h2>';
+        echo '<h2 class="pepe-section__titre">' . esc_html( $categorie->name ) . '</h2>';
         echo do_shortcode( '[products category="' . esc_attr( $categorie->slug ) . '" columns="3" limit="12"]' );
         echo '</section>';
     }

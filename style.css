@@ -3,7 +3,7 @@ Theme Name:   Pepe Chicken
 Description:  Thème enfant Storefront – Click & collect Pepe Chicken (SAÉ 3.01)
 Author:       Sanchez--Perrault Loutsyam
 Template:     storefront
-Version:      1.1.0
+Version:      1.2.0
 Text Domain:  pepe-chicken
 */
 
@@ -111,44 +111,61 @@ button:hover, .button:hover, input[type="submit"]:hover,
   color: var(--brun);
   transform: translateY(-1px);
 }
-.pepe-btn--rouge { background: var(--rouge); color: var(--beige); text-decoration: none; display: inline-block; }
-.pepe-btn--rouge:hover { background: var(--rouge-hover); color: var(--beige); }
+.pepe-btn { display: inline-block; text-decoration: none; }
+.pepe-btn--rouge { background: var(--rouge); color: var(--beige); }
+.pepe-btn--rouge:hover, .pepe-btn--rouge:focus { background: var(--rouge-hover); color: var(--beige); }
+.pepe-btn--beige { background: var(--beige); color: var(--rouge); }
+.pepe-btn--beige:hover, .pepe-btn--beige:focus { background: var(--beige-hover); color: var(--rouge); }
 
 /* ==========================================================
-   4. Header
+   4. Header (structure Storefront conservée)
+   - .site-branding, .main-navigation, .site-header-cart : Storefront
+   - .pepe-logo, .pepe-header__actions : thème enfant
    ========================================================== */
 html body .site-header {
   background: var(--beige);
   border: 0;
-  padding: 0;
   margin-bottom: 0;
-}
-.pepe-header {
-  max-width: 1312px;
-  margin: 0 auto;
-  padding: var(--espace-md) var(--espace-lg);
+  padding: var(--espace-md) max(var(--espace-lg), calc((100% - 1312px) / 2));
+  position: relative;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  gap: 1rem;
+  gap: var(--espace-md);
 }
-.pepe-nav ul { display: flex; gap: var(--espace-2xl); margin: 0; padding: 0; list-style: none; }
-.pepe-nav a {
+/* Les conteneurs Storefront s'effacent pour que logo, menu et actions partagent une seule grille */
+.site-header > .col-full,
+.site-header .storefront-primary-navigation,
+.site-header .storefront-primary-navigation > .col-full { display: contents; }
+
+.site-header .site-branding { grid-column: 2; grid-row: 1; width: auto; float: none; margin: 0; }
+.site-header .main-navigation { grid-column: 1; grid-row: 1; width: auto; float: none; margin: 0; padding: 0; clear: none; }
+.site-header .pepe-header__actions { grid-column: 3; grid-row: 1; justify-self: end; display: flex; align-items: center; gap: var(--espace-md); }
+
+/* Logo */
+.pepe-logo { text-align: center; }
+.pepe-logo__lien { display: inline-flex; flex-direction: column; align-items: center; line-height: .9; text-decoration: none; }
+.pepe-logo img, .site-header .custom-logo-link img { max-height: 70px; width: auto; }
+.pepe-logo__pepe { font-family: var(--police-titre); font-size: 2.6rem; color: var(--rouge); }
+.pepe-logo__chicken { font-family: var(--police-titre); font-size: 1.1rem; color: var(--rouge); }
+
+/* Menu principal Storefront */
+.site-header .main-navigation ul.menu,
+.site-header .main-navigation ul.nav-menu { display: flex; gap: var(--espace-2xl); margin: 0; }
+.site-header .main-navigation ul li a {
   font-family: var(--police-titre);
   color: var(--rouge);
+  padding: var(--espace-xs) 0;
   text-decoration: none;
 }
-.pepe-nav a:hover { color: var(--rouge-hover); text-decoration: underline; }
+.site-header .main-navigation ul li a:hover,
+.site-header .main-navigation ul li.current-menu-item > a { color: var(--rouge-hover); text-decoration: underline; }
 
-.pepe-logo { display: flex; flex-direction: column; align-items: center; line-height: .9; text-decoration: none; }
-.pepe-logo img { max-height: 70px; width: auto; }
-.pepe-logo-pepe { font-family: var(--police-titre); font-size: 2.6rem; color: var(--rouge); }
-.pepe-logo-chicken { font-family: var(--police-titre); font-size: 1.1rem; color: var(--rouge); }
-
-.pepe-actions { display: flex; justify-content: flex-end; align-items: center; gap: 1rem; }
-.pepe-panier {
-  display: inline-flex; align-items: center; gap: .5rem;
-  padding: .55em 1em;
+/* Panier Storefront (lien + mini-panier au survol) */
+.site-header .site-header-cart { width: auto; float: none; margin: 0; position: relative; }
+.site-header .site-header-cart .cart-contents {
+  display: inline-flex; align-items: center; gap: var(--espace-xs);
+  padding: var(--espace-xs) var(--espace-md);
   border: 2px solid var(--rouge);
   border-radius: var(--rayon-pilule);
   background: var(--blanc);
@@ -156,14 +173,48 @@ html body .site-header {
   font-family: var(--police-titre);
   text-decoration: none;
 }
-.pepe-panier:hover { background: var(--beige-hover); color: var(--rouge); }
-.pepe-panier-nombre {
+.site-header .site-header-cart .cart-contents::before { content: "Panier"; }
+.site-header .site-header-cart .cart-contents::after { display: none; }
+.site-header .site-header-cart .cart-contents .amount { display: none; }
+.site-header .site-header-cart .cart-contents .count {
   display: inline-grid; place-items: center;
-  min-width: 22px; height: 22px;
-  border-radius: 50%;
+  min-width: 22px; height: 22px; padding: 0 var(--espace-xs);
+  border-radius: var(--rayon-pilule);
   background: var(--rouge); color: var(--beige);
-  font-family: var(--police-texte); font-size: .75rem; font-weight: 700;
+  font-family: var(--police-texte); font-size: .75rem; font-weight: 700; opacity: 1;
 }
+.site-header .site-header-cart .cart-contents:hover { background: var(--beige-hover); }
+.site-header .site-header-cart .widget_shopping_cart {
+  width: 320px;
+  background: var(--beige);
+  color: var(--brun);
+  border-radius: var(--rayon-md);
+  box-shadow: var(--ombre-cartoon);
+}
+.site-header .site-header-cart:hover .widget_shopping_cart,
+.site-header .site-header-cart.focus .widget_shopping_cart { left: auto; right: 0; }
+.site-header .site-header-cart .widget_shopping_cart a { color: var(--brun); }
+
+/* Bouton du menu mobile Storefront */
+.site-header .menu-toggle {
+  background: transparent;
+  color: var(--rouge);
+  border: 2px solid var(--rouge);
+  box-shadow: none;
+  font-family: var(--police-titre);
+  padding: var(--espace-xs) var(--espace-md) var(--espace-xs) 2.6em;
+}
+.site-header .menu-toggle:hover { background: var(--beige-hover); color: var(--rouge); transform: none; }
+
+/* Menu mobile Storefront : s'ouvre sous le header, pleine largeur */
+.site-header .handheld-navigation {
+  position: absolute; left: 0; right: 0; top: 100%;
+  z-index: 100;
+  background: var(--beige);
+}
+.site-header .main-navigation.toggled .handheld-navigation { padding: var(--espace-md) var(--espace-lg) var(--espace-lg); box-shadow: 0 6px 0 var(--brun); }
+.site-header .handheld-navigation ul.menu { display: block; }
+.site-header .handheld-navigation ul li a { font-size: var(--taille-h3); padding: var(--espace-sm) 0; }
 
 /* ==========================================================
    5. Fil d'Ariane
@@ -181,7 +232,7 @@ html body .site-header {
   display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem;
   margin-top: 2rem;
 }
-.pepe-categories a {
+.pepe-categories__lien {
   font-family: var(--police-titre);
   padding: .45em 1.1em;
   border: 1.5px solid var(--beige);
@@ -189,11 +240,11 @@ html body .site-header {
   color: var(--beige);
   text-decoration: none;
 }
-.pepe-categories a:hover { background: rgba(255, 236, 217, .15); color: var(--beige); }
-.pepe-categories a.is-active { background: var(--beige); color: var(--rouge); }
+.pepe-categories__lien:hover { background: rgba(255, 236, 217, .15); color: var(--beige); }
+.pepe-categories__lien--actif { background: var(--beige); color: var(--rouge); }
 
 .pepe-section { margin-bottom: 4rem; scroll-margin-top: 2rem; }
-.pepe-section-titre { text-align: center; font-size: var(--taille-h2); margin-bottom: 2rem; }
+.pepe-section__titre { text-align: center; font-size: var(--taille-h2); margin-bottom: 2rem; }
 
 /* Grille et cartes produit */
 ul.products { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--espace-3xl) var(--espace-4xl); max-width: 900px; margin: 0 auto !important; }
@@ -311,41 +362,44 @@ ul.products li.product .onsale {
 .woocommerce-message a, .woocommerce-info a { color: var(--rouge); }
 
 /* ==========================================================
-   9. Footer
+   9. Footer (zones de widgets Storefront conservées au-dessus)
    ========================================================== */
-html body .site-footer { background: var(--beige); color: var(--brun); padding: 3.5rem 0 2rem; }
-.pepe-footer { max-width: 1312px; margin: 0 auto; padding: 0 var(--espace-lg); }
-.pepe-footer-colonnes { display: grid; grid-template-columns: repeat(5, auto); justify-content: space-between; gap: var(--espace-xl); }
-.pepe-footer h3 { font-family: var(--police-titre); font-size: 1rem; color: var(--brun); margin-bottom: .8rem; }
-.pepe-footer ul { list-style: none; margin: 0; padding: 0; }
-.pepe-footer li { margin-bottom: .5rem; }
-.pepe-footer a { color: var(--brun); text-decoration: none; font-size: var(--taille-petit); }
-.pepe-footer a:hover { color: var(--rouge); }
-.pepe-footer-logo { display: flex; flex-direction: column; align-items: center; line-height: .9; }
-.pepe-footer-sante { text-align: center; font-size: .75rem; margin: 2.5rem 0 0; color: var(--brun); }
-.pepe-footer-sante a { text-decoration: underline; font-size: .75rem; }
+html body .site-footer { background: var(--beige); color: var(--brun); padding: var(--espace-3xl) 0 var(--espace-xl); }
+.site-footer .footer-widgets { border-color: var(--beige-hover); }
+.pepe-footer__colonnes { display: grid; grid-template-columns: repeat(5, auto); justify-content: space-between; gap: var(--espace-xl); }
+.pepe-footer__titre { font-family: var(--police-titre); font-size: 1rem; color: var(--brun); margin: 0 0 var(--espace-sm); }
+.pepe-footer__liste { list-style: none; margin: 0; padding: 0; }
+.pepe-footer__element { margin-bottom: var(--espace-xs); }
+.pepe-footer__lien { color: var(--brun); text-decoration: none; font-size: var(--taille-petit); }
+.pepe-footer__lien:hover, .pepe-footer__lien:focus { color: var(--rouge); }
+.pepe-footer__logo { display: flex; flex-direction: column; align-items: center; line-height: .9; }
+.pepe-footer__sante { text-align: center; font-size: .75rem; margin: var(--espace-2xl) 0 0; color: var(--brun); }
+.pepe-footer__sante .pepe-footer__lien { text-decoration: underline; font-size: .75rem; }
 
-/* Barre mobile de Storefront : non utilisée */
+/* Barre mobile de Storefront (compte / recherche / panier) : remplacée par le burger et le panier du header */
 .storefront-handheld-footer-bar { display: none; }
+@media (max-width: 767px) {
+  body { padding-bottom: 0; }
+}
 
 /* ==========================================================
-   10. Mobile
+   10. Mobile (même point de rupture que Storefront : 768px)
    ========================================================== */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   :root { --taille-h1: 1.875rem; --taille-h2: 1.75rem; --taille-h3: 1.1875rem; --taille-texte: .9375rem; --taille-petit: .8125rem; } /* 30 / 28 / 19 / 15 / 13 px comme le mode Mobile de Figma */
 
-  .pepe-header { grid-template-columns: 1fr auto; }
-  .pepe-nav { display: none; }
-  .pepe-logo { justify-self: start; }
-  .pepe-logo-pepe { font-size: 1.9rem; }
-  .pepe-actions .pepe-btn { display: none; }
+  html body .site-header { grid-template-columns: auto 1fr auto; padding: var(--espace-sm) var(--espace-md); }
+  .site-header .site-branding { justify-self: center; }
+  .pepe-logo__pepe { font-size: 1.9rem; }
+  .site-header .pepe-header__commander { display: none; }
+  .site-header .site-header-cart .cart-contents::before { content: none; }
 
-  ul.products { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem 1.25rem; }
+  ul.products { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--espace-lg) var(--espace-md); }
   ul.products li.product .button { width: 32px; height: 32px; font-size: 1.1rem; }
 
-  .single-product div.product { grid-template-columns: 1fr; gap: 1.5rem; }
-  .woocommerce-tabs { padding: 1.25rem; }
+  .single-product div.product { grid-template-columns: 1fr; gap: var(--espace-lg); }
+  .woocommerce-tabs { padding: var(--espace-md); }
 
-  .pepe-footer-colonnes { grid-template-columns: 1fr; text-align: left; }
-  .pepe-footer-logo { order: -1; }
+  .pepe-footer__colonnes { grid-template-columns: 1fr; text-align: left; }
+  .pepe-footer__logo { order: -1; align-items: flex-start; }
 }

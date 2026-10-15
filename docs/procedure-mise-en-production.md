@@ -44,6 +44,9 @@ Les mots de passe ne sont pas notés ici.
 3. Envoyer le dossier `pepe-chicken` (sans `.git` ni `docs`) dans `wordpress/wp-content/themes/` avec FileZilla (écraser les fichiers).
    Le thème contient : `style.css`, `functions.php` et le dossier `woocommerce/` (modèles WooCommerce surchargés, ex. `archive-product.php` pour la page Boutique). Ne pas oublier ce dossier.
 4. Vider le cache du navigateur (Ctrl + F5) pour voir le nouveau CSS.
+5. Si la modification touche aux menus (depuis la version 1.2.0 du thème) : dans l'admin de prod, **Apparence > Menus**, attribuer le menu du header aux emplacements Storefront **« Menu principal »** et **« Menu mobile »**. Tant qu'aucun menu n'est attribué, le thème affiche les liens par défaut (Le concept, Le menu, Où nous trouver).
+
+> Organisation du code du thème (v1.2.0) : la structure de Storefront est conservée (menu mobile, mini-panier, liens d'accessibilité, zones de widgets du footer) et complétée par des hooks dans `functions.php`. Les classes ajoutées suivent la convention BEM avec le préfixe `pepe-` (ex. `pepe-header__actions`, `pepe-footer__colonnes`, `pepe-categories__lien--actif`), les mêmes que sur la page Design System HTML/CSS.
 
 ### 2. Nouvelle extension ou mise à jour d'extension
 1. L'installer / la mettre à jour en dev.
