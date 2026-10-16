@@ -26,8 +26,13 @@ https://loutsyam.github.io/Sa--3.01_pepechicken/design-system/
 ## Première installation (IT-1)
 
 1. Envoyer l'archive de WordPress (fr_FR) dans `public_html` et la décompresser dans `wordpress/`.
-2. Ouvrir l'URL de prod et remplir la configuration de la base :
-   nom `sanchezperrau1`, identifiant `sanchezperrau1`, hôte `localhost`, préfixe `r3sae01_` → crée `wp-config.php`.
+2. Configurer **manuellement** `wp-config.php` (US-1.4) :
+   - partir de `wp-config-sample.php` (copie de travail dans `Pepe chicken/mise-en-prod/wp-config.php`, hors GitHub) ;
+   - renseigner `DB_NAME` = `sanchezperrau1`, `DB_USER` = `sanchezperrau1`, `DB_PASSWORD` (mot de passe de la base, non noté ici), `DB_HOST` = `localhost` ;
+   - définir le préfixe dédié au projet : `$table_prefix = 'r3sae01_';` ;
+   - remplacer les clés de sécurité (`AUTH_KEY`…) par des clés uniques ;
+   - désactiver le débogage en prod (`WP_DEBUG` à `false`) ;
+   - envoyer le fichier par SFTP dans `public_html/wordpress/`, puis vérifier que le site s'affiche.
 3. Installer WordPress (titre « Pepe Chicken », compte administrateur).
 4. Envoyer en SFTP depuis le dev :
    - `wp-content/plugins/woocommerce`, `secure-custom-fields`, `classic-editor` → `wordpress/wp-content/plugins/`
