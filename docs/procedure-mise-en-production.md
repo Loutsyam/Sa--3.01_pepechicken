@@ -5,7 +5,7 @@
 | | Dev (local) | Prod |
 |---|---|---|
 | URL | https://pepe-chicken.ddev.site | https://mmi.unilim.fr/~sanchezperrau1/wordpress |
-| Outil | DDEV (WSL) | Serveur mmi.unilim.fr |
+| Outil | DDEV dans WSL (Ubuntu) + Docker Desktop | Serveur mmi.unilim.fr |
 | Dossier | `Bureau/Pepe chicken` | `/home/etudiants/sanchezperrau1/public_html/wordpress` |
 | Base de données | `db` (DDEV) | `sanchezperrau1` (phpMyAdmin) |
 | Préfixe des tables | `r3sae01_` | `r3sae01_` |
@@ -17,10 +17,31 @@ La page Design System HTML/CSS est dans `docs/design-system/` et publiée avec G
 (réglage du dépôt : Settings → Pages → branche `main`, dossier `/docs`) :
 https://loutsyam.github.io/Sa--3.01_pepechicken/design-system/
 
+## Démarrer l'environnement de dev
+
+1. Ouvrir **Docker Desktop** (attendre que l'icône soit verte).
+2. Dans l'invite de commandes Windows :
+   ```bash
+   wsl
+   cd "/mnt/c/Users/tsuku/Desktop/Pepe chicken"
+   ddev start
+   ```
+3. Ouvrir https://pepe-chicken.ddev.site (admin : `/wp-admin`). Arrêter avec `ddev stop`.
+
+Les fichiers (WordPress, extensions, thème) sont dans le dossier `Pepe chicken`, mais **la base de données est stockée dans Docker**.
+Elle peut être perdue si Docker est réinitialisé : la sauvegarder régulièrement, dans `Pepe chicken` (jamais dans le thème) :
+```bash
+ddev export-db --file=sauvegarde-AAAA-MM-JJ.sql.gz
+```
+Restauration : `ddev import-db --file=sauvegarde-AAAA-MM-JJ.sql.gz`.
+
+Le `wp-config.php` à la racine de `Pepe chicken` est celui du dev (généré par DDEV, base `db`) : il ne doit **jamais** être envoyé en prod.
+
 ## Accès au serveur
 
 - Connexion en **SFTP** avec FileZilla : hôte `sftp://mmi.unilim.fr`, port `22`, identifiant `sanchezperrau1`.
 - Le FTP classique (port 21) est fermé : WordPress ne peut pas installer ou mettre à jour les extensions depuis l'admin. Tout passe par l'envoi des fichiers depuis le dev.
+- Connexion en **SSH** (même port 22) pour les commandes sur le serveur : `ssh sanchezperrau1@mmi.unilim.fr` (git, WP-CLI).
 - Base de données : phpMyAdmin, base `sanchezperrau1`.
 
 ## Première installation (IT-1)
@@ -50,7 +71,16 @@ https://loutsyam.github.io/Sa--3.01_pepechicken/design-system/
    git commit -m "[IT-X] description"
    git push
    ```
-3. Envoyer le dossier `pepe-chicken` (sans `.git` ni `docs`) dans `wordpress/wp-content/themes/` avec FileZilla (écraser les fichiers).
+3. Mettre à jour le thème sur le serveur **depuis le dépôt GitHub** (US-1.4), en SSH :
+   ```bash
+   ssh sanchezperrau1@mmi.unilim.fr
+   cd ~/public_html/wordpress/wp-content/themes
+   # première fois seulement (renommer d'abord l'ancien dossier envoyé en SFTP) :
+   git clone https://github.com/Loutsyam/Sa--3.01_pepechicken.git pepe-chicken
+   # mises à jour suivantes :
+   cd pepe-chicken && git pull
+   ```
+   Méthode de secours (sans SSH) : envoyer le dossier `pepe-chicken` (sans `.git` ni `docs`) dans `wordpress/wp-content/themes/` avec FileZilla.
    Le thème contient : `style.css`, `functions.php` et le dossier `woocommerce/` (modèles WooCommerce surchargés, ex. `archive-product.php` pour la page Boutique). Ne pas oublier ce dossier.
 4. Vider le cache du navigateur (Ctrl + F5) pour voir le nouveau CSS.
 5. Si la modification touche aux menus (depuis la version 1.2.0 du thème) : dans l'admin de prod, **Apparence > Menus**, attribuer le menu du header aux emplacements Storefront **« Menu principal »** et **« Menu mobile »**. Tant qu'aucun menu n'est attribué, le thème affiche les liens par défaut (Le concept, Le menu, Où nous trouver).
@@ -68,10 +98,14 @@ https://loutsyam.github.io/Sa--3.01_pepechicken/design-system/
    ddev export-db --file=pepe-chicken.sql.gz
    ```
 2. Dans phpMyAdmin (base `sanchezperrau1`) : **Importer** le fichier `pepe-chicken.sql.gz`.
-3. Remplacer l'URL de dev par l'URL de prod :
-   dans la table `r3sae01_options`, modifier `siteurl` et `home` en
-   `https://mmi.unilim.fr/~sanchezperrau1/wordpress`
-   (ou `wp search-replace 'https://pepe-chicken.ddev.site' 'https://mmi.unilim.fr/~sanchezperrau1/wordpress' --all-tables` si WP-CLI est disponible).
+3. Remplacer l'URL de dev par l'URL de prod, en SSH avec WP-CLI (US-1.4) :
+   ```bash
+   ssh sanchezperrau1@mmi.unilim.fr
+   cd ~/public_html/wordpress
+   wp search-replace 'https://pepe-chicken.ddev.site' 'https://mmi.unilim.fr/~sanchezperrau1/wordpress' --all-tables
+   ```
+   Sans WP-CLI : dans phpMyAdmin, table `r3sae01_options`, modifier `siteurl` et `home` en `https://mmi.unilim.fr/~sanchezperrau1/wordpress`.
+   L'import de la base ne touche pas au `wp-config.php` de prod (identifiants de la base de prod conservés).
 4. Envoyer `wp-content/uploads/` (images des produits) dans `wordpress/wp-content/uploads/` avec FileZilla.
 5. Se reconnecter à l'admin de prod (les comptes sont ceux de la base de dev).
 6. Supprimer le fichier `.sql.gz` du PC une fois l'import fait (il ne doit jamais aller sur GitHub).
