@@ -3,417 +3,937 @@ Theme Name:   Pepe Chicken
 Description:  Thème enfant Storefront – Click & collect Pepe Chicken (SAÉ 3.01)
 Author:       Sanchez--Perrault Loutsyam
 Template:     storefront
-Version:      1.2.0
+Version:      1.3.0
 Text Domain:  pepe-chicken
 */
 
+/*
+  Sommaire
+  1. Polices
+  2. Variables (mêmes noms et valeurs que le Design System)
+  3. Base
+  4. Boutons
+  5. Header
+  6. Fil d'Ariane
+  7. Boutique
+  8. Cartes produit
+  9. Fiche produit
+  10. Messages WooCommerce
+  11. Footer
+  12. Mobile
+
+  Les classes qui commencent par « pepe- » sont celles du thème (convention BEM :
+  bloc__element--modificateur). Les autres (.site-header, .main-navigation, ul.products…)
+  viennent de Storefront ou de WooCommerce : on les cible pour les mettre à nos couleurs.
+
+  Pas de !important : quand une règle de Storefront est plus forte, on écrit un sélecteur
+  un peu plus précis (par exemple en ajoutant .site-main devant).
+*/
+
 /* ==========================================================
-   1. Polices (déposer les fichiers dans /fonts si disponibles)
+   1. Polices
    ========================================================== */
 @font-face {
   font-family: "Cooper Black";
-  src: local("Cooper Black"), local("CooperBlack"),
-       url("fonts/cooper-black.woff2") format("woff2"),
-       url("fonts/cooper-black.woff") format("woff");
+  src:
+    local("Cooper Black"),
+    local("CooperBlack"),
+    url("fonts/cooper-black.woff2") format("woff2");
   font-display: swap;
 }
+
 @font-face {
   font-family: "Myriad Pro";
-  src: local("Myriad Pro"), local("MyriadPro-Regular"),
-       url("fonts/myriad-pro.woff2") format("woff2"),
-       url("fonts/myriad-pro.woff") format("woff");
+  src:
+    local("Myriad Pro"),
+    local("MyriadPro-Regular"),
+    url("fonts/myriad-pro.woff2") format("woff2");
   font-display: swap;
 }
 
 /* ==========================================================
-   2. Variables (mêmes valeurs que le Design System Figma)
+   2. Variables
    ========================================================== */
 :root {
-  --rouge: #D81F2A;
-  --rouge-hover: #B81822;
-  --jaune: #FFC700;
-  --jaune-hover: #E6B300;
-  --beige: #FFECD9;
-  --beige-hover: #F5DCC4;
-  --brun: #3D2120;
-  --blanc: #FFFFFF;
+  /* Couleurs */
+  --color-rouge: #d81f2a;
+  --color-rouge-hover: #b81822;
+  --color-jaune: #ffc700;
+  --color-jaune-hover: #e6b300;
+  --color-beige: #ffecd9;
+  --color-beige-hover: #f5dcc4;
+  --color-brun: #3d2120;
+  --color-blanc: #ffffff;
 
-  --police-titre: "Cooper Black", "Cooper Std", Georgia, serif;
-  --police-texte: "Myriad Pro", "Helvetica Neue", Arial, sans-serif;
+  /* Polices */
+  --ff-titre: "Cooper Black", "Cooper Std", Georgia, serif;
+  --ff-texte: "Myriad Pro", "Helvetica Neue", Arial, sans-serif;
 
-  --taille-h1: 3rem;     /* 48px */
-  --taille-h2: 2.25rem;  /* 36px */
-  --taille-h3: 1.5rem;   /* 24px */
-  --taille-texte: 1rem;  /* 16px */
-  --taille-petit: .875rem;
+  /* Tailles de texte (desktop) */
+  --fs-h1: 3rem;         /* 48px */
+  --fs-h2: 2.25rem;      /* 36px */
+  --fs-h3: 1.5rem;       /* 24px */
+  --fs-texte: 1rem;      /* 16px */
+  --fs-petit: 0.875rem;  /* 14px */
 
-  /* Espacements (espace/… dans Figma) */
-  --espace-xxs: 4px;
-  --espace-xs: 8px;
-  --espace-sm: 12px;
-  --espace-md: 16px;
-  --espace-lg: 24px;
-  --espace-xl: 32px;
-  --espace-2xl: 40px;
-  --espace-3xl: 48px;
-  --espace-4xl: 64px;
-  --espace-5xl: 80px;
+  /* Espacements */
+  --spacing-xxs: 0.25rem; /* 4px */
+  --spacing-xs: 0.5rem;   /* 8px */
+  --spacing-sm: 0.75rem;  /* 12px */
+  --spacing-md: 1rem;     /* 16px */
+  --spacing-lg: 1.5rem;   /* 24px */
+  --spacing-xl: 2rem;     /* 32px */
+  --spacing-2xl: 2.5rem;  /* 40px */
+  --spacing-3xl: 3rem;    /* 48px */
+  --spacing-4xl: 4rem;    /* 64px */
 
-  /* Arrondis (rayon/… dans Figma) */
-  --rayon-xs: 8px;
-  --rayon-sm: 12px;
-  --rayon-md: 16px;
-  --rayon-lg: 20px;
-  --rayon-xl: 24px;
-  --rayon-pilule: 999px;
-  --rayon-carte: var(--rayon-md);
-  --ombre-cartoon: 0 3px 0 var(--brun);
+  /* Arrondis */
+  --radius-sm: 0.75rem;   /* 12px */
+  --radius-md: 1rem;      /* 16px */
+  --radius-lg: 1.25rem;   /* 20px */
+  --radius-xl: 1.5rem;    /* 24px */
+  --radius-pilule: 999px;
+
+  /* Ombre « cartoon » */
+  --shadow-cartoon: 0 3px 0 var(--color-brun);
 }
 
 /* ==========================================================
    3. Base
    ========================================================== */
-html body {
-  background: var(--rouge);
-  color: var(--beige);
-  font-family: var(--police-texte);
-  font-size: var(--taille-texte);
+body {
+  background: var(--color-rouge);
+  color: var(--color-beige);
+  font-family: var(--ff-texte);
+  font-size: var(--fs-texte);
 }
-h1, h2, h3, h4, .page-title, .product_title {
-  font-family: var(--police-titre);
+
+h1,
+h2,
+h3,
+h4,
+.page-title,
+.product_title {
+  font-family: var(--ff-titre);
   font-weight: normal;
-  color: var(--beige);
+  color: var(--color-beige);
   letter-spacing: 0;
 }
-a { color: var(--beige); }
-a:hover, a:focus { color: var(--jaune); }
 
-.site-content { padding-top: 2.5rem; }
-.col-full { max-width: 1312px; padding: 0 var(--espace-lg); }
+a {
+  color: var(--color-beige);
+}
 
-/* Boutons */
-.pepe-btn,
-button, .button, input[type="submit"],
-.woocommerce a.button, .woocommerce button.button {
-  font-family: var(--police-titre);
+a:hover,
+a:focus {
+  color: var(--color-jaune);
+}
+
+.site-content {
+  padding-top: var(--spacing-2xl);
+}
+
+.col-full {
+  max-width: 82rem; /* 1312px */
+  padding: 0 var(--spacing-lg);
+}
+
+/* Pas de barre latérale : le contenu prend toute la largeur */
+.content-area,
+.right-sidebar .content-area,
+.left-sidebar .content-area {
+  width: 100%;
+  float: none;
+  margin: 0;
+}
+
+.widget-area {
+  display: none;
+}
+
+/* ==========================================================
+   4. Boutons
+   ========================================================== */
+
+/* Tous les boutons du site (WooCommerce compris) : jaunes, en pilule */
+button,
+.button,
+input[type="submit"],
+.pepe-btn {
+  font-family: var(--ff-titre);
   font-weight: normal;
   border: 0;
-  border-radius: var(--rayon-pilule);
-  padding: .7em 1.6em;
-  background: var(--jaune);
-  color: var(--brun);
-  box-shadow: var(--ombre-cartoon);
-  transition: background .15s, transform .15s;
+  border-radius: var(--radius-pilule);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: var(--color-jaune);
+  color: var(--color-brun);
+  box-shadow: var(--shadow-cartoon);
+  transition: background 0.15s;
 }
-button:hover, .button:hover, input[type="submit"]:hover,
-.woocommerce a.button:hover, .woocommerce button.button:hover {
-  background: var(--jaune-hover);
-  color: var(--brun);
-  transform: translateY(-1px);
+
+button:hover,
+.button:hover,
+input[type="submit"]:hover {
+  background: var(--color-jaune-hover);
+  color: var(--color-brun);
 }
-.pepe-btn { display: inline-block; text-decoration: none; }
-.pepe-btn--rouge { background: var(--rouge); color: var(--beige); }
-.pepe-btn--rouge:hover, .pepe-btn--rouge:focus { background: var(--rouge-hover); color: var(--beige); }
-.pepe-btn--beige { background: var(--beige); color: var(--rouge); }
-.pepe-btn--beige:hover, .pepe-btn--beige:focus { background: var(--beige-hover); color: var(--rouge); }
+
+/* Bloc pepe-btn et ses variantes de couleur */
+.pepe-btn {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.pepe-btn--rouge {
+  background: var(--color-rouge);
+  color: var(--color-beige);
+}
+
+.pepe-btn--rouge:hover,
+.pepe-btn--rouge:focus {
+  background: var(--color-rouge-hover);
+  color: var(--color-beige);
+}
+
+.pepe-btn--beige {
+  background: var(--color-beige);
+  color: var(--color-rouge);
+}
+
+.pepe-btn--beige:hover,
+.pepe-btn--beige:focus {
+  background: var(--color-beige-hover);
+  color: var(--color-rouge);
+}
 
 /* ==========================================================
-   4. Header (structure Storefront conservée)
-   - .site-branding, .main-navigation, .site-header-cart : Storefront
-   - .pepe-logo, .pepe-header__actions : thème enfant
+   5. Header
+   On garde le header de Storefront (logo, menu, panier) et on le range
+   sur une seule ligne : menu à gauche, logo au centre, actions à droite.
    ========================================================== */
-html body .site-header {
-  background: var(--beige);
+.site-header {
+  background: var(--color-beige);
   border: 0;
   margin-bottom: 0;
-  padding: var(--espace-md) max(var(--espace-lg), calc((100% - 1312px) / 2));
+  padding: var(--spacing-md) var(--spacing-2xl);
   position: relative;
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: 1fr auto 1fr; /* gauche | centre | droite */
   align-items: center;
-  gap: var(--espace-md);
+  gap: var(--spacing-md);
 }
-/* Les conteneurs Storefront s'effacent pour que logo, menu et actions partagent une seule grille */
-.site-header > .col-full,
-.site-header .storefront-primary-navigation,
-.site-header .storefront-primary-navigation > .col-full { display: contents; }
 
-.site-header .site-branding { grid-column: 2; grid-row: 1; width: auto; float: none; margin: 0; }
-.site-header .main-navigation { grid-column: 1; grid-row: 1; width: auto; float: none; margin: 0; padding: 0; clear: none; }
-.site-header .pepe-header__actions { grid-column: 3; grid-row: 1; justify-self: end; display: flex; align-items: center; gap: var(--espace-md); }
+/* Storefront met le logo et le menu dans deux boîtes différentes.
+   display: contents « enlève » ces boîtes pour que tout aille dans la même grille. */
+.site-header .col-full,
+.site-header .storefront-primary-navigation {
+  display: contents;
+}
 
-/* Logo */
-.pepe-logo { text-align: center; }
-.pepe-logo__lien { display: inline-flex; flex-direction: column; align-items: center; line-height: .9; text-decoration: none; }
-.pepe-logo img, .site-header .custom-logo-link img { max-height: 70px; width: auto; }
-.pepe-logo__pepe { font-family: var(--police-titre); font-size: 2.6rem; color: var(--rouge); }
-.pepe-logo__chicken { font-family: var(--police-titre); font-size: 1.1rem; color: var(--rouge); }
+/* Leurs pseudo-éléments ::before / ::after (anciens « clearfix » de Storefront)
+   prendraient une case de la grille : on les cache. */
+.site-header .col-full::before,
+.site-header .col-full::after,
+.site-header .storefront-primary-navigation::before,
+.site-header .storefront-primary-navigation::after {
+  display: none;
+}
 
-/* Menu principal Storefront */
+/* Storefront donne une largeur en % au logo, au menu et au panier
+   avec le sélecteur « .woocommerce-active .site-header … » :
+   on reprend le même sélecteur pour pouvoir annuler ces largeurs. */
+.woocommerce-active .site-header .main-navigation {
+  grid-column: 1;
+  grid-row: 1;
+  width: auto;
+  float: none;
+  margin: 0;
+  padding: 0;
+}
+
+.woocommerce-active .site-header .site-branding {
+  grid-column: 2;
+  grid-row: 1;
+  width: auto;
+  float: none;
+  margin: 0;
+}
+
+.pepe-header__actions {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+/* --- Logo (bloc pepe-logo) --- */
+.pepe-logo {
+  text-align: center;
+}
+
+.pepe-logo__lien {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 0.9;
+  text-decoration: none;
+}
+
+.pepe-logo__pepe {
+  font-family: var(--ff-titre);
+  font-size: 2.6rem;
+  color: var(--color-rouge);
+}
+
+.pepe-logo__chicken {
+  font-family: var(--ff-titre);
+  font-size: 1.1rem;
+  color: var(--color-rouge);
+}
+
+.site-header .custom-logo-link img {
+  max-height: 4.5rem;
+  width: auto;
+}
+
+/* --- Menu principal (Storefront) --- */
 .site-header .main-navigation ul.menu,
-.site-header .main-navigation ul.nav-menu { display: flex; gap: var(--espace-2xl); margin: 0; }
+.site-header .main-navigation ul.nav-menu {
+  display: flex;
+  gap: var(--spacing-2xl);
+  margin: 0;
+}
+
 .site-header .main-navigation ul li a {
-  font-family: var(--police-titre);
-  color: var(--rouge);
-  padding: var(--espace-xs) 0;
+  font-family: var(--ff-titre);
+  color: var(--color-rouge);
+  padding: var(--spacing-xs) 0;
   text-decoration: none;
 }
-.site-header .main-navigation ul li a:hover,
-.site-header .main-navigation ul li.current-menu-item > a { color: var(--rouge-hover); text-decoration: underline; }
 
-/* Accès au compte (connexion / Mon compte) */
+.site-header .main-navigation ul li a:hover {
+  color: var(--color-rouge-hover);
+  text-decoration: underline;
+}
+
+/* --- Bouton compte (connexion / Mon compte) --- */
 .pepe-header__compte {
-  display: inline-grid; place-items: center;
-  width: 46px; height: 46px;
-  border: 2px solid var(--rouge);
-  border-radius: var(--rayon-pilule);
-  background: var(--blanc);
-  color: var(--rouge);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.875rem;
+  height: 2.875rem;
+  border: 2px solid var(--color-rouge);
+  border-radius: var(--radius-pilule);
+  background: var(--color-blanc);
+  color: var(--color-rouge);
 }
-.pepe-header__compte:hover, .pepe-header__compte:focus { background: var(--beige-hover); color: var(--rouge); }
-.pepe-header__icone { fill: currentColor; }
 
-/* Panier Storefront (lien + mini-panier au survol) */
-.site-header .site-header-cart { width: auto; float: none; margin: 0; position: relative; }
+.pepe-header__compte:hover,
+.pepe-header__compte:focus {
+  background: var(--color-beige-hover);
+  color: var(--color-rouge);
+}
+
+.pepe-header__icone {
+  fill: currentColor;
+}
+
+/* --- Panier (Storefront) --- */
+.woocommerce-active .site-header .site-header-cart {
+  width: auto;
+  float: none;
+  margin: 0;
+  position: relative;
+}
+
 .site-header .site-header-cart .cart-contents {
-  display: inline-flex; align-items: center; gap: var(--espace-xs);
-  padding: var(--espace-xs) var(--espace-md);
-  border: 2px solid var(--rouge);
-  border-radius: var(--rayon-pilule);
-  background: var(--blanc);
-  color: var(--rouge);
-  font-family: var(--police-titre);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: 2px solid var(--color-rouge);
+  border-radius: var(--radius-pilule);
+  background: var(--color-blanc);
+  color: var(--color-rouge);
+  font-family: var(--ff-titre);
   text-decoration: none;
 }
-.site-header .site-header-cart .cart-contents::before { content: "Panier"; }
-.site-header .site-header-cart .cart-contents::after { display: none; }
-.site-header .site-header-cart .cart-contents .amount { display: none; }
-.site-header .site-header-cart .cart-contents .count {
-  display: inline-grid; place-items: center;
-  min-width: 22px; height: 22px; padding: 0 var(--espace-xs);
-  border-radius: var(--rayon-pilule);
-  background: var(--rouge); color: var(--beige);
-  font-family: var(--police-texte); font-size: .75rem; font-weight: 700; opacity: 1;
-}
-.site-header .site-header-cart .cart-contents:hover { background: var(--beige-hover); }
-.site-header .site-header-cart .widget_shopping_cart {
-  width: 320px;
-  background: var(--beige);
-  color: var(--brun);
-  border-radius: var(--rayon-md);
-  box-shadow: var(--ombre-cartoon);
-}
-.site-header .site-header-cart:hover .widget_shopping_cart,
-.site-header .site-header-cart.focus .widget_shopping_cart { left: auto; right: 0; }
-.site-header .site-header-cart .widget_shopping_cart a { color: var(--brun); }
 
-/* Bouton du menu mobile Storefront */
+.site-header .site-header-cart .cart-contents:hover {
+  background: var(--color-beige-hover);
+}
+
+/* On affiche le mot « Panier » et le nombre d'articles, sans le montant */
+.site-header .site-header-cart .cart-contents::before {
+  content: "Panier";
+}
+
+.site-header .site-header-cart .cart-contents::after,
+.site-header .site-header-cart .cart-contents .amount {
+  display: none;
+}
+
+.site-header .site-header-cart .cart-contents .count {
+  padding: 0 var(--spacing-xs);
+  border-radius: var(--radius-pilule);
+  background: var(--color-rouge);
+  color: var(--color-beige);
+  font-family: var(--ff-texte);
+  font-size: 0.75rem;
+  font-weight: bold;
+  line-height: 1.4rem;
+  opacity: 1;
+}
+
+/* Mini-panier qui s'ouvre au survol */
+.site-header .site-header-cart .widget_shopping_cart {
+  width: 20rem;
+  background: var(--color-beige);
+  color: var(--color-brun);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-cartoon);
+}
+
+.site-header .site-header-cart:hover .widget_shopping_cart {
+  left: auto;
+  right: 0;
+}
+
+.site-header .site-header-cart .widget_shopping_cart a {
+  color: var(--color-brun);
+}
+
+/* --- Menu mobile (Storefront) --- */
 .site-header .menu-toggle {
   background: transparent;
-  color: var(--rouge);
-  border: 2px solid var(--rouge);
+  color: var(--color-rouge);
+  border: 2px solid var(--color-rouge);
   box-shadow: none;
-  font-family: var(--police-titre);
-  padding: var(--espace-xs) var(--espace-md) var(--espace-xs) 2.6em;
+  font-family: var(--ff-titre);
+  padding: var(--spacing-xs) var(--spacing-md) var(--spacing-xs) 2.6em;
 }
-.site-header .menu-toggle:hover { background: var(--beige-hover); color: var(--rouge); transform: none; }
 
-/* Menu mobile Storefront : s'ouvre sous le header, pleine largeur */
+.site-header .menu-toggle:hover {
+  background: var(--color-beige-hover);
+  color: var(--color-rouge);
+}
+
+/* Le menu mobile s'ouvre sous le header, sur toute la largeur */
 .site-header .handheld-navigation {
-  position: absolute; left: 0; right: 0; top: 100%;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
   z-index: 100;
-  background: var(--beige);
+  background: var(--color-beige);
 }
-.site-header .main-navigation.toggled .handheld-navigation { padding: var(--espace-md) var(--espace-lg) var(--espace-lg); box-shadow: 0 6px 0 var(--brun); }
-.site-header .handheld-navigation ul.menu { display: block; }
-.site-header .handheld-navigation ul li a { font-size: var(--taille-h3); padding: var(--espace-sm) 0; }
+
+.site-header .main-navigation.toggled .handheld-navigation {
+  padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.site-header .handheld-navigation ul.menu {
+  display: block;
+}
+
+.site-header .handheld-navigation ul li a {
+  font-size: var(--fs-h3);
+  padding: var(--spacing-sm) 0;
+}
 
 /* ==========================================================
-   5. Fil d'Ariane
+   6. Fil d'Ariane
    ========================================================== */
-.storefront-breadcrumb { background: transparent; margin: 0 0 1.5rem; padding: 0; }
-.woocommerce-breadcrumb, .woocommerce-breadcrumb a { color: var(--beige); font-size: var(--taille-petit); }
+.storefront-breadcrumb {
+  background: transparent;
+  margin: 0 0 var(--spacing-lg);
+  padding: 0;
+}
+
+.woocommerce-breadcrumb,
+.woocommerce-breadcrumb a {
+  color: var(--color-beige);
+  font-size: var(--fs-petit);
+}
 
 /* ==========================================================
-   6. Boutique
+   7. Boutique
    ========================================================== */
-.woocommerce-products-header { text-align: center; padding: 1rem 0 2rem; }
-.woocommerce-products-header .page-title { font-size: var(--taille-h1); line-height: 1.1; }
+.woocommerce-products-header {
+  text-align: center;
+  padding: var(--spacing-md) 0 var(--spacing-xl);
+}
 
+.woocommerce-products-header .page-title {
+  font-size: var(--fs-h1);
+  line-height: 1.1;
+}
+
+/* --- Onglets de catégories (bloc pepe-categories) --- */
 .pepe-categories {
-  display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem;
-  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-xl);
 }
+
 .pepe-categories__lien {
-  font-family: var(--police-titre);
-  padding: .45em 1.1em;
-  border: 1.5px solid var(--beige);
-  border-radius: var(--rayon-pilule);
-  color: var(--beige);
+  font-family: var(--ff-titre);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: 2px solid var(--color-beige);
+  border-radius: var(--radius-pilule);
+  color: var(--color-beige);
   text-decoration: none;
 }
-.pepe-categories__lien:hover { background: rgba(255, 236, 217, .15); color: var(--beige); }
-.pepe-categories__lien--actif { background: var(--beige); color: var(--rouge); }
 
-.pepe-section { margin-bottom: 4rem; scroll-margin-top: 2rem; }
-.pepe-section__titre { text-align: center; font-size: var(--taille-h2); margin-bottom: 2rem; }
+.pepe-categories__lien:hover {
+  background: var(--color-rouge-hover);
+  color: var(--color-beige);
+}
 
-/* Grille et cartes produit */
-ul.products { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--espace-3xl) var(--espace-4xl); max-width: 900px; margin: 0 auto !important; }
-ul.products::before, ul.products::after { display: none !important; }
-ul.products li.product {
-  width: auto !important; float: none !important; margin: 0 !important;
+.pepe-categories__lien--actif {
+  background: var(--color-beige);
+  color: var(--color-rouge);
+}
+
+/* --- Une section par catégorie (bloc pepe-section) --- */
+.pepe-section {
+  margin-bottom: var(--spacing-4xl);
+}
+
+.pepe-section__titre {
+  text-align: center;
+  font-size: var(--fs-h2);
+  margin-bottom: var(--spacing-xl);
+}
+
+.woocommerce-result-count,
+.woocommerce-ordering {
+  color: var(--color-beige);
+}
+
+/* ==========================================================
+   8. Cartes produit (grilles WooCommerce)
+   ========================================================== */
+
+/* La grille : 3 colonnes */
+.site-main ul.products {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-3xl) var(--spacing-4xl);
+  max-width: 56rem; /* 900px */
+  margin: 0 auto;
+}
+
+/* Storefront ajoute ces deux pseudo-éléments pour ses anciennes colonnes en float :
+   dans une grille ils prendraient une case, on les cache. */
+.site-main ul.products::before,
+.site-main ul.products::after {
+  display: none;
+}
+
+/* Une carte.
+   Storefront donne une largeur en % et un float aux cartes avec .columns-3, .columns-4… :
+   [class*="columns-"] rend notre sélecteur plus précis pour annuler ces réglages. */
+.site-main ul.products[class*="columns-"] li.product {
+  width: auto;
+  float: none;
+  margin: 0;
+  position: relative;
   display: grid;
   grid-template-columns: 1fr auto;
   grid-template-areas:
-    "lien lien"
-    "prix bouton";
+    "image image"
+    "titre titre"
+    "prix  bouton";
   align-items: center;
+  column-gap: var(--spacing-sm);
   text-align: center;
 }
-ul.products li.product > a.woocommerce-LoopProduct-link { grid-area: lien; display: block; color: var(--beige); text-decoration: none; }
-ul.products li.product img {
-  border-radius: var(--rayon-carte);
+
+/* WooCommerce range l'image, le titre et le prix dans un lien.
+   display: contents « enlève » la boîte du lien (le lien reste cliquable)
+   pour que le prix puisse se mettre sur la même ligne que le bouton « + ». */
+.site-main ul.products li.product .woocommerce-LoopProduct-link {
+  display: contents;
+  color: var(--color-beige);
+  text-decoration: none;
+}
+
+.site-main ul.products li.product img {
+  grid-area: image;
+  width: 100%;
   aspect-ratio: 1 / 1.04;
   object-fit: cover;
-  margin-bottom: .8rem !important;
-  background: var(--beige);
+  margin: 0 0 var(--spacing-sm);
+  border-radius: var(--radius-md);
+  background: var(--color-beige);
 }
-ul.products li.product .woocommerce-loop-product__title {
-  font-family: var(--police-titre);
-  font-size: 1.1rem !important;
-  color: var(--beige);
-  padding: 0 !important;
-  margin-bottom: .6rem;
+
+.site-main ul.products li.product .woocommerce-loop-product__title {
+  grid-area: titre;
+  font-family: var(--ff-titre);
+  font-size: 1.1rem;
+  color: var(--color-beige);
+  padding: 0;
+  margin: 0 0 var(--spacing-xs);
 }
-ul.products li.product .price {
+
+.site-main ul.products li.product .price {
   grid-area: prix;
   justify-self: start;
-  margin: 0 !important;
-  font-family: var(--police-titre);
+  margin: 0;
+  font-family: var(--ff-titre);
   font-size: 1.15rem;
-  color: var(--jaune) !important;
+  color: var(--color-jaune);
 }
-ul.products li.product .price del { color: var(--beige); opacity: .7; }
-ul.products li.product .button {
+
+.site-main ul.products li.product .price del {
+  color: var(--color-beige);
+  opacity: 0.7;
+}
+
+/* Bouton rond « + » */
+.site-main ul.products li.product .button {
   grid-area: bouton;
-  width: 40px; height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
   padding: 0;
-  margin: 0 !important;
-  display: grid; place-items: center;
-  font-size: 1.4rem; line-height: 1;
-}
-ul.products li.product .added_to_cart { grid-column: 1 / -1; font-size: var(--taille-petit); color: var(--beige); }
-ul.products li.product .onsale {
-  position: absolute; top: .6rem; left: .6rem;
-  background: var(--jaune); color: var(--brun);
-  border: 0; border-radius: var(--rayon-pilule);
-  font-family: var(--police-titre); padding: .2em .8em;
+  margin: 0;
+  font-size: 1.4rem;
+  line-height: 1;
 }
 
-/* Pas de barre latérale : contenu pleine largeur */
-.content-area, .right-sidebar .content-area, .left-sidebar .content-area { width: 100%; float: none; margin: 0; }
-.widget-area { display: none; }
-
-.woocommerce-result-count, .woocommerce-ordering { color: var(--beige); }
-.storefront-sorting { margin-bottom: 2rem; }
-
-/* ==========================================================
-   7. Fiche produit
-   ========================================================== */
-.single-product div.product { display: grid; grid-template-columns: minmax(0, 560px) minmax(0, 1fr); gap: var(--espace-4xl); align-items: start; }
-.single-product div.product::before, .single-product div.product::after { display: none; }
-.single-product div.product .woocommerce-product-gallery,
-.single-product div.product .summary { width: auto; float: none; margin: 0; }
-.single-product div.product .woocommerce-product-gallery img { border-radius: var(--rayon-xl); background: var(--beige); }
-.single-product .flex-control-thumbs img { border-radius: var(--rayon-sm); }
-
-.single-product div.product .product_title { font-size: var(--taille-h1); line-height: 1.1; margin-bottom: 1rem; }
-.single-product div.product .woocommerce-product-details__short-description { color: var(--beige); line-height: 1.6; }
-.single-product div.product p.price {
-  font-family: var(--police-titre);
-  font-size: 2.25rem;
-  color: var(--jaune);
-  margin: 1.5rem 0;
-}
-.single-product div.product form.cart { display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem; }
-.single-product div.product form.cart .quantity .qty {
-  width: 4.5em; border-radius: var(--rayon-pilule); border: 0;
-  background: var(--beige); color: var(--brun); text-align: center; padding: .6em;
-}
-.single-product div.product .single_add_to_cart_button { flex: 1; }
-.single-product .product_meta { font-size: var(--taille-petit); color: var(--beige); }
-.single-product .product_meta a { color: var(--jaune); }
-
-/* Onglets (description, infos…) dans une carte beige */
-.woocommerce-tabs {
+/* Lien « Voir le panier » qui apparaît après un ajout */
+.site-main ul.products li.product .added_to_cart {
   grid-column: 1 / -1;
-  background: var(--beige);
-  color: var(--brun);
-  border-radius: var(--rayon-lg);
-  padding: var(--espace-lg) var(--espace-xl);
+  font-size: var(--fs-petit);
+  color: var(--color-beige);
 }
-.woocommerce-tabs ul.tabs { border: 0; display: flex; gap: 1.5rem; margin: 0 0 1rem; padding: 0; width: auto; float: none; }
-.woocommerce-tabs ul.tabs li { border: 0; }
-.woocommerce-tabs ul.tabs li a { font-family: var(--police-titre); color: var(--brun); padding: .3em 0; }
-.woocommerce-tabs ul.tabs li.active a { color: var(--rouge); border-bottom: 3px solid var(--rouge); }
-.woocommerce-tabs ul.tabs li::after { display: none; }
-.woocommerce-tabs .panel { width: auto; float: none; margin: 0; }
-.woocommerce-tabs .panel h2, .woocommerce-tabs .panel { color: var(--brun); }
 
-.related.products, .upsells.products { grid-column: 1 / -1; }
-.related.products > h2, .upsells.products > h2 { font-size: var(--taille-h2); }
+/* Badge « Promo » */
+.site-main ul.products li.product .onsale {
+  position: absolute;
+  top: var(--spacing-xs);
+  left: var(--spacing-xs);
+  padding: var(--spacing-xxs) var(--spacing-sm);
+  border: 0;
+  border-radius: var(--radius-pilule);
+  background: var(--color-jaune);
+  color: var(--color-brun);
+  font-family: var(--ff-titre);
+}
 
 /* ==========================================================
-   8. Messages WooCommerce
+   9. Fiche produit
    ========================================================== */
-.woocommerce-message, .woocommerce-info, .woocommerce-error {
-  background: var(--beige); color: var(--brun);
-  border-radius: var(--rayon-sm); border-left: 6px solid var(--jaune);
+
+/* Deux colonnes : la photo à gauche, les infos à droite */
+.single-product div.product {
+  display: grid;
+  grid-template-columns: 35rem 1fr;
+  gap: var(--spacing-4xl);
+  align-items: start;
 }
-.woocommerce-message a, .woocommerce-info a { color: var(--rouge); }
+
+.single-product div.product::before,
+.single-product div.product::after {
+  display: none;
+}
+
+.single-product div.product .woocommerce-product-gallery,
+.single-product div.product .summary {
+  width: auto;
+  float: none;
+  margin: 0;
+}
+
+.single-product div.product .woocommerce-product-gallery img {
+  border-radius: var(--radius-xl);
+  background: var(--color-beige);
+}
+
+.single-product div.product .product_title {
+  font-size: var(--fs-h1);
+  line-height: 1.1;
+  margin-bottom: var(--spacing-md);
+}
+
+.single-product div.product .woocommerce-product-details__short-description {
+  color: var(--color-beige);
+  line-height: 1.6;
+}
+
+.single-product div.product p.price {
+  font-family: var(--ff-titre);
+  font-size: var(--fs-h2);
+  color: var(--color-jaune);
+  margin: var(--spacing-lg) 0;
+}
+
+/* Quantité + bouton « Ajouter au panier » sur la même ligne */
+.single-product div.product form.cart {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.single-product div.product form.cart .qty {
+  width: 4.5em;
+  padding: var(--spacing-xs);
+  border: 0;
+  border-radius: var(--radius-pilule);
+  background: var(--color-beige);
+  color: var(--color-brun);
+  text-align: center;
+}
+
+.single-product div.product .single_add_to_cart_button {
+  flex: 1;
+}
+
+.single-product .product_meta {
+  font-size: var(--fs-petit);
+  color: var(--color-beige);
+}
+
+.single-product .product_meta a {
+  color: var(--color-jaune);
+}
+
+/* Onglets (Description, Informations…) dans une carte beige */
+.single-product .woocommerce-tabs {
+  grid-column: 1 / -1;
+  padding: var(--spacing-lg) var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  background: var(--color-beige);
+  color: var(--color-brun);
+}
+
+.single-product .woocommerce-tabs ul.tabs {
+  display: flex;
+  gap: var(--spacing-lg);
+  width: auto;
+  float: none;
+  margin: 0 0 var(--spacing-md);
+  padding: 0;
+  border: 0;
+}
+
+.single-product .woocommerce-tabs ul.tabs li {
+  border: 0;
+}
+
+.single-product .woocommerce-tabs ul.tabs li::after {
+  display: none;
+}
+
+.single-product .woocommerce-tabs ul.tabs li a {
+  font-family: var(--ff-titre);
+  color: var(--color-brun);
+  padding: var(--spacing-xxs) 0;
+}
+
+.single-product .woocommerce-tabs ul.tabs li.active a {
+  color: var(--color-rouge);
+  border-bottom: 3px solid var(--color-rouge);
+}
+
+.single-product .woocommerce-tabs .panel {
+  width: auto;
+  float: none;
+  margin: 0;
+  color: var(--color-brun);
+}
+
+.single-product .woocommerce-tabs .panel h2 {
+  color: var(--color-brun);
+}
+
+/* Produits similaires : sous la photo et les infos, sur toute la largeur */
+.single-product .related.products,
+.single-product .upsells.products {
+  grid-column: 1 / -1;
+}
+
+.single-product .related.products > h2,
+.single-product .upsells.products > h2 {
+  font-size: var(--fs-h2);
+}
 
 /* ==========================================================
-   9. Footer (zones de widgets Storefront conservées au-dessus)
+   10. Messages WooCommerce (ajout au panier, erreurs…)
    ========================================================== */
-html body .site-footer { background: var(--beige); color: var(--brun); padding: var(--espace-3xl) 0 var(--espace-xl); }
-.site-footer .footer-widgets { border-color: var(--beige-hover); }
-.pepe-footer__colonnes { display: grid; grid-template-columns: repeat(5, auto); justify-content: space-between; gap: var(--espace-xl); }
-.pepe-footer__titre { font-family: var(--police-titre); font-size: 1rem; color: var(--brun); margin: 0 0 var(--espace-sm); }
-.pepe-footer__liste { list-style: none; margin: 0; padding: 0; }
-.pepe-footer__element { margin-bottom: var(--espace-xs); }
-.pepe-footer__lien { color: var(--brun); text-decoration: none; font-size: var(--taille-petit); }
-.pepe-footer__lien:hover, .pepe-footer__lien:focus { color: var(--rouge); }
-.pepe-footer__logo { display: flex; flex-direction: column; align-items: center; line-height: .9; }
-.pepe-footer__sante { text-align: center; font-size: .75rem; margin: var(--espace-2xl) 0 0; color: var(--brun); }
-.pepe-footer__sante .pepe-footer__lien { text-decoration: underline; font-size: .75rem; }
+.woocommerce-message,
+.woocommerce-info,
+.woocommerce-error {
+  background: var(--color-beige);
+  color: var(--color-brun);
+  border-left: 6px solid var(--color-jaune);
+  border-radius: var(--radius-sm);
+}
 
-/* Barre mobile de Storefront (compte / recherche / panier) : remplacée par le burger et le panier du header */
-.storefront-handheld-footer-bar { display: none; }
+.woocommerce-message a,
+.woocommerce-info a {
+  color: var(--color-rouge);
+}
+
+/* ==========================================================
+   11. Footer
+   Les zones de widgets de Storefront restent au-dessus de notre footer.
+   ========================================================== */
+.site-footer {
+  background: var(--color-beige);
+  color: var(--color-brun);
+  padding: var(--spacing-3xl) 0 var(--spacing-xl);
+}
+
+/* --- Bloc pepe-footer --- */
+.pepe-footer__colonnes {
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  justify-content: space-between;
+  gap: var(--spacing-xl);
+}
+
+.pepe-footer__titre {
+  font-family: var(--ff-titre);
+  font-size: 1rem;
+  color: var(--color-brun);
+  margin: 0 0 var(--spacing-sm);
+}
+
+.pepe-footer__liste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pepe-footer__element {
+  margin-bottom: var(--spacing-xs);
+}
+
+.pepe-footer__lien {
+  color: var(--color-brun);
+  font-size: var(--fs-petit);
+  text-decoration: none;
+}
+
+.pepe-footer__lien:hover,
+.pepe-footer__lien:focus {
+  color: var(--color-rouge);
+}
+
+.pepe-footer__logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 0.9;
+}
+
+.pepe-footer__sante {
+  margin: var(--spacing-2xl) 0 0;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--color-brun);
+}
+
+.pepe-footer__sante .pepe-footer__lien {
+  font-size: 0.75rem;
+  text-decoration: underline;
+}
+
+/* Barre du bas de Storefront sur mobile (compte / recherche / panier) :
+   on ne l'utilise pas, le header a déjà le burger, le compte et le panier. */
+.storefront-handheld-footer-bar {
+  display: none;
+}
+
+/* ==========================================================
+   12. Mobile (moins de 768px, comme Storefront)
+   ========================================================== */
 @media (max-width: 767px) {
-  body { padding-bottom: 0; }
-}
+  /* Tailles de texte du mode « Mobile » de Figma : 30 / 28 / 19 / 15 / 13 px */
+  :root {
+    --fs-h1: 1.875rem;
+    --fs-h2: 1.75rem;
+    --fs-h3: 1.1875rem;
+    --fs-texte: 0.9375rem;
+    --fs-petit: 0.8125rem;
+  }
 
-/* ==========================================================
-   10. Mobile (même point de rupture que Storefront : 768px)
-   ========================================================== */
-@media (max-width: 767px) {
-  :root { --taille-h1: 1.875rem; --taille-h2: 1.75rem; --taille-h3: 1.1875rem; --taille-texte: .9375rem; --taille-petit: .8125rem; } /* 30 / 28 / 19 / 15 / 13 px comme le mode Mobile de Figma */
+  body {
+    padding-bottom: 0;
+  }
 
-  html body .site-header { grid-template-columns: auto 1fr auto; padding: var(--espace-sm) var(--espace-md); }
-  .site-header .site-branding { justify-self: center; }
-  .pepe-logo__pepe { font-size: 1.9rem; }
-  .site-header .pepe-header__commander { display: none; }
-  .site-header .pepe-header__actions { gap: var(--espace-xxs); }
-  .pepe-header__compte { width: 40px; height: 40px; }
-  .site-header .site-header-cart .cart-contents::before { content: none; }
+  /* Header : burger | logo | compte + panier */
+  .site-header {
+    grid-template-columns: auto 1fr auto;
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
 
-  ul.products { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--espace-lg) var(--espace-md); }
-  ul.products li.product .button { width: 32px; height: 32px; font-size: 1.1rem; }
+  .woocommerce-active .site-header .site-branding {
+    justify-self: center;
+  }
 
-  .single-product div.product { grid-template-columns: 1fr; gap: var(--espace-lg); }
-  .woocommerce-tabs { padding: var(--espace-md); }
+  .pepe-logo__pepe {
+    font-size: 1.9rem;
+  }
 
-  .pepe-footer__colonnes { grid-template-columns: 1fr; text-align: left; }
-  .pepe-footer__logo { order: -1; align-items: flex-start; }
+  .pepe-header__commander {
+    display: none;
+  }
+
+  .pepe-header__actions {
+    gap: var(--spacing-xxs);
+  }
+
+  .pepe-header__compte {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .site-header .site-header-cart .cart-contents::before {
+    content: none;
+  }
+
+  /* Cartes produit sur 2 colonnes */
+  .site-main ul.products {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg) var(--spacing-md);
+  }
+
+  .site-main ul.products li.product .button {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.1rem;
+  }
+
+  /* Fiche produit sur 1 colonne */
+  .single-product div.product {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+
+  .single-product .woocommerce-tabs {
+    padding: var(--spacing-md);
+  }
+
+  /* Footer sur 1 colonne, logo en premier */
+  .pepe-footer__colonnes {
+    grid-template-columns: 1fr;
+  }
+
+  .pepe-footer__logo {
+    order: -1;
+    align-items: flex-start;
+  }
 }

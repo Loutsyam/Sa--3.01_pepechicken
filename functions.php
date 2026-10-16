@@ -93,7 +93,7 @@ function pepe_menu_par_defaut( $args ) {
     echo '<div class="' . esc_attr( $classe ) . '"><ul class="menu">';
     echo '<li class="menu-item"><a href="' . esc_url( home_url( '/' ) ) . '">Le concept</a></li>';
     echo '<li class="menu-item"><a href="' . esc_url( $boutique ) . '">Le menu</a></li>';
-    echo '<li class="menu-item"><a href="#">Où nous trouver</a></li>';
+    echo '<li class="menu-item"><a href="' . esc_url( pepe_url_page( 'a-propos' ) ) . '">À propos</a></li>';
     echo '</ul></div>';
 }
 
@@ -116,7 +116,7 @@ function pepe_footer() {
         'Accès rapide'           => array(
             'Le concept'      => home_url( '/' ),
             'Le menu'         => $boutique,
-            'Où nous trouver' => '#',
+            'À propos'        => pepe_url_page( 'a-propos' ),
             'Mon compte'      => function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : wp_login_url(),
             'FAQ'             => pepe_url_page( 'faq' ),
         ),
