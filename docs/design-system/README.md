@@ -5,7 +5,8 @@ du site click & collect Pepe Chicken (SAÉ 3.01). HTML et CSS uniquement, sans f
 
 ## Organisation
 
-Deux fichiers : `index.html` et `style.css`. La feuille est découpée en couches (`@layer`), dans cet ordre :
+Un seul fichier : `index.html`, avec les styles intégrés dans une balise `<style>`.
+La feuille est découpée en couches (`@layer`), dans cet ordre :
 `reset < variables < global < components < layout < utilities` (une couche plus bas l'emporte sur celles du dessus).
 
 - **reset** : remise à zéro des styles du navigateur
