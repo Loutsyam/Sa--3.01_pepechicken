@@ -14,6 +14,7 @@ defined( 'ABSPATH' ) || exit;
 
 // IT-3 : options des produits (champs SCF du groupe « Options du produit »)
 require_once get_stylesheet_directory() . '/inc/options-affichage.php';
+require_once get_stylesheet_directory() . '/inc/options-prix.php';
 
 /* Réglages des hooks Storefront */
 add_action( 'init', function () {

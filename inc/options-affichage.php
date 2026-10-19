@@ -84,7 +84,12 @@ function pepe_afficher_options() {
     // Accompagnement et boisson ne sont cachés que si le produit a une formule
     $a_une_formule = isset( $options['pepe_formule'] );
 
-    echo '<div class="pepe-choix-liste">';
+    // Données pour le calcul du prix en JavaScript (US-3.3)
+    echo '<div class="pepe-choix-liste"';
+    echo ' data-prix="' . esc_attr( wc_get_price_to_display( $product ) ) . '"';
+    echo ' data-decimales="' . esc_attr( wc_get_price_decimals() ) . '"';
+    echo ' data-separateur="' . esc_attr( wc_get_price_decimal_separator() ) . '"';
+    echo ' data-devise="' . esc_attr( html_entity_decode( get_woocommerce_currency_symbol() ) ) . '">';
 
     foreach ( $options as $nom => $groupe ) {
         $classe = 'pepe-choix';
