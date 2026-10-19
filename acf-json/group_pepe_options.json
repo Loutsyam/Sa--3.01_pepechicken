@@ -217,5 +217,5 @@
     "active": true,
     "description": "Options que le client choisit sur la fiche produit. Cocher les choix proposés pour ce produit (rien de coché = groupe non affiché).",
     "show_in_rest": 0,
-    "modified": 1792400000
+    "modified": 1792401596
 }
