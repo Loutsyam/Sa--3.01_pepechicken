@@ -9,25 +9,14 @@ Text Domain:  pepe-chicken
 
 /*
   Sommaire
-  1. Polices
-  2. Variables (mêmes noms et valeurs que le Design System)
-  3. Base
-  4. Boutons
-  5. Header
-  6. Fil d'Ariane
-  7. Boutique
-  8. Cartes produit
-  9. Fiche produit
-  10. Messages WooCommerce
-  11. Footer
-  12. Mobile
+  1. Polices          6. Fil d'Ariane      11. Valeurs nutritionnelles
+  2. Variables        7. Boutique          12. Panier
+  3. Base             8. Cartes produit    13. Messages WooCommerce
+  4. Boutons          9. Fiche produit     14. Footer
+  5. Header           10. Options          15. Mobile
 
-  Les classes qui commencent par « pepe- » sont celles du thème (convention BEM :
-  bloc__element--modificateur). Les autres (.site-header, .main-navigation, ul.products…)
-  viennent de Storefront ou de WooCommerce : on les cible pour les mettre à nos couleurs.
-
-  Pas de !important : quand une règle de Storefront est plus forte, on écrit un sélecteur
-  un peu plus précis (par exemple en ajoutant .site-main devant).
+  Classes « pepe- » : celles du thème (BEM). Les autres viennent de Storefront
+  ou de WooCommerce. Pas de !important : on écrit un sélecteur plus précis.
 */
 
 /* 1. Polices */
@@ -147,7 +136,7 @@ a:focus {
 
 /* 4. Boutons */
 
-/* Tous les boutons du site (WooCommerce compris) : jaunes, en pilule */
+/* Tous les boutons : jaunes, en pilule */
 button,
 .button,
 input[type="submit"],
@@ -198,11 +187,7 @@ input[type="submit"]:hover {
   color: var(--color-rouge);
 }
 
-/*
-   5. Header
-   On garde le header de Storefront (logo, menu, panier) et on le range
-   sur une seule ligne : menu à gauche, logo au centre, actions à droite.
-*/
+/* 5. Header : menu à gauche, logo au centre, boutons à droite */
 .site-header {
   background: var(--color-beige);
   border: 0;
@@ -215,15 +200,13 @@ input[type="submit"]:hover {
   gap: var(--spacing-md);
 }
 
-/* Storefront met le logo et le menu dans deux boîtes différentes.
-   display: contents « enlève » ces boîtes pour que tout aille dans la même grille. */
+/* display: contents : les boîtes de Storefront disparaissent, tout va dans la grille */
 .site-header .col-full,
 .site-header .storefront-primary-navigation {
   display: contents;
 }
 
-/* Leurs pseudo-éléments ::before / ::after (anciens « clearfix » de Storefront)
-   prendraient une case de la grille : on les cache. */
+/* Les ::before / ::after de Storefront prendraient une case : on les cache */
 .site-header .col-full::before,
 .site-header .col-full::after,
 .site-header .storefront-primary-navigation::before,
@@ -231,9 +214,7 @@ input[type="submit"]:hover {
   display: none;
 }
 
-/* Storefront donne une largeur en % au logo, au menu et au panier
-   avec le sélecteur « .woocommerce-active .site-header … » :
-   on reprend le même sélecteur pour pouvoir annuler ces largeurs. */
+/* Même sélecteur que Storefront pour annuler ses largeurs en % */
 .woocommerce-active .site-header .main-navigation {
   grid-column: 1;
   grid-row: 1;
@@ -260,7 +241,7 @@ input[type="submit"]:hover {
   gap: var(--spacing-md);
 }
 
-/* --- Logo (bloc pepe-logo) --- */
+/* Logo (bloc pepe-logo) */
 .pepe-logo {
   text-align: center;
 }
@@ -290,7 +271,7 @@ input[type="submit"]:hover {
   width: auto;
 }
 
-/* --- Menu principal (Storefront) --- */
+/* Menu principal (Storefront) */
 .site-header .main-navigation ul.menu,
 .site-header .main-navigation ul.nav-menu {
   display: flex;
@@ -310,7 +291,7 @@ input[type="submit"]:hover {
   text-decoration: underline;
 }
 
-/* --- Bouton compte (connexion / Mon compte) --- */
+/* Bouton compte (connexion / Mon compte) */
 .pepe-header__compte {
   display: flex;
   align-items: center;
@@ -333,7 +314,7 @@ input[type="submit"]:hover {
   fill: currentColor;
 }
 
-/* --- Panier (Storefront) --- */
+/* Panier (Storefront) */
 .woocommerce-active .site-header .site-header-cart {
   width: auto;
   float: none;
@@ -358,7 +339,7 @@ input[type="submit"]:hover {
   background: var(--color-beige-hover);
 }
 
-/* On affiche le mot « Panier » et le nombre d'articles, sans le montant */
+/* « Panier » + nombre d'articles, sans le montant */
 .site-header .site-header-cart .cart-contents::before {
   content: "Panier";
 }
@@ -398,7 +379,7 @@ input[type="submit"]:hover {
   color: var(--color-brun);
 }
 
-/* --- Menu mobile (Storefront) --- */
+/* Menu mobile (Storefront) */
 .site-header .menu-toggle {
   background: transparent;
   color: var(--color-rouge);
@@ -460,7 +441,7 @@ input[type="submit"]:hover {
   line-height: 1.1;
 }
 
-/* --- Onglets de catégories (bloc pepe-categories) --- */
+/* Onglets de catégories (bloc pepe-categories) */
 .pepe-categories {
   display: flex;
   flex-wrap: wrap;
@@ -488,7 +469,7 @@ input[type="submit"]:hover {
   color: var(--color-rouge);
 }
 
-/* --- Une section par catégorie (bloc pepe-section) --- */
+/* Une section par catégorie (bloc pepe-section) */
 .pepe-section {
   margin-bottom: var(--spacing-4xl);
 }
@@ -515,16 +496,13 @@ input[type="submit"]:hover {
   margin: 0 auto;
 }
 
-/* Storefront ajoute ces deux pseudo-éléments pour ses anciennes colonnes en float :
-   dans une grille ils prendraient une case, on les cache. */
+/* Les ::before / ::after de Storefront prendraient une case : on les cache */
 .site-main ul.products::before,
 .site-main ul.products::after {
   display: none;
 }
 
-/* Une carte.
-   Storefront donne une largeur en % et un float aux cartes avec .columns-3, .columns-4… :
-   [class*="columns-"] rend notre sélecteur plus précis pour annuler ces réglages. */
+/* Une carte ([class*="columns-"] : plus précis que Storefront pour annuler son float) */
 .site-main ul.products[class*="columns-"] li.product {
   width: auto;
   float: none;
@@ -541,9 +519,7 @@ input[type="submit"]:hover {
   text-align: center;
 }
 
-/* WooCommerce range l'image, le titre et le prix dans un lien.
-   display: contents « enlève » la boîte du lien (le lien reste cliquable)
-   pour que le prix puisse se mettre sur la même ligne que le bouton « + ». */
+/* display: contents sur le lien : le prix se met sur la même ligne que le « + » */
 .site-main ul.products li.product .woocommerce-LoopProduct-link {
   display: contents;
   color: var(--color-beige);
@@ -742,7 +718,7 @@ input[type="submit"]:hover {
   color: var(--color-brun);
 }
 
-/* Produits similaires : sous la photo et les infos, sur toute la largeur */
+/* Produits similaires : sur toute la largeur */
 .single-product .related.products,
 .single-product .upsells.products {
   grid-column: 1 / -1;
@@ -753,13 +729,13 @@ input[type="submit"]:hover {
   font-size: var(--fs-h2);
 }
 
-/* Sélecteur d'options (IT-3, US-3.2) : maquette + Design System */
-/* Le formulaire passe à la ligne : options au-dessus, quantité + bouton en dessous */
+/* 10. Options (pilules du Design System) */
+/* Options au-dessus, quantité + bouton en dessous */
 .single-product div.product form.cart:has(.pepe-choix-liste) {
   flex-wrap: wrap;
 }
 
-/* Carte beige comme les onglets de la fiche produit */
+/* Carte beige */
 .pepe-choix-liste {
   flex: 1 0 100%;
   padding: var(--spacing-lg);
@@ -794,8 +770,7 @@ input[type="submit"]:hover {
   font-weight: 400;
 }
 
-/* Groupes du menu (accompagnement, boisson) : affichés seulement
-   quand la pilule « Menu » est cochée */
+/* Accompagnement et boisson : seulement avec « Menu » */
 .pepe-choix-liste .pepe-choix--menu {
   display: none;
 }
@@ -811,7 +786,7 @@ input[type="submit"]:hover {
   gap: var(--spacing-xs);
 }
 
-/* Pilule (composant pepe-option du Design System) */
+/* Pilule */
 .pepe-option {
   position: relative;
   font-family: var(--ff-texte);
@@ -829,14 +804,14 @@ input[type="submit"]:hover {
   border-color: var(--color-rouge);
 }
 
-/* Pilule d'une variation épuisée (US-3.1) */
+/* Pilule épuisée */
 .pepe-option--epuise {
   opacity: 0.5;
   text-decoration: line-through;
   cursor: not-allowed;
 }
 
-/* Le vrai bouton radio / la case est invisible mais reste utilisable au clavier */
+/* Le bouton radio est caché mais reste utilisable au clavier */
 .pepe-option__input {
   position: absolute;
   opacity: 0;
@@ -845,7 +820,7 @@ input[type="submit"]:hover {
   margin: 0;
 }
 
-/* Option choisie : même style que pepe-option--actif du Design System */
+/* Option choisie : en rouge */
 .pepe-option--actif,
 .pepe-option:has(.pepe-option__input:checked) {
   background: var(--color-rouge);
@@ -853,13 +828,13 @@ input[type="submit"]:hover {
   color: var(--color-beige);
 }
 
-/* Focus clavier visible */
+/* Focus clavier */
 .pepe-option:has(.pepe-option__input:focus-visible) {
   outline: 0.1875rem solid var(--color-jaune);
   outline-offset: 0.125rem;
 }
 
-/* Valeurs nutritionnelles (sous le titre de la fiche produit, US-4) */
+/* 11. Valeurs nutritionnelles */
 .pepe-nutrition {
   margin-bottom: var(--spacing-md);
 }
@@ -884,7 +859,7 @@ input[type="submit"]:hover {
   list-style: none;
 }
 
-/* Petite carte beige : la valeur en gros, le nom en dessous */
+/* Petite carte : la valeur, puis le nom */
 .pepe-nutrition__item {
   display: flex;
   flex-direction: column;
@@ -912,7 +887,7 @@ input[type="submit"]:hover {
   color: var(--color-beige);
 }
 
-/* Variations sur la fiche produit (US-3.1) : même aspect que les options */
+/* Variations (Burger seul / Menu) : même aspect que les options */
 .single-product table.variations {
   width: 100%;
   margin: 0 0 var(--spacing-md);
@@ -944,7 +919,7 @@ input[type="submit"]:hover {
   display: none;
 }
 
-/* Les pilules des variations sont des <button> : on retire le style jaune des boutons du thème */
+/* Ce sont des <button> : on enlève le style jaune des boutons */
 .single-product .variations .pepe-option {
   padding: var(--spacing-xs) var(--spacing-md);
   border: 0.125rem solid var(--color-beige-hover);
@@ -972,7 +947,7 @@ input[type="submit"]:hover {
   padding-bottom: var(--spacing-xs);
 }
 
-/* Stock de la variation : « Plus que 3 en stock » / « Rupture de stock » */
+/* Stock : « Plus que 3 en stock » / « Rupture de stock » */
 .single-product .woocommerce-variation-availability .stock {
   margin: 0 0 var(--spacing-sm);
   font-weight: 700;
@@ -983,8 +958,7 @@ input[type="submit"]:hover {
   color: var(--color-beige);
 }
 
-/* Produit variable : variations, stock et options les uns sous les autres,
-   puis quantité + bouton sur la même ligne (comme un produit simple) */
+/* Produit variable : tout l'un sous l'autre, puis quantité + bouton */
 .single-product div.product form.variations_form {
   display: block;
 }
@@ -996,7 +970,7 @@ input[type="submit"]:hover {
   gap: var(--spacing-md);
 }
 
-/* Page Panier (IT-5, US-5.3) */
+/* 12. Panier */
 .pepe-panier__entete {
   margin-bottom: var(--spacing-lg);
 }
@@ -1033,7 +1007,7 @@ input[type="submit"]:hover {
   color: var(--color-jaune);
 }
 
-/* Deux colonnes : articles à gauche, récapitulatif à droite */
+/* Articles à gauche, récapitulatif à droite */
 .pepe-panier__contenu {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 22rem;
@@ -1093,7 +1067,7 @@ input[type="submit"]:hover {
   color: var(--color-rouge);
 }
 
-/* Quantité : − 1 + dans une pilule blanche */
+/* Quantité − 1 + */
 .pepe-article__quantite {
   display: flex;
   align-items: center;
@@ -1144,7 +1118,7 @@ input[type="submit"]:hover {
   white-space: nowrap;
 }
 
-/* Croix simple au lieu de l'icône ronde de Storefront */
+/* Croix simple (au lieu de l'icône de Storefront) */
 .pepe-article .pepe-article__supprimer .remove::before {
   content: "×";
   font-family: var(--ff-texte);
@@ -1153,7 +1127,7 @@ input[type="submit"]:hover {
   color: var(--color-brun);
 }
 
-/* Bouton caché : déclenché par les boutons − / + */
+/* Bouton caché, cliqué par le script des − / + */
 .pepe-panier__maj {
   position: absolute;
   width: 1px;
@@ -1230,7 +1204,7 @@ input[type="submit"]:hover {
   text-decoration: none;
 }
 
-/* Récapitulatif (colonne de droite) */
+/* Récapitulatif */
 .pepe-recap {
   padding: var(--spacing-lg);
   border-radius: var(--radius-xl);
@@ -1259,7 +1233,7 @@ input[type="submit"]:hover {
   font-size: var(--fs-petit);
 }
 
-/* Mode de récupération : cartes avec bouton radio (US-5.4) */
+/* Mode de récupération */
 .pepe-expedition__choix {
   display: flex;
   align-items: center;
@@ -1324,7 +1298,7 @@ input[type="submit"]:hover {
   border-collapse: collapse;
 }
 
-/* 3 classes : plus précis que les lignes grises des tableaux Storefront */
+/* 3 classes pour passer devant les lignes grises de Storefront */
 .pepe-recap .pepe-recap__totaux .pepe-recap__ligne th,
 .pepe-recap .pepe-recap__totaux .pepe-recap__ligne td {
   padding: var(--spacing-xxs) 0;
@@ -1350,7 +1324,7 @@ input[type="submit"]:hover {
   color: var(--color-rouge);
 }
 
-/* Bouton rouge de la maquette (Storefront le met en gris foncé avec une flèche) */
+/* Bouton rouge (Storefront le met en gris avec une flèche) */
 .pepe-recap .wc-proceed-to-checkout .pepe-recap__valider {
   display: block;
   width: 100%;
@@ -1373,7 +1347,7 @@ input[type="submit"]:hover {
   content: none;
 }
 
-/* Sur le panier : pas de fil d'Ariane ni de titre de page (remplacés par « Mon panier ») */
+/* Pas de fil d'Ariane ni de titre de page sur le panier */
 .woocommerce-cart .storefront-breadcrumb,
 .woocommerce-cart .entry-header:has(.entry-title:empty) {
   display: none;
@@ -1385,7 +1359,7 @@ input[type="submit"]:hover {
   text-align: center;
 }
 
-/* 10. Messages WooCommerce (ajout au panier, erreurs…) */
+/* 13. Messages WooCommerce */
 .woocommerce-message,
 .woocommerce-info,
 .woocommerce-error {
@@ -1400,17 +1374,14 @@ input[type="submit"]:hover {
   color: var(--color-rouge);
 }
 
-/*
-   11. Footer
-   Les zones de widgets de Storefront restent au-dessus de notre footer.
-*/
+/* 14. Footer */
 .site-footer {
   background: var(--color-beige);
   color: var(--color-brun);
   padding: var(--spacing-3xl) 0 var(--spacing-xl);
 }
 
-/* --- Bloc pepe-footer --- */
+/* Bloc pepe-footer */
 .pepe-footer__colonnes {
   display: grid;
   grid-template-columns: repeat(5, auto);
@@ -1465,13 +1436,12 @@ input[type="submit"]:hover {
   text-decoration: underline;
 }
 
-/* Barre du bas de Storefront sur mobile (compte / recherche / panier) :
-   on ne l'utilise pas, le header a déjà le burger, le compte et le panier. */
+/* Barre du bas de Storefront sur mobile : inutile, le header a déjà tout */
 .storefront-handheld-footer-bar {
   display: none;
 }
 
-/* 12. Mobile (moins de 768px, comme Storefront) */
+/* 15. Mobile (moins de 768 px) */
 @media (max-width: 767px) {
   /* Panier : une seule colonne, carte d'article sur 2 lignes */
   .pepe-panier__contenu {
@@ -1517,7 +1487,7 @@ input[type="submit"]:hover {
     grid-template-columns: 1fr;
   }
 
-  /* Tailles de texte du mode « Mobile » de Figma : 30 / 28 / 19 / 15 / 13 px */
+  /* Tailles de texte mobiles de Figma */
   :root {
     --fs-h1: 1.875rem;
     --fs-h2: 1.75rem;
