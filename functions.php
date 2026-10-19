@@ -16,6 +16,9 @@ defined( 'ABSPATH' ) || exit;
 require_once get_stylesheet_directory() . '/inc/options-affichage.php';
 require_once get_stylesheet_directory() . '/inc/options-prix.php';
 
+// US-4 : valeurs nutritionnelles (champs SCF du groupe « Valeurs nutritionnelles »)
+require_once get_stylesheet_directory() . '/inc/valeurs-nutritionnelles.php';
+
 /* Réglages des hooks Storefront */
 add_action( 'init', function () {
     // Header : on retire la recherche et le menu secondaire (absents de la maquette)

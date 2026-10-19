@@ -1,0 +1,249 @@
+{
+    "key": "group_6ad5d7e3f3898",
+    "title": "Valeurs nutritionnelles",
+    "fields": [
+        {
+            "key": "field_c2eed47c9795a",
+            "label": "Énergie",
+            "name": "pepe_energie",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Pour une portion (le produit entier).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 0,
+            "max": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "step": "0.1",
+            "prepend": "",
+            "append": "kcal"
+        },
+        {
+            "key": "field_b0077e03689de",
+            "label": "Matières grasses",
+            "name": "pepe_matieres_grasses",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 0,
+            "max": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "step": "0.1",
+            "prepend": "",
+            "append": "g"
+        },
+        {
+            "key": "field_c57ba7eac173b",
+            "label": "dont acides gras saturés",
+            "name": "pepe_acides_gras_satures",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 0,
+            "max": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "step": "0.1",
+            "prepend": "",
+            "append": "g"
+        },
+        {
+            "key": "field_626cd806e7f8a",
+            "label": "Glucides",
+            "name": "pepe_glucides",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 0,
+            "max": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "step": "0.1",
+            "prepend": "",
+            "append": "g"
+        },
+        {
+            "key": "field_e35fccb0582b2",
+            "label": "dont sucres",
+            "name": "pepe_sucres",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 0,
+            "max": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "step": "0.1",
+            "prepend": "",
+            "append": "g"
+        },
+        {
+            "key": "field_ad87e0d004186",
+            "label": "Fibres",
+            "name": "pepe_fibres",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 0,
+            "max": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "step": "0.1",
+            "prepend": "",
+            "append": "g"
+        },
+        {
+            "key": "field_b806c3d72d101",
+            "label": "Protéines",
+            "name": "pepe_proteines",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 0,
+            "max": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "step": "0.1",
+            "prepend": "",
+            "append": "g"
+        },
+        {
+            "key": "field_3f4a8b85344e7",
+            "label": "Sel",
+            "name": "pepe_sel",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 0,
+            "max": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "step": "0.1",
+            "prepend": "",
+            "append": "g"
+        },
+        {
+            "key": "field_c5e052b9a3f2c",
+            "label": "Allergènes",
+            "name": "pepe_allergenes",
+            "aria-label": "",
+            "type": "checkbox",
+            "instructions": "Cocher les allergènes présents dans le produit.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Gluten": "Gluten",
+                "Lait": "Lait",
+                "Œufs": "Œufs",
+                "Moutarde": "Moutarde",
+                "Sésame": "Sésame",
+                "Soja": "Soja",
+                "Céleri": "Céleri",
+                "Fruits à coque": "Fruits à coque",
+                "Arachides": "Arachides",
+                "Poisson": "Poisson",
+                "Crustacés": "Crustacés",
+                "Sulfites": "Sulfites"
+            },
+            "default_value": [],
+            "return_format": "value",
+            "allow_custom": 0,
+            "save_custom": 0,
+            "layout": "horizontal",
+            "toggle": 0,
+            "allow_in_bindings": 0,
+            "custom_choice_button_text": "Ajouter un nouveau choix"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "product"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Valeurs nutritionnelles et allergènes affichés sur la fiche produit.",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1792403859
+}

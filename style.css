@@ -851,6 +851,59 @@ input[type="submit"]:hover {
   outline-offset: 0.125rem;
 }
 
+/* Valeurs nutritionnelles (sous le titre de la fiche produit, US-4) */
+.pepe-nutrition {
+  margin-bottom: var(--spacing-md);
+}
+
+.pepe-nutrition__titre {
+  margin-bottom: var(--spacing-xs);
+  font-family: var(--ff-titre);
+  font-size: var(--fs-texte);
+  color: var(--color-beige);
+}
+
+.pepe-nutrition__portion {
+  font-family: var(--ff-texte);
+  font-size: var(--fs-petit);
+}
+
+.pepe-nutrition__liste {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin: 0 0 var(--spacing-sm);
+  list-style: none;
+}
+
+/* Petite carte beige : la valeur en gros, le nom en dessous */
+.pepe-nutrition__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 5.5rem;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-md);
+  background: var(--color-beige);
+  color: var(--color-brun);
+  text-align: center;
+}
+
+.pepe-nutrition__valeur {
+  font-weight: 700;
+}
+
+.pepe-nutrition__nom {
+  font-size: var(--fs-petit);
+  line-height: 1.2;
+}
+
+.pepe-nutrition__allergenes {
+  margin: 0;
+  font-size: var(--fs-petit);
+  color: var(--color-beige);
+}
+
 /* 10. Messages WooCommerce (ajout au panier, erreurs…) */
 .woocommerce-message,
 .woocommerce-info,
