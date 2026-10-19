@@ -904,6 +904,395 @@ input[type="submit"]:hover {
   color: var(--color-beige);
 }
 
+/* Page Panier (IT-5, US-5.3) */
+.pepe-panier__entete {
+  margin-bottom: var(--spacing-lg);
+}
+
+.pepe-panier__titre {
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--fs-h1);
+  color: var(--color-beige);
+}
+
+.pepe-panier__nombre {
+  font-family: var(--ff-texte);
+  font-size: var(--fs-petit);
+  vertical-align: middle;
+}
+
+.pepe-etapes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin: 0;
+  list-style: none;
+  font-size: var(--fs-petit);
+  color: var(--color-beige);
+}
+
+.pepe-etapes__item + .pepe-etapes__item::before {
+  content: "›";
+  margin-right: var(--spacing-sm);
+}
+
+.pepe-etapes__item--actif {
+  font-weight: 700;
+  color: var(--color-jaune);
+}
+
+/* Deux colonnes : articles à gauche, récapitulatif à droite */
+.pepe-panier__contenu {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 22rem;
+  gap: var(--spacing-lg);
+  align-items: start;
+}
+
+.pepe-panier__liste {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin: 0;
+  list-style: none;
+}
+
+/* Carte d'un article */
+.pepe-article {
+  display: grid;
+  grid-template-columns: 5rem 1fr auto auto auto;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-lg);
+  background: var(--color-beige);
+  color: var(--color-brun);
+}
+
+.pepe-article__image img {
+  display: block;
+  width: 5rem;
+  height: 5rem;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
+.pepe-article__infos {
+  min-width: 0;
+}
+
+.pepe-article__nom {
+  margin: 0 0 var(--spacing-xxs);
+  font-size: var(--fs-h3);
+}
+
+.pepe-panier .pepe-article .pepe-article__nom a {
+  color: var(--color-brun);
+  text-decoration: none;
+}
+
+.pepe-article__details {
+  margin: 0 0 var(--spacing-xxs);
+  font-size: var(--fs-petit);
+}
+
+.pepe-article__modifier {
+  font-size: var(--fs-petit);
+  color: var(--color-rouge);
+}
+
+/* Quantité : − 1 + dans une pilule blanche */
+.pepe-article__quantite {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-xxs);
+  border-radius: var(--radius-pilule);
+  background: var(--color-blanc);
+}
+
+.pepe-article__quantite .quantity .qty {
+  width: 2.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--color-brun);
+  font-weight: 700;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+.pepe-article__quantite .qty::-webkit-outer-spin-button,
+.pepe-article__quantite .qty::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+.pepe-article .pepe-quantite__bouton {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  box-shadow: none;
+  color: var(--color-rouge);
+  font-weight: 700;
+}
+
+.pepe-article .pepe-quantite__bouton:hover {
+  background: var(--color-beige);
+}
+
+.pepe-article__prix {
+  margin: 0;
+  font-family: var(--ff-titre);
+  font-size: var(--fs-h3);
+  color: var(--color-rouge);
+  white-space: nowrap;
+}
+
+/* Croix simple au lieu de l'icône ronde de Storefront */
+.pepe-article .pepe-article__supprimer .remove::before {
+  content: "×";
+  font-family: var(--ff-texte);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--color-brun);
+}
+
+/* Bouton caché : déclenché par les boutons − / + */
+.pepe-panier__maj {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+/* « Un petit plus ? » */
+.pepe-suggestions {
+  margin-top: var(--spacing-lg);
+}
+
+.pepe-suggestions__titre {
+  font-size: var(--fs-h2);
+  color: var(--color-beige);
+}
+
+.pepe-suggestions__liste {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-sm);
+  margin: 0;
+  list-style: none;
+}
+
+.pepe-suggestion {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-md);
+  background: var(--color-beige);
+}
+
+.pepe-suggestion__image img {
+  display: block;
+  width: 3rem;
+  height: 3rem;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+}
+
+.pepe-suggestion__infos {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  font-size: var(--fs-petit);
+}
+
+.pepe-panier .pepe-suggestions .pepe-suggestion__nom {
+  font-family: var(--ff-titre);
+  color: var(--color-brun);
+  text-decoration: none;
+}
+
+.pepe-suggestion__prix {
+  color: var(--color-rouge);
+  font-weight: 700;
+}
+
+.pepe-panier .pepe-suggestions .pepe-suggestion__ajouter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--color-jaune);
+  box-shadow: var(--shadow-cartoon);
+  color: var(--color-brun);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Récapitulatif (colonne de droite) */
+.pepe-recap {
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-xl);
+  background: var(--color-beige);
+  color: var(--color-brun);
+}
+
+.pepe-recap__titre {
+  font-size: var(--fs-h2);
+  color: var(--color-brun);
+}
+
+.pepe-recap__bloc {
+  margin: 0 0 var(--spacing-md);
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+.pepe-recap .pepe-recap__sous-titre {
+  display: block;
+  margin: 0 0 var(--spacing-xs);
+  padding: 0;
+  background: none;
+  font-weight: 700;
+  font-size: var(--fs-petit);
+}
+
+/* Mode de récupération : cartes avec bouton radio (US-5.4) */
+.pepe-expedition__choix {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-xs);
+  padding: var(--spacing-sm);
+  border: 0.125rem solid var(--color-beige-hover);
+  border-radius: var(--radius-md);
+  background: var(--color-blanc);
+  cursor: pointer;
+}
+
+.pepe-expedition__choix:has(.pepe-expedition__radio:checked) {
+  border-color: var(--color-rouge);
+}
+
+.pepe-expedition__radio {
+  accent-color: var(--color-rouge);
+}
+
+.pepe-expedition__texte {
+  display: flex;
+  flex-direction: column;
+}
+
+.pepe-expedition__nom {
+  font-family: var(--ff-titre);
+}
+
+.pepe-expedition__detail {
+  font-size: var(--fs-petit);
+}
+
+/* Code promo */
+.pepe-promo {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.pepe-promo .pepe-promo__champ {
+  flex: 1;
+  min-width: 0;
+  border-radius: var(--radius-sm);
+  background: var(--color-blanc);
+}
+
+.pepe-recap .pepe-promo__bouton {
+  border: 0.125rem solid var(--color-rouge);
+  background: var(--color-blanc);
+  color: var(--color-rouge);
+}
+
+.pepe-promo__applique {
+  margin: var(--spacing-xs) 0 0;
+  font-size: var(--fs-petit);
+}
+
+/* Totaux */
+.pepe-recap__totaux {
+  width: 100%;
+  margin-bottom: var(--spacing-md);
+  border-collapse: collapse;
+}
+
+/* 3 classes : plus précis que les lignes grises des tableaux Storefront */
+.pepe-recap .pepe-recap__totaux .pepe-recap__ligne th,
+.pepe-recap .pepe-recap__totaux .pepe-recap__ligne td {
+  padding: var(--spacing-xxs) 0;
+  border: 0;
+  background: none;
+  font-size: var(--fs-petit);
+  font-weight: 400;
+}
+
+.pepe-recap .pepe-recap__totaux .pepe-recap__ligne td {
+  text-align: right;
+}
+
+.pepe-recap .pepe-recap__totaux .pepe-recap__ligne--total th,
+.pepe-recap .pepe-recap__totaux .pepe-recap__ligne--total td {
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--color-beige-hover);
+  font-family: var(--ff-titre);
+  font-size: var(--fs-h3);
+}
+
+.pepe-recap .pepe-recap__totaux .pepe-recap__ligne--total td {
+  color: var(--color-rouge);
+}
+
+/* Bouton rouge de la maquette (Storefront le met en gris foncé avec une flèche) */
+.pepe-recap .wc-proceed-to-checkout .pepe-recap__valider {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-pilule);
+  background: var(--color-rouge);
+  box-shadow: var(--shadow-cartoon);
+  color: var(--color-beige);
+  font-family: var(--ff-titre);
+  font-size: var(--fs-texte);
+  text-align: center;
+}
+
+.pepe-recap .wc-proceed-to-checkout .pepe-recap__valider:hover {
+  background: var(--color-rouge-hover);
+}
+
+.pepe-recap .wc-proceed-to-checkout .pepe-recap__valider::after {
+  content: none;
+}
+
+/* Sur le panier : pas de fil d'Ariane ni de titre de page (remplacés par « Mon panier ») */
+.woocommerce-cart .storefront-breadcrumb,
+.woocommerce-cart .entry-header:has(.entry-title:empty) {
+  display: none;
+}
+
+.pepe-recap__note {
+  margin: var(--spacing-xs) 0 0;
+  font-size: var(--fs-petit);
+  text-align: center;
+}
+
 /* 10. Messages WooCommerce (ajout au panier, erreurs…) */
 .woocommerce-message,
 .woocommerce-info,
@@ -992,6 +1381,50 @@ input[type="submit"]:hover {
 
 /* 12. Mobile (moins de 768px, comme Storefront) */
 @media (max-width: 767px) {
+  /* Panier : une seule colonne, carte d'article sur 2 lignes */
+  .pepe-panier__contenu {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pepe-article {
+    grid-template-columns: 4rem minmax(0, 1fr) auto;
+    grid-template-areas:
+      "image infos    supprimer"
+      "image quantite prix";
+    gap: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .pepe-article__image {
+    grid-area: image;
+  }
+
+  .pepe-article__infos {
+    grid-area: infos;
+  }
+
+  .pepe-article__supprimer {
+    grid-area: supprimer;
+    align-self: start;
+  }
+
+  .pepe-article__prix {
+    grid-area: prix;
+  }
+
+  .pepe-article__image img {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .pepe-article__quantite {
+    grid-area: quantite;
+    justify-self: start;
+  }
+
+  .pepe-suggestions__liste {
+    grid-template-columns: 1fr;
+  }
+
   /* Tailles de texte du mode « Mobile » de Figma : 30 / 28 / 19 / 15 / 13 px */
   :root {
     --fs-h1: 1.875rem;

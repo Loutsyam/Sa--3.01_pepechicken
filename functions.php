@@ -19,6 +19,9 @@ require_once get_stylesheet_directory() . '/inc/options-prix.php';
 // US-4 : valeurs nutritionnelles (champs SCF du groupe « Valeurs nutritionnelles »)
 require_once get_stylesheet_directory() . '/inc/valeurs-nutritionnelles.php';
 
+// IT-5 : page Panier et choix du mode d'expédition
+require_once get_stylesheet_directory() . '/inc/panier.php';
+
 /* Réglages des hooks Storefront */
 add_action( 'init', function () {
     // Header : on retire la recherche et le menu secondaire (absents de la maquette)
