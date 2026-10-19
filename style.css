@@ -3,7 +3,7 @@ Theme Name:   Pepe Chicken
 Description:  Thème enfant Storefront – Click & collect Pepe Chicken (SAÉ 3.01)
 Author:       Sanchez--Perrault Loutsyam
 Template:     storefront
-Version:      1.3.0
+Version:      1.4.0
 Text Domain:  pepe-chicken
 */
 
@@ -751,6 +751,104 @@ input[type="submit"]:hover {
 .single-product .related.products > h2,
 .single-product .upsells.products > h2 {
   font-size: var(--fs-h2);
+}
+
+/* Sélecteur d'options (IT-3, US-3.2) : maquette + Design System */
+/* Le formulaire passe à la ligne : options au-dessus, quantité + bouton en dessous */
+.single-product div.product form.cart:has(.pepe-choix-liste) {
+  flex-wrap: wrap;
+}
+
+/* Carte beige comme les onglets de la fiche produit */
+.pepe-choix-liste {
+  flex: 1 0 100%;
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  background: var(--color-beige);
+}
+
+.pepe-choix-liste .pepe-choix {
+  margin: 0 0 var(--spacing-md);
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+.pepe-choix-liste .pepe-choix:last-child {
+  margin-bottom: 0;
+}
+
+.pepe-choix-liste .pepe-choix__titre {
+  margin: 0 0 var(--spacing-xs);
+  padding: 0;
+  font-family: var(--ff-titre);
+  font-size: var(--fs-h3);
+  font-weight: 400;
+  color: var(--color-brun);
+  background: none;
+}
+
+.pepe-choix__note {
+  font-family: var(--ff-texte);
+  font-size: var(--fs-petit);
+  font-weight: 400;
+}
+
+/* Groupes du menu (accompagnement, boisson) : affichés seulement
+   quand la pilule « Menu » est cochée */
+.pepe-choix-liste .pepe-choix--menu {
+  display: none;
+}
+
+.pepe-choix-liste:has(.pepe-option__input[data-menu]:checked) .pepe-choix--menu {
+  display: block;
+}
+
+.pepe-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+/* Pilule (composant pepe-option du Design System) */
+.pepe-option {
+  position: relative;
+  font-family: var(--ff-texte);
+  font-weight: 600;
+  font-size: var(--fs-petit);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-pilule);
+  border: 0.125rem solid var(--color-beige-hover);
+  background: var(--color-blanc);
+  color: var(--color-brun);
+  cursor: pointer;
+}
+
+.pepe-option:hover {
+  border-color: var(--color-rouge);
+}
+
+/* Le vrai bouton radio / la case est invisible mais reste utilisable au clavier */
+.pepe-option__input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+}
+
+/* Option choisie : même style que pepe-option--actif du Design System */
+.pepe-option--actif,
+.pepe-option:has(.pepe-option__input:checked) {
+  background: var(--color-rouge);
+  border-color: var(--color-beige);
+  color: var(--color-beige);
+}
+
+/* Focus clavier visible */
+.pepe-option:has(.pepe-option__input:focus-visible) {
+  outline: 0.1875rem solid var(--color-jaune);
+  outline-offset: 0.125rem;
 }
 
 /* 10. Messages WooCommerce (ajout au panier, erreurs…) */
