@@ -16,8 +16,8 @@ function pepe_script_prix() {
         wp_enqueue_script(
             'pepe-options-prix',
             get_stylesheet_directory_uri() . '/js/options-prix.js',
-            array(),
-            '1.0.0',
+            array( 'jquery' ),
+            '1.1.0',
             true
         );
     }
@@ -34,8 +34,15 @@ function pepe_choix_envoyes( $produit_id ) {
     $choix = array();
 
     // Formule Menu choisie ? (sinon accompagnement et boisson ne comptent pas)
-    $formule = isset( $_POST['pepe_formule'] ) ? sanitize_text_field( wp_unslash( $_POST['pepe_formule'] ) ) : '';
-    $est_menu = ! isset( $options['pepe_formule'] ) || 'Menu' === $formule;
+    // Pilules SCF : champ pepe_formule / Variation (US-3.1) : champ attribute_formule
+    if ( isset( $options['pepe_formule'] ) ) {
+        $formule  = isset( $_POST['pepe_formule'] ) ? sanitize_text_field( wp_unslash( $_POST['pepe_formule'] ) ) : '';
+        $est_menu = 'Menu' === $formule;
+    } elseif ( isset( $_POST['attribute_formule'] ) ) {
+        $est_menu = 'Menu' === sanitize_text_field( wp_unslash( $_POST['attribute_formule'] ) );
+    } else {
+        $est_menu = true;
+    }
 
     foreach ( $options as $nom => $groupe ) {
         if ( $groupe['menu'] && ! $est_menu ) {

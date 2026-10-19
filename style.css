@@ -800,7 +800,8 @@ input[type="submit"]:hover {
   display: none;
 }
 
-.pepe-choix-liste:has(.pepe-option__input[data-menu]:checked) .pepe-choix--menu {
+.pepe-choix-liste:has(.pepe-option__input[data-menu]:checked) .pepe-choix--menu,
+.pepe-choix-liste--menu .pepe-choix--menu {
   display: block;
 }
 
@@ -826,6 +827,13 @@ input[type="submit"]:hover {
 
 .pepe-option:hover {
   border-color: var(--color-rouge);
+}
+
+/* Pilule d'une variation épuisée (US-3.1) */
+.pepe-option--epuise {
+  opacity: 0.5;
+  text-decoration: line-through;
+  cursor: not-allowed;
 }
 
 /* Le vrai bouton radio / la case est invisible mais reste utilisable au clavier */
@@ -902,6 +910,90 @@ input[type="submit"]:hover {
   margin: 0;
   font-size: var(--fs-petit);
   color: var(--color-beige);
+}
+
+/* Variations sur la fiche produit (US-3.1) : même aspect que les options */
+.single-product table.variations {
+  width: 100%;
+  margin: 0 0 var(--spacing-md);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  background: var(--color-beige);
+}
+
+.single-product table.variations tr,
+.single-product table.variations th,
+.single-product table.variations td {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+}
+
+.single-product table.variations th label {
+  font-family: var(--ff-titre);
+  font-size: var(--fs-h3);
+  font-weight: 400;
+  color: var(--color-brun);
+}
+
+.single-product .variations .pepe-options__select,
+.single-product .variations .reset_variations,
+.single-product .woocommerce-variation-price {
+  display: none;
+}
+
+/* Les pilules des variations sont des <button> : on retire le style jaune des boutons du thème */
+.single-product .variations .pepe-option {
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: 0.125rem solid var(--color-beige-hover);
+  border-radius: var(--radius-pilule);
+  background: var(--color-blanc);
+  box-shadow: none;
+  color: var(--color-brun);
+  font-family: var(--ff-texte);
+  font-size: var(--fs-petit);
+  font-weight: 600;
+}
+
+.single-product .variations .pepe-option:hover {
+  border-color: var(--color-rouge);
+}
+
+.single-product .variations .pepe-option--actif,
+.single-product .variations .pepe-option--actif:hover {
+  border-color: var(--color-beige);
+  background: var(--color-rouge);
+  color: var(--color-beige);
+}
+
+.single-product table.variations th.label {
+  padding-bottom: var(--spacing-xs);
+}
+
+/* Stock de la variation : « Plus que 3 en stock » / « Rupture de stock » */
+.single-product .woocommerce-variation-availability .stock {
+  margin: 0 0 var(--spacing-sm);
+  font-weight: 700;
+  color: var(--color-jaune);
+}
+
+.single-product .woocommerce-variation-availability .out-of-stock {
+  color: var(--color-beige);
+}
+
+/* Produit variable : variations, stock et options les uns sous les autres,
+   puis quantité + bouton sur la même ligne (comme un produit simple) */
+.single-product div.product form.variations_form {
+  display: block;
+}
+
+.single-product .woocommerce-variation-add-to-cart {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-md);
 }
 
 /* Page Panier (IT-5, US-5.3) */

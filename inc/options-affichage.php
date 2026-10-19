@@ -71,6 +71,24 @@ function pepe_options_du_produit( $produit_id ) {
     return $options;
 }
 
+/**
+ * Le produit est-il variable avec un attribut « Formule » (Burger seul / Menu) ?
+ * (US-3.1 : la formule est une vraie variation WooCommerce, avec son prix et son stock)
+ */
+function pepe_a_formule_variable( $produit ) {
+    if ( ! $produit || ! $produit->is_type( 'variable' ) ) {
+        return false;
+    }
+
+    foreach ( array_keys( $produit->get_variation_attributes() ) as $attribut ) {
+        if ( 'formule' === sanitize_title( $attribut ) ) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 /* Affiche les options juste avant le bouton « Ajouter au panier » */
 function pepe_afficher_options() {
     global $product;
@@ -82,7 +100,8 @@ function pepe_afficher_options() {
     }
 
     // Accompagnement et boisson ne sont cachés que si le produit a une formule
-    $a_une_formule = isset( $options['pepe_formule'] );
+    // (pilules SCF « Formule » ou variations Burger seul / Menu)
+    $a_une_formule = isset( $options['pepe_formule'] ) || pepe_a_formule_variable( $product );
 
     // Données pour le calcul du prix en JavaScript (US-3.3)
     echo '<div class="pepe-choix-liste"';
@@ -152,3 +171,31 @@ function pepe_pas_d_ajax_si_options( $supporte, $fonction, $produit ) {
     return $supporte;
 }
 add_filter( 'woocommerce_product_supports', 'pepe_pas_d_ajax_si_options', 10, 3 );
+
+/*
+ * Variations (US-3.1) : WooCommerce affiche une liste déroulante par attribut.
+ * On la garde (son script s'en sert pour trouver la variation, son prix et
+ * son stock) mais on la cache, et on affiche les mêmes pilules que les options.
+ */
+function pepe_classe_liste_variation( $args ) {
+    $args['class'] = 'pepe-options__select';
+    return $args;
+}
+add_filter( 'woocommerce_dropdown_variation_attribute_options_args', 'pepe_classe_liste_variation' );
+
+function pepe_pilules_variation( $html, $args ) {
+    if ( empty( $args['options'] ) ) {
+        return $html;
+    }
+
+    $pilules = '<div class="pepe-options" role="group" aria-label="' . esc_attr( wc_attribute_label( $args['attribute'], $args['product'] ) ) . '">';
+
+    foreach ( $args['options'] as $option ) {
+        $pilules .= '<button type="button" class="pepe-option pepe-option--variation" data-valeur="' . esc_attr( $option ) . '" aria-pressed="false">' . esc_html( $option ) . '</button>';
+    }
+
+    $pilules .= '</div>';
+
+    return $html . $pilules;
+}
+add_filter( 'woocommerce_dropdown_variation_attribute_options_html', 'pepe_pilules_variation', 10, 2 );

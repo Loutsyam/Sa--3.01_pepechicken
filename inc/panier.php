@@ -39,11 +39,20 @@ add_action( 'wp_enqueue_scripts', 'pepe_script_panier' );
  * (les choix sont enregistrés dans le panier par inc/options-prix.php).
  */
 function pepe_details_article_panier( $article ) {
-    if ( empty( $article['pepe_choix'] ) ) {
-        return '';
+    $details = array();
+
+    // Variation choisie (US-3.1) : « Menu » ou « Burger seul »
+    if ( ! empty( $article['variation'] ) ) {
+        foreach ( $article['variation'] as $valeur ) {
+            $details[] = $valeur;
+        }
     }
 
-    return implode( ' · ', array_values( $article['pepe_choix'] ) );
+    if ( ! empty( $article['pepe_choix'] ) ) {
+        $details = array_merge( $details, array_values( $article['pepe_choix'] ) );
+    }
+
+    return implode( ' · ', $details );
 }
 
 /**
