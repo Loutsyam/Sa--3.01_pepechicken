@@ -1,0 +1,221 @@
+{
+    "key": "group_pepe_options",
+    "title": "Options du produit",
+    "fields": [
+        {
+            "key": "field_pepe_formule",
+            "label": "Formule",
+            "name": "pepe_formule",
+            "aria-label": "",
+            "type": "checkbox",
+            "instructions": "obligatoire",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Burger seul": "Burger seul",
+                "Menu": "Menu (+ side + boisson) +3,50 €"
+            },
+            "default_value": [],
+            "return_format": "array",
+            "allow_custom": 0,
+            "save_custom": 0,
+            "layout": "horizontal",
+            "toggle": 1,
+            "allow_in_bindings": 0,
+            "custom_choice_button_text": "Ajouter un nouveau choix"
+        },
+        {
+            "key": "field_pepe_accompagnement",
+            "label": "Accompagnement",
+            "name": "pepe_accompagnement",
+            "aria-label": "",
+            "type": "checkbox",
+            "instructions": "inclus dans le menu",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Waffle Fries": "Waffle Fries",
+                "Tater Tots": "Tater Tots",
+                "Frites de patates douces": "Frites de patates douces",
+                "Mac'n Cheese Balls": "Mac'n Cheese Balls +1,00 €"
+            },
+            "default_value": [],
+            "return_format": "array",
+            "allow_custom": 0,
+            "save_custom": 0,
+            "layout": "horizontal",
+            "toggle": 1,
+            "allow_in_bindings": 0,
+            "custom_choice_button_text": "Ajouter un nouveau choix"
+        },
+        {
+            "key": "field_pepe_boisson",
+            "label": "Boisson",
+            "name": "pepe_boisson",
+            "aria-label": "",
+            "type": "checkbox",
+            "instructions": "inclus dans le menu",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Pop's Mangue Passion": "Pop's Mangue Passion",
+                "Pop's Pêche": "Pop's Pêche",
+                "Pop's Goyave": "Pop's Goyave"
+            },
+            "default_value": [],
+            "return_format": "array",
+            "allow_custom": 0,
+            "save_custom": 0,
+            "layout": "horizontal",
+            "toggle": 1,
+            "allow_in_bindings": 0,
+            "custom_choice_button_text": "Ajouter un nouveau choix"
+        },
+        {
+            "key": "field_pepe_sauce",
+            "label": "Sauce",
+            "name": "pepe_sauce",
+            "aria-label": "",
+            "type": "checkbox",
+            "instructions": "1 incluse",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Original Pepe": "Original Pepe",
+                "Creamy BBQ": "Creamy BBQ",
+                "Sauce Verte": "Sauce Verte",
+                "Pepe Hot Sauce": "Pepe Hot Sauce"
+            },
+            "default_value": [],
+            "return_format": "array",
+            "allow_custom": 0,
+            "save_custom": 0,
+            "layout": "horizontal",
+            "toggle": 1,
+            "allow_in_bindings": 0,
+            "custom_choice_button_text": "Ajouter un nouveau choix"
+        },
+        {
+            "key": "field_pepe_piquant",
+            "label": "Niveau de piquant",
+            "name": "pepe_piquant",
+            "aria-label": "",
+            "type": "checkbox",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Doux": "Doux",
+                "Medium": "Medium",
+                "Hot": "Hot"
+            },
+            "default_value": [],
+            "return_format": "array",
+            "allow_custom": 0,
+            "save_custom": 0,
+            "layout": "horizontal",
+            "toggle": 1,
+            "allow_in_bindings": 0,
+            "custom_choice_button_text": "Ajouter un nouveau choix"
+        },
+        {
+            "key": "field_pepe_retirer",
+            "label": "Retirer des ingrédients",
+            "name": "pepe_retirer",
+            "aria-label": "",
+            "type": "checkbox",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Sans pickles": "Sans pickles",
+                "Sans salade": "Sans salade",
+                "Sans cheddar": "Sans cheddar"
+            },
+            "default_value": [],
+            "return_format": "array",
+            "allow_custom": 0,
+            "save_custom": 0,
+            "layout": "horizontal",
+            "toggle": 1,
+            "allow_in_bindings": 0,
+            "custom_choice_button_text": "Ajouter un nouveau choix"
+        },
+        {
+            "key": "field_pepe_supplements",
+            "label": "Suppléments",
+            "name": "pepe_supplements",
+            "aria-label": "",
+            "type": "checkbox",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Bacon de dinde": "Bacon de dinde +1,00 €",
+                "Double cheddar": "Double cheddar +0,80 €"
+            },
+            "default_value": [],
+            "return_format": "array",
+            "allow_custom": 0,
+            "save_custom": 0,
+            "layout": "horizontal",
+            "toggle": 1,
+            "allow_in_bindings": 0,
+            "custom_choice_button_text": "Ajouter un nouveau choix"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "product"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Options que le client choisit sur la fiche produit. Cocher les choix proposés pour ce produit (rien de coché = groupe non affiché).",
+    "show_in_rest": 0,
+    "modified": 1792400000
+}
