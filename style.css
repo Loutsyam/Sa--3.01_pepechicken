@@ -11,9 +11,10 @@ Text Domain:  pepe-chicken
   Sommaire
   1. Polices          6. Fil d'Ariane      11. Valeurs nutritionnelles
   2. Variables        7. Boutique          12. Panier
-  3. Base             8. Cartes produit    13. Messages WooCommerce
-  4. Boutons          9. Fiche produit     14. Footer
-  5. Header           10. Options          15. Mobile
+  3. Base             8. Cartes produit    13. Commande
+  4. Boutons          9. Fiche produit     14. Messages WooCommerce
+  5. Header           10. Options          15. Footer
+                                           16. Mobile
 
   Classes « pepe- » : celles du thème (BEM). Les autres viennent de Storefront
   ou de WooCommerce. Pas de !important : on écrit un sélecteur plus précis.
@@ -1347,9 +1348,11 @@ input[type="submit"]:hover {
   content: none;
 }
 
-/* Pas de fil d'Ariane ni de titre de page sur le panier */
+/* Pas de fil d'Ariane ni de titre de page sur le panier et la commande */
 .woocommerce-cart .storefront-breadcrumb,
-.woocommerce-cart .entry-header:has(.entry-title:empty) {
+.woocommerce-checkout .storefront-breadcrumb,
+.woocommerce-cart .entry-header:has(.entry-title:empty),
+.woocommerce-checkout .entry-header:has(.entry-title:empty) {
   display: none;
 }
 
@@ -1359,7 +1362,249 @@ input[type="submit"]:hover {
   text-align: center;
 }
 
-/* 13. Messages WooCommerce */
+/* 13. Commande (checkout) */
+.pepe-commande__contenu {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 22rem;
+  gap: var(--spacing-lg);
+  align-items: start;
+}
+
+.pepe-commande__gauche {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+/* Les ::before / ::after de Storefront prendraient une case de la grille : on les cache */
+.pepe-commande form.pepe-commande__contenu::before,
+.pepe-commande form.pepe-commande__contenu::after {
+  display: none;
+}
+
+/* Pays : champ caché (toujours la France) */
+.pepe-commande #billing_country_field {
+  display: none;
+}
+
+/* Les colonnes en float de Storefront (#customer_details, #order_review) : annulées */
+.pepe-commande #customer_details,
+.pepe-commande #order_review,
+.pepe-commande #order_review_heading {
+  width: auto;
+  float: none;
+  margin: 0;
+}
+
+.pepe-commande #order_review {
+  background: var(--color-beige);
+}
+
+/* Carte beige */
+.pepe-commande__carte {
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-xl);
+  background: var(--color-beige);
+  color: var(--color-brun);
+}
+
+.pepe-commande .pepe-commande__titre {
+  margin: 0 0 var(--spacing-sm);
+  font-size: var(--fs-h3);
+  color: var(--color-brun);
+}
+
+/* Mes coordonnées */
+.pepe-commande .woocommerce-billing-fields > h3 {
+  display: none;
+}
+
+.pepe-commande .woocommerce-billing-fields label {
+  font-size: var(--fs-petit);
+  color: var(--color-brun);
+}
+
+.pepe-commande .woocommerce-billing-fields .input-text {
+  border-radius: var(--radius-sm);
+  background: var(--color-blanc);
+}
+
+.pepe-commande__connexion {
+  margin: 0;
+  font-size: var(--fs-petit);
+}
+
+.pepe-commande__connexion a {
+  font-weight: 700;
+  color: var(--color-rouge);
+}
+
+/* Retrait en restaurant */
+.pepe-retrait__mode {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  border: 0.125rem solid var(--color-rouge);
+  border-radius: var(--radius-md);
+  background: var(--color-blanc);
+}
+
+.pepe-retrait__nom {
+  margin: 0;
+  font-family: var(--ff-titre);
+}
+
+.pepe-retrait__detail {
+  margin: 0;
+  font-size: var(--fs-petit);
+}
+
+.pepe-retrait__modifier {
+  font-weight: 700;
+  font-size: var(--fs-petit);
+  color: var(--color-rouge);
+}
+
+/* Instructions pour le retrait (texte réglé dans l'admin) */
+.pepe-instructions {
+  margin-top: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  border: 0.125rem solid var(--color-jaune);
+  border-radius: var(--radius-md);
+  background: var(--color-blanc);
+}
+
+.pepe-commande .pepe-instructions__titre {
+  margin: 0 0 var(--spacing-xxs);
+  font-size: var(--fs-texte);
+  color: var(--color-brun);
+}
+
+.pepe-instructions__texte {
+  margin: 0;
+  font-size: var(--fs-petit);
+}
+
+/* Paiement : #payment dans le sélecteur pour passer devant Storefront */
+#payment.pepe-paiement {
+  background: none;
+}
+
+#payment .pepe-paiement__liste {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+}
+
+/* .pepe-commande + #payment : plus précis que les styles de Storefront */
+.pepe-commande #payment .pepe-paiement__liste .pepe-paiement__choix {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--spacing-xs);
+  padding: var(--spacing-sm);
+  border: 0.125rem solid var(--color-beige-hover);
+  border-radius: var(--radius-md);
+  background: var(--color-blanc);
+}
+
+.pepe-commande #payment .pepe-paiement__liste .pepe-paiement__choix:last-child {
+  margin-bottom: 0;
+  padding-bottom: var(--spacing-sm);
+}
+
+.pepe-commande #payment .pepe-paiement__liste .pepe-paiement__choix:has(.pepe-paiement__radio:checked) {
+  border-color: var(--color-rouge);
+}
+
+/* Le rond est dessiné par Storefront devant le nom (label::before) */
+.pepe-commande #payment .pepe-paiement__choix .pepe-paiement__texte {
+  display: block;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.pepe-paiement__nom {
+  font-family: var(--ff-titre);
+}
+
+.pepe-paiement__description {
+  display: block;
+  padding-left: 1.75rem;
+  font-size: var(--fs-petit);
+}
+
+#payment .pepe-paiement__valider {
+  margin: var(--spacing-md) 0 0;
+  padding: 0;
+  background: none;
+}
+
+/* Bouton jaune « Passer la commande 32,85 € » */
+#payment .pepe-paiement__valider .pepe-commande__payer {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-pilule);
+  background: var(--color-jaune);
+  box-shadow: var(--shadow-cartoon);
+  color: var(--color-brun);
+  font-family: var(--ff-titre);
+  font-size: var(--fs-texte);
+}
+
+#payment .pepe-paiement__valider .pepe-commande__payer:hover {
+  background: var(--color-jaune-hover);
+}
+
+/* Ma commande */
+.pepe-resume {
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+}
+
+.pepe-commande .pepe-resume .pepe-resume__ligne th,
+.pepe-commande .pepe-resume .pepe-resume__ligne td {
+  padding: var(--spacing-xxs) 0;
+  border: 0;
+  background: none;
+  font-size: var(--fs-petit);
+  font-weight: 400;
+  vertical-align: top;
+}
+
+.pepe-commande .pepe-resume .pepe-resume__ligne td {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.pepe-resume__details {
+  display: block;
+  opacity: 0.8;
+}
+
+.pepe-commande .pepe-resume .pepe-resume__ligne--separation th,
+.pepe-commande .pepe-resume .pepe-resume__ligne--separation td {
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--color-beige-hover);
+}
+
+.pepe-commande .pepe-resume .pepe-resume__ligne--total th,
+.pepe-commande .pepe-resume .pepe-resume__ligne--total td {
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--color-beige-hover);
+  font-family: var(--ff-titre);
+  font-size: var(--fs-h3);
+}
+
+.pepe-commande .pepe-resume .pepe-resume__ligne--total td {
+  color: var(--color-rouge);
+}
+
+/* 14. Messages WooCommerce */
 .woocommerce-message,
 .woocommerce-info,
 .woocommerce-error {
@@ -1374,7 +1619,7 @@ input[type="submit"]:hover {
   color: var(--color-rouge);
 }
 
-/* 14. Footer */
+/* 15. Footer */
 .site-footer {
   background: var(--color-beige);
   color: var(--color-brun);
@@ -1441,8 +1686,17 @@ input[type="submit"]:hover {
   display: none;
 }
 
-/* 15. Mobile (moins de 768 px) */
+/* 16. Mobile (moins de 768 px) */
 @media (max-width: 767px) {
+  /* Commande : une seule colonne, « Ma commande » en premier */
+  .pepe-commande__contenu {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pepe-commande__droite {
+    order: -1;
+  }
+
   /* Panier : une seule colonne, carte d'article sur 2 lignes */
   .pepe-panier__contenu {
     grid-template-columns: minmax(0, 1fr);

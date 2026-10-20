@@ -14,6 +14,7 @@ require_once get_stylesheet_directory() . '/inc/options-affichage.php';      // 
 require_once get_stylesheet_directory() . '/inc/options-prix.php';           // IT-3 : prix, panier et commande
 require_once get_stylesheet_directory() . '/inc/valeurs-nutritionnelles.php'; // IT-4 : valeurs nutritionnelles
 require_once get_stylesheet_directory() . '/inc/panier.php';                 // IT-5 : page Panier
+require_once get_stylesheet_directory() . '/inc/commande.php';               // IT-6 : validation de commande
 
 
 /* ---------- Header et footer de Storefront ---------- */

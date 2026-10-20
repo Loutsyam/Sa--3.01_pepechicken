@@ -1,0 +1,46 @@
+{
+    "key": "group_pepe_retrait",
+    "title": "Instructions pour le retrait",
+    "fields": [
+        {
+            "key": "field_pepe_instructions_retrait",
+            "label": "Texte des instructions",
+            "name": "pepe_instructions_retrait",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Affiché sur la page de validation de commande quand le client choisit le retrait en boutique.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Présente-toi au comptoir « Click & Collect » avec ton numéro de commande. Ta commande est prête à l'heure choisie et gardée au chaud 15 minutes. Paiement possible sur place si tu as choisi « Payer au retrait ».",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 4,
+            "placeholder": "",
+            "new_lines": "br"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "pepe-instructions-retrait"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Texte « Instructions pour le retrait » de la page de validation de commande.",
+    "show_in_rest": 0,
+    "modified": 1792482238
+}
