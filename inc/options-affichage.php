@@ -199,3 +199,18 @@ function pepe_pilules_variation( $html, $args ) {
     return $html . $pilules;
 }
 add_filter( 'woocommerce_dropdown_variation_attribute_options_html', 'pepe_pilules_variation', 10, 2 );
+
+/*
+ * Quantité + bouton « Ajouter au panier » dans un bloc qui reste collé en bas
+ * de l'écran pendant qu'on choisit les options (ligne de flottaison).
+ * Mêmes crochets pour les produits simples et variables.
+ */
+function pepe_debut_bloc_achat() {
+    echo '<div class="pepe-achat">';
+}
+add_action( 'woocommerce_before_add_to_cart_quantity', 'pepe_debut_bloc_achat' );
+
+function pepe_fin_bloc_achat() {
+    echo '</div>';
+}
+add_action( 'woocommerce_after_add_to_cart_button', 'pepe_fin_bloc_achat' );
