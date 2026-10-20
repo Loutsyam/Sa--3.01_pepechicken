@@ -606,6 +606,7 @@ input[type="submit"]:hover {
   color: var(--color-brun);
   font-family: var(--ff-titre);
 }
+  text-transform: none;
 
 /* 9. Fiche produit */
 
@@ -653,6 +654,37 @@ input[type="submit"]:hover {
 }
 
 /* Quantité + bouton « Ajouter au panier » sur la même ligne */
+/* IT-10 : prix en promo (ancien prix barré) et badge « Promo » */
+.single-product div.product p.price del {
+  font-size: var(--fs-h3);
+  color: var(--color-beige);
+  opacity: 0.7;
+}
+
+.single-product div.product p.price ins {
+  text-decoration: none;
+}
+
+.single-product div.product {
+  position: relative;
+}
+
+/* Badge posé en haut à gauche de la photo */
+.single-product div.product .onsale {
+  position: absolute;
+  top: var(--spacing-md);
+  left: var(--spacing-md);
+  z-index: 2;
+  margin: 0;
+  padding: var(--spacing-xxs) var(--spacing-sm);
+  border: 0;
+  border-radius: var(--radius-pilule);
+  background: var(--color-jaune);
+  color: var(--color-brun);
+  font-family: var(--ff-titre);
+  text-transform: none;
+}
+
 .single-product div.product form.cart {
   display: flex;
   align-items: center;
@@ -1364,6 +1396,15 @@ input[type="submit"]:hover {
 }
 
 /* Totaux */
+/* IT-10 : « Tu économises … » sous le total */
+.pepe-recap .pepe-recap__totaux .pepe-recap__ligne--economie th,
+.pepe-recap .pepe-recap__totaux .pepe-recap__ligne--economie td {
+  padding-top: 0;
+  font-size: var(--fs-petit);
+  font-weight: 700;
+  color: var(--color-rouge);
+}
+
 .pepe-recap__totaux {
   width: 100%;
   margin-bottom: var(--spacing-md);
@@ -1822,6 +1863,13 @@ input[type="submit"]:hover {
 }
 
 /* Tableau des commandes */
+/* IT-9 : lien pour annuler la commande */
+.pepe-suivi__annuler {
+  margin: var(--spacing-sm) 0 0;
+  font-size: var(--fs-petit);
+  text-align: right;
+}
+
 .pepe-commandes,
 .pepe-compte .woocommerce-orders-table {
   width: 100%;
@@ -1863,13 +1911,6 @@ input[type="submit"]:hover {
 }
 
 .woocommerce-account .pepe-compte .woocommerce-Addresses.col2-set::before,
-/* IT-9 : lien pour annuler la commande */
-.pepe-suivi__annuler {
-  margin: var(--spacing-sm) 0 0;
-  font-size: var(--fs-petit);
-  text-align: right;
-}
-
 .woocommerce-account .pepe-compte .woocommerce-Addresses.col2-set::after {
   display: none;
 }

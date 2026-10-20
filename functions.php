@@ -18,6 +18,7 @@ require_once get_stylesheet_directory() . '/inc/commande.php';               // 
 require_once get_stylesheet_directory() . '/inc/compte.php';                 // IT-7 : espace client
 require_once get_stylesheet_directory() . '/inc/emails.php';                 // IT-8 : e-mails transactionnels
 require_once get_stylesheet_directory() . '/inc/suivi-commandes.php';        // IT-9 : suivi des commandes
+require_once get_stylesheet_directory() . '/inc/promotions.php';             // IT-10 : promotions
 
 
 /* ---------- Header et footer de Storefront ---------- */
