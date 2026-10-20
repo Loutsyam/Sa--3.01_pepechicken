@@ -29,7 +29,11 @@ defined( 'ABSPATH' ) || exit;
 				<button type="submit" form="pepe-form-panier" class="button pepe-promo__bouton" name="apply_coupon" value="Appliquer">Appliquer</button>
 			</div>
 			<?php foreach ( WC()->cart->get_coupons() as $code => $coupon ) : ?>
-				<p class="pepe-promo__applique">✓ Code <?php echo esc_html( strtoupper( $code ) ); ?> appliqué · <?php wc_cart_totals_coupon_html( $coupon ); ?></p>
+				<?php // Lien « Retirer » : la classe woocommerce-remove-coupon est gérée par le script du panier ?>
+				<p class="pepe-promo__applique">
+					✓ Code <?php echo esc_html( strtoupper( $code ) ); ?> appliqué ·
+					<a class="woocommerce-remove-coupon pepe-promo__retirer" href="<?php echo esc_url( add_query_arg( 'remove_coupon', rawurlencode( $code ), wc_get_cart_url() ) ); ?>" data-coupon="<?php echo esc_attr( $code ); ?>">Retirer</a>
+				</p>
 			<?php endforeach; ?>
 		</div>
 	<?php endif; ?>

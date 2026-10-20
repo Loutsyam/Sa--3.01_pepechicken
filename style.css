@@ -1293,6 +1293,11 @@ input[type="submit"]:hover {
   font-size: var(--fs-petit);
 }
 
+.pepe-promo__retirer {
+  font-weight: 700;
+  color: var(--color-rouge);
+}
+
 /* Totaux */
 .pepe-recap__totaux {
   width: 100%;
