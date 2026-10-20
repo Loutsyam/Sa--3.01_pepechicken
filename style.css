@@ -1537,14 +1537,20 @@ input[type="submit"]:hover {
   font-size: var(--fs-petit);
 }
 
-#payment .pepe-paiement__valider {
+.pepe-commande .pepe-paiement__valider {
   margin: var(--spacing-md) 0 0;
   padding: 0;
   background: none;
+  color: var(--color-beige);
+  font-size: var(--fs-petit);
+}
+
+.pepe-commande .pepe-paiement__valider a {
+  color: var(--color-beige);
 }
 
 /* Bouton jaune « Passer la commande 32,85 € » */
-#payment .pepe-paiement__valider .pepe-commande__payer {
+.pepe-commande .pepe-paiement__valider .pepe-commande__payer {
   width: 100%;
   padding: var(--spacing-sm);
   border-radius: var(--radius-pilule);
@@ -1555,7 +1561,7 @@ input[type="submit"]:hover {
   font-size: var(--fs-texte);
 }
 
-#payment .pepe-paiement__valider .pepe-commande__payer:hover {
+.pepe-commande .pepe-paiement__valider .pepe-commande__payer:hover {
   background: var(--color-jaune-hover);
 }
 
@@ -1688,13 +1694,9 @@ input[type="submit"]:hover {
 
 /* 16. Mobile (moins de 768 px) */
 @media (max-width: 767px) {
-  /* Commande : une seule colonne, « Ma commande » en premier */
+  /* Commande : une seule colonne, « Ma commande » et le bouton à la fin */
   .pepe-commande__contenu {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  .pepe-commande__droite {
-    order: -1;
   }
 
   /* Panier : une seule colonne, carte d'article sur 2 lignes */

@@ -3,6 +3,7 @@
  * Bloc « Paiement » (IT-6) – surcharge de checkout/payment.php
  * La div #payment garde la classe woocommerce-checkout-payment :
  * WooCommerce la recharge toute seule quand le total change.
+ * Le bouton « Passer la commande » est sous « Ma commande », à droite.
  *
  * @version 10.9.0
  */
@@ -33,22 +34,7 @@ if ( ! wp_doing_ajax() ) {
 		</section>
 	<?php endif; ?>
 
-	<div class="form-row place-order pepe-paiement__valider">
-		<noscript>
-			Votre navigateur n'exécute pas JavaScript : cliquez sur « Mettre à jour le total » avant de commander.
-			<br><button type="submit" class="button alt" name="woocommerce_checkout_update_totals" value="Mettre à jour le total">Mettre à jour le total</button>
-		</noscript>
-
-		<?php wc_get_template( 'checkout/terms.php' ); ?>
-
-		<?php do_action( 'woocommerce_review_order_before_submit' ); ?>
-
-		<?php echo apply_filters( 'woocommerce_order_button_html', '<button type="submit" class="button alt" name="woocommerce_checkout_place_order" id="place_order" value="' . esc_attr( $order_button_text ) . '" data-value="' . esc_attr( $order_button_text ) . '">' . esc_html( $order_button_text ) . '</button>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-
-		<?php do_action( 'woocommerce_review_order_after_submit' ); ?>
-
-		<?php wp_nonce_field( 'woocommerce-process_checkout', 'woocommerce-process-checkout-nonce' ); ?>
-	</div>
+	<?php // Le bouton « Passer la commande » est dans la colonne de droite (form-checkout.php) ?>
 </div>
 <?php
 if ( ! wp_doing_ajax() ) {
