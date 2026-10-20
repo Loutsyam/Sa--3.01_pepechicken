@@ -6,8 +6,10 @@
  * (groupe « Options du produit », enregistré dans acf-json/).
  * Sur chaque produit, on coche les choix proposés au client.
  *
- * Sur la fiche, chaque champ est affiché dans un <fieldset> avec
+ * Sur la fiche, chaque champ est un menu repliable (<details>) avec
  * des pilules « pepe-option » (Design System, 07 Badges et options).
+ * Repliés, les menus prennent peu de place : le bouton « Ajouter au panier »
+ * reste visible sans faire défiler la page (ligne de flottaison).
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -116,13 +118,21 @@ function pepe_afficher_options() {
             $classe .= ' pepe-choix--menu';
         }
 
-        echo '<fieldset class="' . esc_attr( $classe ) . '">';
+        // Options repliables : seule la formule est ouverte au départ,
+        // le titre montre le choix fait (rempli en JavaScript)
+        $ouvert = ( 'pepe_formule' === $nom ) ? ' open' : '';
 
-        echo '<legend class="pepe-choix__titre">' . esc_html( $groupe['titre'] );
+        echo '<details class="' . esc_attr( $classe ) . '"' . $ouvert . '>';
+
+        echo '<summary class="pepe-choix__titre">' . esc_html( $groupe['titre'] );
         if ( $groupe['note'] ) {
             echo ' <span class="pepe-choix__note">' . esc_html( $groupe['note'] ) . '</span>';
         }
-        echo '</legend>';
+        echo ' <span class="pepe-choix__resume"></span>';
+        echo '</summary>';
+
+        echo '<fieldset class="pepe-choix__groupe">';
+        echo '<legend class="screen-reader-text">' . esc_html( $groupe['titre'] ) . '</legend>';
 
         echo '<div class="pepe-options">';
 
@@ -144,6 +154,7 @@ function pepe_afficher_options() {
 
         echo '</div>';
         echo '</fieldset>';
+        echo '</details>';
     }
 
     echo '</div>';
@@ -201,8 +212,7 @@ function pepe_pilules_variation( $html, $args ) {
 add_filter( 'woocommerce_dropdown_variation_attribute_options_html', 'pepe_pilules_variation', 10, 2 );
 
 /*
- * Quantité + bouton « Ajouter au panier » dans un bloc qui reste collé en bas
- * de l'écran pendant qu'on choisit les options (ligne de flottaison).
+ * Quantité + bouton « Ajouter au panier » sur une même ligne, sous les options.
  * Mêmes crochets pour les produits simples et variables.
  */
 function pepe_debut_bloc_achat() {

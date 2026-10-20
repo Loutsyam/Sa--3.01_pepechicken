@@ -5,6 +5,8 @@
  *              + suppléments des options cochées.
  * Une option cachée (accompagnement sans la formule Menu) ne compte pas.
  *
+ * Options repliables : le titre de chaque menu affiche le choix fait.
+ *
  * Variations (US-3.1) : les pilules « Burger seul / Menu » choisissent la
  * valeur dans la liste déroulante cachée de WooCommerce, qui trouve alors
  * la variation, son prix et son stock.
@@ -60,7 +62,33 @@ jQuery( function ( $ ) {
 	} );
 	marquerEpuises();
 
-	/* 2. Prix et groupes du menu */
+	/* 2. Options repliables : le titre montre le choix fait */
+
+	function mettreAJourResumes() {
+		$liste.find( '.pepe-choix' ).each( function () {
+			var textes = [];
+
+			$( this ).find( '.pepe-option__input:checked' ).each( function () {
+				textes.push( $( this ).siblings( '.pepe-option__texte' ).text() );
+			} );
+
+			$( this ).find( '.pepe-choix__resume' ).text( textes.join( ', ' ) );
+		} );
+	}
+
+	// Un seul choix possible (bouton radio) : le menu se replie tout seul
+	$liste.on( 'change', 'input[type="radio"]', function () {
+		var $menu = $( this ).closest( '.pepe-choix' );
+
+		if ( ! $( this ).data( 'menu' ) && $( this ).attr( 'name' ) !== 'pepe_formule' ) {
+			$menu.removeAttr( 'open' );
+		}
+	} );
+
+	$liste.on( 'change', mettreAJourResumes );
+	mettreAJourResumes();
+
+	/* 3. Prix et groupes du menu */
 
 	if ( ! $liste.length || ! $prix.length ) {
 		return;

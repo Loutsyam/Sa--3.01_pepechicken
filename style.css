@@ -740,30 +740,71 @@ input[type="submit"]:hover {
 /* Carte beige */
 .pepe-choix-liste {
   flex: 1 0 100%;
-  padding: var(--spacing-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
   border-radius: var(--radius-lg);
   background: var(--color-beige);
 }
 
 .pepe-choix-liste .pepe-choix {
-  margin: 0 0 var(--spacing-md);
-  padding: 0;
-  border: 0;
-  background: none;
+  margin: 0 0 var(--spacing-xxs);
+  padding: 0 0 var(--spacing-xxs);
+  border-bottom: 0.0625rem solid var(--color-beige-hover);
 }
 
 .pepe-choix-liste .pepe-choix:last-child {
   margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
 }
 
 .pepe-choix-liste .pepe-choix__titre {
-  margin: 0 0 var(--spacing-xs);
-  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--spacing-xs);
+  margin: 0;
+  padding: var(--spacing-xxs) 0;
   font-family: var(--ff-titre);
   font-size: var(--fs-h3);
   font-weight: 400;
+  line-height: 1.2;
   color: var(--color-brun);
   background: none;
+  list-style: none;
+  cursor: pointer;
+}
+
+/* Flèche à la place du triangle du navigateur */
+.pepe-choix-liste .pepe-choix__titre::-webkit-details-marker {
+  display: none;
+}
+
+.pepe-choix-liste .pepe-choix__titre::before {
+  content: "▸";
+  transition: transform 0.2s;
+}
+
+.pepe-choix-liste .pepe-choix[open] > .pepe-choix__titre::before {
+  transform: rotate(90deg);
+}
+
+/* Choix fait, affiché à droite du titre quand le menu est replié */
+.pepe-choix__resume {
+  margin-left: auto;
+  font-family: var(--ff-texte);
+  font-size: var(--fs-petit);
+  font-weight: 600;
+  color: var(--color-rouge);
+}
+
+.pepe-choix[open] .pepe-choix__resume {
+  display: none;
+}
+
+.pepe-choix-liste .pepe-choix__groupe {
+  margin: 0;
+  padding: var(--spacing-xs) 0 0;
+  border: 0;
 }
 
 .pepe-choix__note {
@@ -836,27 +877,12 @@ input[type="submit"]:hover {
   outline-offset: 0.125rem;
 }
 
-/* Le bloc collé (sticky) ne marche pas si un parent a overflow: hidden :
-   Storefront en met sur la fiche produit et sur .site, on les remplace */
-.single-product div.product {
-  overflow: visible;
-}
-
-.single-product .site {
-  overflow-x: clip;
-}
-
-/* Quantité + bouton : collés en bas de l'écran pendant qu'on choisit les options */
+/* Quantité + bouton sur une ligne, sous les options */
 .single-product div.product .pepe-achat {
-  position: sticky;
-  bottom: 0;
-  z-index: 10;
   display: flex;
   flex: 1 0 100%;
   align-items: center;
   gap: var(--spacing-md);
-  padding: var(--spacing-sm) 0;
-  background: var(--color-rouge);
 }
 
 .single-product div.product .pepe-achat .single_add_to_cart_button {
