@@ -2,6 +2,7 @@
 /**
  * Tableau de bord du compte (IT-7) – surcharge de myaccount/dashboard.php
  * « Commande en cours » avec sa progression, puis les dernières commandes.
+ * IT-9 : statut « Prête à retirer » (étape 3) et lien pour annuler la commande.
  *
  * @version 4.4.0
  */
@@ -18,7 +19,7 @@ $commandes = wc_get_orders( array(
 // La plus récente qui n'est pas encore récupérée
 $en_cours = null;
 foreach ( $commandes as $commande ) {
-	if ( in_array( $commande->get_status(), array( 'pending', 'on-hold', 'processing' ), true ) ) {
+	if ( in_array( $commande->get_status(), array( 'pending', 'on-hold', 'processing', 'prete' ), true ) ) {
 		$en_cours = $commande;
 		break;
 	}
@@ -44,6 +45,13 @@ foreach ( $commandes as $commande ) {
 				</li>
 			<?php endforeach; ?>
 		</ol>
+
+		<?php // IT-9 – US-9.3 : annulation possible tant que la commande n'est pas prête ?>
+		<?php if ( in_array( $en_cours->get_status(), array( 'on-hold', 'processing' ), true ) ) : ?>
+			<p class="pepe-suivi__annuler">
+				<a class="pepe-commandes__lien" href="<?php echo esc_url( $en_cours->get_cancel_order_url( wc_get_page_permalink( 'myaccount' ) ) ); ?>">Annuler cette commande</a>
+			</p>
+		<?php endif; ?>
 	</section>
 <?php endif; ?>
 

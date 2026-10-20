@@ -41,6 +41,7 @@ function pepe_statut_commande( $commande ) {
         'pending'    => 'En attente de paiement',
         'on-hold'    => 'Reçue',
         'processing' => 'En préparation',
+        'prete'      => 'Prête à retirer',
         'completed'  => 'Récupérée',
         'cancelled'  => 'Annulée',
         'refunded'   => 'Remboursée',
@@ -59,6 +60,8 @@ function pepe_etape_commande( $commande ) {
     switch ( $commande->get_status() ) {
         case 'processing':
             return 2;
+        case 'prete':
+            return 3;
         case 'completed':
             return 4;
         default:

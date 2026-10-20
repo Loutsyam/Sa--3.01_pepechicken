@@ -381,6 +381,18 @@ input[type="submit"]:hover {
   color: var(--color-brun);
 }
 
+/* Bouton « Commander » du mini-panier en jaune, comme les autres boutons */
+.site-header .site-header-cart .widget_shopping_cart a.button.checkout {
+  border-color: var(--color-jaune);
+  background: var(--color-jaune);
+  color: var(--color-brun);
+}
+
+.site-header .site-header-cart .widget_shopping_cart a.button.checkout:hover {
+  border-color: var(--color-jaune-hover);
+  background: var(--color-jaune-hover);
+}
+
 /* Menu mobile (Storefront) */
 .site-header .menu-toggle {
   background: transparent;
@@ -1851,6 +1863,13 @@ input[type="submit"]:hover {
 }
 
 .woocommerce-account .pepe-compte .woocommerce-Addresses.col2-set::before,
+/* IT-9 : lien pour annuler la commande */
+.pepe-suivi__annuler {
+  margin: var(--spacing-sm) 0 0;
+  font-size: var(--fs-petit);
+  text-align: right;
+}
+
 .woocommerce-account .pepe-compte .woocommerce-Addresses.col2-set::after {
   display: none;
 }
