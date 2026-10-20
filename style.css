@@ -12,9 +12,10 @@ Text Domain:  pepe-chicken
   1. Polices          6. Fil d'Ariane      11. Valeurs nutritionnelles
   2. Variables        7. Boutique          12. Panier
   3. Base             8. Cartes produit    13. Commande
-  4. Boutons          9. Fiche produit     14. Messages WooCommerce
-  5. Header           10. Options          15. Footer
-                                           16. Mobile
+  4. Boutons          9. Fiche produit     14. Compte client
+  5. Header           10. Options          15. Messages WooCommerce
+                                           16. Footer
+                                           17. Mobile
 
   Classes « pepe- » : celles du thème (BEM). Les autres viennent de Storefront
   ou de WooCommerce. Pas de !important : on écrit un sélecteur plus précis.
@@ -1348,11 +1349,13 @@ input[type="submit"]:hover {
   content: none;
 }
 
-/* Pas de fil d'Ariane ni de titre de page sur le panier et la commande */
+/* Pas de fil d'Ariane ni de titre de page sur le panier, la commande et le compte */
 .woocommerce-cart .storefront-breadcrumb,
 .woocommerce-checkout .storefront-breadcrumb,
+.woocommerce-account .storefront-breadcrumb,
 .woocommerce-cart .entry-header:has(.entry-title:empty),
-.woocommerce-checkout .entry-header:has(.entry-title:empty) {
+.woocommerce-checkout .entry-header:has(.entry-title:empty),
+.woocommerce-account .entry-header:has(.entry-title:empty) {
   display: none;
 }
 
@@ -1610,7 +1613,248 @@ input[type="submit"]:hover {
   color: var(--color-rouge);
 }
 
-/* 14. Messages WooCommerce */
+/* 14. Compte client */
+.pepe-compte__titre {
+  margin-bottom: var(--spacing-lg);
+  font-size: var(--fs-h1);
+  color: var(--color-beige);
+}
+
+/* Menu à gauche, page à droite */
+.pepe-compte__contenu {
+  display: grid;
+  grid-template-columns: 14rem minmax(0, 1fr);
+  gap: var(--spacing-lg);
+  align-items: start;
+}
+
+/* Storefront met le menu et la page en float avec une largeur en % : annulé
+   (.woocommerce-account devant : la feuille WooCommerce de Storefront est chargée après la nôtre) */
+.woocommerce-account .pepe-compte .woocommerce-MyAccount-navigation,
+.woocommerce-account .pepe-compte .woocommerce-MyAccount-content {
+  width: auto;
+  float: none;
+  margin: 0;
+}
+
+.woocommerce-account .pepe-compte .woocommerce-MyAccount-navigation {
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-xl);
+  background: var(--color-beige);
+}
+
+.woocommerce-account .pepe-compte .woocommerce-MyAccount-navigation ul {
+  margin: 0;
+  border: 0;
+  list-style: none;
+}
+
+.woocommerce-account .pepe-compte .woocommerce-MyAccount-navigation ul li {
+  border: 0;
+}
+
+.woocommerce-account .pepe-compte .woocommerce-MyAccount-navigation ul li a {
+  display: block;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-md);
+  color: var(--color-brun);
+  font-family: var(--ff-titre);
+  font-size: var(--fs-petit);
+  text-decoration: none;
+}
+
+/* Storefront ajoute une icône devant chaque lien : on l'enlève */
+.woocommerce-account .pepe-compte .woocommerce-MyAccount-navigation ul li a::before {
+  content: none;
+}
+
+.woocommerce-account .pepe-compte .woocommerce-MyAccount-navigation ul li.is-active a {
+  background: var(--color-rouge);
+  color: var(--color-beige);
+}
+
+/* Contenu : cartes beiges */
+.pepe-compte .woocommerce-MyAccount-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  color: var(--color-brun);
+}
+
+.pepe-compte__carte,
+.pepe-compte .woocommerce-MyAccount-content > form,
+.pepe-compte .woocommerce-MyAccount-content > .woocommerce-orders-table,
+.pepe-compte .woocommerce-MyAccount-content > .woocommerce-Addresses,
+.pepe-compte .woocommerce-MyAccount-content > .woocommerce-order-details,
+.pepe-compte .woocommerce-MyAccount-content > .woocommerce-customer-details {
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-xl);
+  background: var(--color-beige);
+  color: var(--color-brun);
+}
+
+.pepe-compte .woocommerce-MyAccount-content > p {
+  color: var(--color-beige);
+}
+
+.pepe-compte .pepe-compte__sous-titre,
+.pepe-compte .woocommerce-MyAccount-content h2,
+.pepe-compte .woocommerce-MyAccount-content h3 {
+  margin: 0 0 var(--spacing-sm);
+  font-size: var(--fs-h3);
+  color: var(--color-brun);
+}
+
+/* Commande en cours */
+.pepe-suivi__entete {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.pepe-suivi__entete .pepe-compte__sous-titre {
+  margin: 0;
+}
+
+.pepe-badge {
+  padding: var(--spacing-xxs) var(--spacing-sm);
+  border-radius: var(--radius-pilule);
+  background: var(--color-jaune);
+  color: var(--color-brun);
+  font-size: var(--fs-petit);
+  font-weight: 700;
+}
+
+.pepe-suivi__detail {
+  margin: var(--spacing-xs) 0 var(--spacing-sm);
+  font-size: var(--fs-petit);
+}
+
+/* Barre de progression en 4 morceaux */
+.pepe-suivi__etapes {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-xs);
+  margin: 0;
+  list-style: none;
+}
+
+.pepe-suivi__etape {
+  height: 0.375rem;
+  border-radius: var(--radius-pilule);
+  background: var(--color-beige-hover);
+}
+
+.pepe-suivi__etape--faite {
+  background: var(--color-rouge);
+}
+
+/* Tableau des commandes */
+.pepe-commandes,
+.pepe-compte .woocommerce-orders-table {
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+}
+
+.pepe-compte .pepe-commandes th,
+.pepe-compte .pepe-commandes td,
+.pepe-compte .woocommerce-orders-table th,
+.pepe-compte .woocommerce-orders-table td {
+  padding: var(--spacing-xs) 0;
+  border: 0;
+  border-bottom: 1px solid var(--color-beige-hover);
+  background: none;
+  font-size: var(--fs-petit);
+  text-align: left;
+}
+
+.pepe-compte .pepe-commandes thead th {
+  font-weight: 400;
+}
+
+.pepe-compte .pepe-commandes tbody th {
+  font-family: var(--ff-titre);
+}
+
+.pepe-commandes__lien,
+.pepe-compte .woocommerce-orders-table a {
+  font-weight: 700;
+  color: var(--color-rouge);
+}
+
+/* Adresses : deux colonnes en grille (Storefront les met en float avec une largeur en %) */
+.woocommerce-account .pepe-compte .woocommerce-Addresses.col2-set {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+}
+
+.woocommerce-account .pepe-compte .woocommerce-Addresses.col2-set::before,
+.woocommerce-account .pepe-compte .woocommerce-Addresses.col2-set::after {
+  display: none;
+}
+
+.woocommerce-account .pepe-compte .woocommerce-Addresses.col2-set .col-1,
+.woocommerce-account .pepe-compte .woocommerce-Addresses.col2-set .col-2 {
+  width: auto;
+  float: none;
+  margin: 0;
+}
+
+/* Champs des formulaires (adresses, détails du compte) */
+.pepe-compte .woocommerce-MyAccount-content .input-text {
+  border-radius: var(--radius-sm);
+  background: var(--color-blanc);
+}
+
+/* Connexion / Créer un compte : deux cartes côte à côte */
+.woocommerce-account .u-columns.col2-set {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+}
+
+.woocommerce-account .u-columns.col2-set::before,
+.woocommerce-account .u-columns.col2-set::after {
+  display: none;
+}
+
+/* #customer_login : Storefront utilise cet id pour donner une largeur en % */
+.woocommerce-account #customer_login.col2-set .u-column1,
+.woocommerce-account #customer_login.col2-set .u-column2 {
+  width: auto;
+  float: none;
+  margin: 0;
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-xl);
+  background: var(--color-beige);
+  color: var(--color-brun);
+}
+
+.woocommerce-account .u-columns h2 {
+  font-size: var(--fs-h3);
+  color: var(--color-brun);
+}
+
+.woocommerce-account .u-columns form {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.woocommerce-account .u-columns .input-text {
+  border-radius: var(--radius-sm);
+  background: var(--color-blanc);
+}
+
+.woocommerce-account .u-columns a {
+  color: var(--color-rouge);
+}
+
+/* 15. Messages WooCommerce */
 .woocommerce-message,
 .woocommerce-info,
 .woocommerce-error {
@@ -1625,7 +1869,7 @@ input[type="submit"]:hover {
   color: var(--color-rouge);
 }
 
-/* 15. Footer */
+/* 16. Footer */
 .site-footer {
   background: var(--color-beige);
   color: var(--color-brun);
@@ -1692,8 +1936,18 @@ input[type="submit"]:hover {
   display: none;
 }
 
-/* 16. Mobile (moins de 768 px) */
+/* 17. Mobile (moins de 768 px) */
 @media (max-width: 767px) {
+  /* Compte : le menu au-dessus, puis la page */
+  .pepe-compte__contenu,
+  .woocommerce-account .u-columns.col2-set {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pepe-compte .pepe-commandes thead {
+    display: none;
+  }
+
   /* Commande : une seule colonne, « Ma commande » et le bouton à la fin */
   .pepe-commande__contenu {
     grid-template-columns: minmax(0, 1fr);
