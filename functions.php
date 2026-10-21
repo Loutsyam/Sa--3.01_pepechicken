@@ -10,6 +10,7 @@
 defined( 'ABSPATH' ) || exit;
 
 // Fichiers du thème
+require_once get_stylesheet_directory() . '/inc/accueil.php';                // IT-2 : page d'accueil
 require_once get_stylesheet_directory() . '/inc/options-affichage.php';      // IT-3 : options sur la fiche produit
 require_once get_stylesheet_directory() . '/inc/options-prix.php';           // IT-3 : prix, panier et commande
 require_once get_stylesheet_directory() . '/inc/valeurs-nutritionnelles.php'; // IT-4 : valeurs nutritionnelles

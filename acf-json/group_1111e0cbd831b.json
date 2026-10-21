@@ -1,0 +1,412 @@
+{
+    "key": "group_1111e0cbd831b",
+    "title": "Page d'accueil",
+    "fields": [
+        {
+            "key": "field_340b3b56fecb3",
+            "label": "En-tête",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_6c59f68377715",
+            "label": "Titre",
+            "name": "accueil_titre",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Le maillot officiel Pepe est là !",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_354949430fc12",
+            "label": "Texte",
+            "name": "accueil_texte",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Porté par l'équipe et les habitués, le maillot rouge Pepe Chicken arrive au restaurant. Une édition limitée, comme nos recettes.",
+            "maxlength": "",
+            "rows": 3,
+            "placeholder": "",
+            "new_lines": "",
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_f25349cd68dba",
+            "label": "Petite ligne",
+            "name": "accueil_petite_ligne",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Sous le texte, en petit (ex : disponibilité).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Disponible au comptoir, dans la limite des stocks.",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_065ca8cea955b",
+            "label": "Texte du bouton",
+            "name": "accueil_bouton_texte",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Je découvre la carte",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_0c4582e9ff476",
+            "label": "Lien du bouton",
+            "name": "accueil_bouton_lien",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "Vide : page Boutique.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "allow_in_bindings": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_db9965ac6938e",
+            "label": "Image",
+            "name": "accueil_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Image à droite du titre (PNG détouré conseillé).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "allow_in_bindings": 0,
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_3b04f467d0a43",
+            "label": "Produits",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_6e4b603c2dc98",
+            "label": "Nos nouveautés",
+            "name": "accueil_nouveautes",
+            "aria-label": "",
+            "type": "relationship",
+            "instructions": "3 produits. Vide : les 3 derniers produits ajoutés.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "product"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "filters": [
+                "search",
+                "taxonomy"
+            ],
+            "return_format": "id",
+            "min": 0,
+            "max": 3,
+            "elements": [
+                "featured_image"
+            ],
+            "bidirectional": 0,
+            "allow_in_bindings": 0,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_c5688f9fe42e9",
+            "label": "Produit à la une",
+            "name": "accueil_vedette",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "Grande carte « n°1 » sous les nouveautés.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "product"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "return_format": "id",
+            "multiple": 0,
+            "allow_null": 1,
+            "bidirectional": 0,
+            "ui": 1,
+            "allow_in_bindings": 0,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_26db43150dff9",
+            "label": "Badge du produit à la une",
+            "name": "accueil_vedette_badge",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Nouveauté · le plus commandé",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_951fd110f86ff",
+            "label": "Le concept",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_fc9593c63de12",
+            "label": "Titre du concept",
+            "name": "accueil_concept_titre",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Pepe Chicken créateur de plaisir !",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6fb1e34a565c3",
+            "label": "Texte du concept",
+            "name": "accueil_concept_texte",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Une ligne vide entre deux paragraphes.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Du poulet mariné 24 h, pané à la main et frit minute : chez Pepe Chicken, tout est fait pour le plaisir.\n\nBurgers généreux, tenders croustillants, sides et sauces maison, à déguster sur place ou à emporter en click & collect.\n\nCommande en ligne, récupère au comptoir, et régale-toi.",
+            "maxlength": "",
+            "rows": 6,
+            "placeholder": "",
+            "new_lines": "wpautop",
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_216481d51ccbc",
+            "label": "Photo du concept",
+            "name": "accueil_concept_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Affichée dans la forme de flamme.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "allow_in_bindings": 0,
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_c5404a1c02f0f",
+            "label": "C'est validé !",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_27e9f439352eb",
+            "label": "Photos des clients",
+            "name": "accueil_photos",
+            "aria-label": "",
+            "type": "gallery",
+            "instructions": "3 photos affichées entre les avis clients (les avis viennent des avis produits 5 étoiles).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min": 0,
+            "max": 3,
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "insert": "append",
+            "preview_size": "medium",
+            "allow_in_bindings": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_type",
+                "operator": "==",
+                "value": "front_page"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "the_content"
+    ],
+    "active": true,
+    "description": "Contenu de la page d'accueil (Le concept).",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1792572483
+}
