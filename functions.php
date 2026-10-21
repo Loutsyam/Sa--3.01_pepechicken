@@ -20,6 +20,7 @@ require_once get_stylesheet_directory() . '/inc/emails.php';                 // 
 require_once get_stylesheet_directory() . '/inc/suivi-commandes.php';        // IT-9 : suivi des commandes
 require_once get_stylesheet_directory() . '/inc/promotions.php';             // IT-10 : promotions
 require_once get_stylesheet_directory() . '/inc/equipe.php';                 // IT-11 : équipe
+require_once get_stylesheet_directory() . '/inc/collections.php';            // IT-12 : collections
 
 
 /* ---------- Header et footer de Storefront ---------- */

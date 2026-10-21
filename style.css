@@ -484,6 +484,30 @@ input[type="submit"]:hover {
   color: var(--color-rouge);
 }
 
+/* IT-12 : pilules des collections (même bloc, plus petites) */
+.pepe-categories--collections {
+  align-items: center;
+  margin-top: var(--spacing-md);
+}
+
+.pepe-categories__intro {
+  font-size: var(--fs-petit);
+  font-weight: 600;
+  color: var(--color-beige);
+}
+
+.pepe-categories--collections .pepe-categories__lien {
+  padding: var(--spacing-xxs) var(--spacing-sm);
+  font-size: var(--fs-petit);
+}
+
+/* Description d'une collection */
+.tax-collection .woocommerce-products-header .term-description {
+  max-width: 40rem;
+  margin: var(--spacing-sm) auto 0;
+  color: var(--color-beige);
+}
+
 /* Une section par catégorie (bloc pepe-section) */
 .pepe-section {
   margin-bottom: var(--spacing-4xl);
@@ -683,6 +707,28 @@ input[type="submit"]:hover {
   color: var(--color-brun);
   font-family: var(--ff-titre);
   text-transform: none;
+}
+
+/* IT-12 : collections du produit, sous le titre */
+.pepe-collections-produit {
+  margin: 0 0 var(--spacing-sm);
+  font-size: var(--fs-petit);
+  color: var(--color-beige);
+}
+
+.pepe-collections-produit__lien {
+  display: inline-block;
+  padding: var(--spacing-xxs) var(--spacing-sm);
+  border: 2px solid var(--color-beige);
+  border-radius: var(--radius-pilule);
+  color: var(--color-beige);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.pepe-collections-produit__lien:hover {
+  background: var(--color-beige);
+  color: var(--color-rouge);
 }
 
 /* Quantité + bouton « Ajouter au panier » sur la même ligne */
