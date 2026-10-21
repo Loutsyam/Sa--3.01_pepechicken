@@ -839,6 +839,156 @@ input[type="submit"]:hover {
   max-width: none;
 }
 
+/* IT-14 : bloc « Avis clients » (carte beige, résumé à gauche, avis à droite) */
+.single-product .pepe-avis {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: 16rem 1fr;
+  gap: var(--spacing-xl);
+  margin-top: var(--spacing-3xl);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-xl);
+  background: var(--color-beige);
+  color: var(--color-brun);
+}
+
+.pepe-avis__titre {
+  margin: 0 0 var(--spacing-sm);
+  font-size: var(--fs-h3);
+  color: var(--color-brun);
+}
+
+.pepe-avis__moyenne {
+  margin: 0;
+  font-family: var(--ff-titre);
+  font-size: var(--fs-h1);
+  line-height: 1;
+  color: var(--color-rouge);
+}
+
+.pepe-avis__nombre {
+  margin: var(--spacing-xxs) 0 var(--spacing-md);
+  font-size: var(--fs-petit);
+}
+
+.pepe-avis .pepe-avis__bouton {
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-lg);
+  border-radius: var(--radius-pilule);
+  background: var(--color-rouge);
+  color: var(--color-beige);
+  font-family: var(--ff-titre);
+  text-decoration: none;
+}
+
+.pepe-avis .pepe-avis__bouton:hover {
+  background: var(--color-rouge-hover);
+  color: var(--color-beige);
+}
+
+/* Étoiles jaunes (Storefront les colore en violet : sélecteurs plus précis) */
+.single-product .pepe-avis .star-rating {
+  margin: 0;
+}
+
+.single-product .pepe-avis .star-rating::before {
+  color: var(--color-beige-hover);
+}
+
+.single-product .pepe-avis .star-rating span::before,
+.single-product .pepe-avis p.stars:hover a::before,
+.single-product .pepe-avis p.stars.selected a.active::before,
+.single-product .pepe-avis p.stars.selected a:not(.active)::before {
+  color: var(--color-jaune);
+}
+
+/* Liens du bloc en rouge (le site les met en beige) */
+.single-product .pepe-avis__info a,
+.single-product .pepe-avis .must-log-in a {
+  color: var(--color-rouge);
+}
+
+/* Cartes des avis */
+.pepe-avis .pepe-avis__cartes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#reviews .pepe-avis__cartes .pepe-avis__carte {
+  margin: 0;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  background: var(--color-blanc);
+}
+
+.pepe-avis__entete {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-xs);
+}
+
+.pepe-avis__texte p {
+  margin: 0;
+}
+
+.pepe-avis__infos,
+.pepe-avis__attente {
+  margin: var(--spacing-xs) 0 0;
+  font-size: var(--fs-petit);
+  opacity: 0.7;
+}
+
+.pepe-avis__vide,
+.pepe-avis__info {
+  margin: 0;
+}
+
+/* Formulaire « Laisser un avis » */
+.pepe-avis__formulaire {
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  background: var(--color-blanc);
+}
+
+/* Storefront cache ce titre et met un fond gris au formulaire (#reviews, #respond) */
+#reviews .pepe-avis__formulaire #respond {
+  padding: 0;
+  background: none;
+}
+
+#reviews .pepe-avis__formulaire .pepe-avis__sous-titre {
+  display: block;
+  margin: 0 0 var(--spacing-sm);
+  font-size: var(--fs-h3);
+  color: var(--color-brun);
+}
+
+.pepe-avis .comment-form label {
+  display: block;
+  margin-bottom: var(--spacing-xxs);
+  font-weight: 600;
+}
+
+.pepe-avis .comment-form p.stars a {
+  color: var(--color-jaune);
+}
+
+.pepe-avis .comment-form textarea,
+.pepe-avis .comment-form input[type="text"],
+.pepe-avis .comment-form input[type="email"] {
+  width: 100%;
+  border: 2px solid var(--color-beige-hover);
+  border-radius: var(--radius-sm);
+  background: var(--color-blanc);
+}
+
 /* 10. Options (pilules du Design System) */
 /* Options au-dessus, quantité + bouton en dessous */
 .single-product div.product form.cart:has(.pepe-choix-liste) {
@@ -2472,6 +2622,12 @@ input[type="submit"]:hover {
   }
 
   /* Cartes produit sur 2 colonnes */
+  /* Avis : résumé au-dessus des avis */
+  .single-product .pepe-avis {
+    grid-template-columns: 1fr;
+    padding: var(--spacing-lg);
+  }
+
   .site-main ul.products,
   .site-main .pepe-complements ul.products {
     grid-template-columns: repeat(2, 1fr);
