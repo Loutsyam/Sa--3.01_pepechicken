@@ -21,6 +21,7 @@ require_once get_stylesheet_directory() . '/inc/suivi-commandes.php';        // 
 require_once get_stylesheet_directory() . '/inc/promotions.php';             // IT-10 : promotions
 require_once get_stylesheet_directory() . '/inc/equipe.php';                 // IT-11 : équipe
 require_once get_stylesheet_directory() . '/inc/collections.php';            // IT-12 : collections
+require_once get_stylesheet_directory() . '/inc/ventes-croisees.php';        // IT-13 : ventes croisées
 
 
 /* ---------- Header et footer de Storefront ---------- */
@@ -196,7 +197,8 @@ add_filter( 'woocommerce_page_title', 'pepe_titre_boutique' );
 
 // Bouton « + » dans les grilles de produits (« → » si le produit s'ouvre d'abord)
 function pepe_texte_bouton_ajout( $texte, $produit ) {
-    if ( is_product() ) {
+    // Sur la fiche produit, le vrai bouton garde son texte (sauf dans « Ça va bien avec », IT-13)
+    if ( is_product() && 'complements' !== wc_get_loop_prop( 'name' ) ) {
         return $texte;
     }
 

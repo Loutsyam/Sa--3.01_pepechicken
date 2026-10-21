@@ -822,6 +822,23 @@ input[type="submit"]:hover {
   font-size: var(--fs-h2);
 }
 
+/* IT-13 : « Ça va bien avec » (ventes croisées), 4 cartes sur une ligne */
+.single-product .pepe-complements {
+  grid-column: 1 / -1;
+  margin-top: var(--spacing-3xl);
+}
+
+.pepe-complements__titre {
+  margin-bottom: var(--spacing-xl);
+  font-size: var(--fs-h2);
+}
+
+.site-main .pepe-complements ul.products {
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-xl);
+  max-width: none;
+}
+
 /* 10. Options (pilules du Design System) */
 /* Options au-dessus, quantité + bouton en dessous */
 .single-product div.product form.cart:has(.pepe-choix-liste) {
@@ -1437,9 +1454,21 @@ input[type="submit"]:hover {
   font-size: var(--fs-petit);
 }
 
-.pepe-promo__retirer {
-  font-weight: 700;
+/* « Retirer ✕ » : police des menus et boutons, sans soulignement */
+.pepe-recap .pepe-promo__retirer {
+  font-family: var(--ff-titre);
+  font-weight: 400;
   color: var(--color-rouge);
+  text-decoration: none;
+}
+
+.pepe-recap .pepe-promo__retirer:hover {
+  text-decoration: underline;
+}
+
+.pepe-promo__croix {
+  font-family: var(--ff-texte);
+  font-size: 0.85em;
 }
 
 /* IT-10 : « Tu économises … » sous le total */
@@ -1787,7 +1816,7 @@ input[type="submit"]:hover {
 }
 
 /* Storefront met le menu et la page en float avec une largeur en % : annulé
-   (.woocommerce-account devant : la feuille WooCommerce de Storefront est chargée après la nôtre) */
+   (.woocommerce-account devant : plus précis que le sélecteur de Storefront) */
 .woocommerce-account .pepe-compte .woocommerce-MyAccount-navigation,
 .woocommerce-account .pepe-compte .woocommerce-MyAccount-content {
   width: auto;
@@ -2443,7 +2472,8 @@ input[type="submit"]:hover {
   }
 
   /* Cartes produit sur 2 colonnes */
-  .site-main ul.products {
+  .site-main ul.products,
+  .site-main .pepe-complements ul.products {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--spacing-lg) var(--spacing-md);
   }

@@ -30,9 +30,17 @@ defined( 'ABSPATH' ) || exit;
 			</div>
 			<?php foreach ( WC()->cart->get_coupons() as $code => $coupon ) : ?>
 				<?php // Lien « Retirer » : la classe woocommerce-remove-coupon est gérée par le script du panier ?>
+				<?php
+				// Réduction du code, comme la maquette : « -10 % » ou « -2,00 € »
+				if ( 'percent' === $coupon->get_discount_type() ) {
+					$reduction = '-' . wc_format_localized_decimal( $coupon->get_amount() ) . ' %';
+				} else {
+					$reduction = '-' . wp_strip_all_tags( wc_price( $coupon->get_amount() ) );
+				}
+				?>
 				<p class="pepe-promo__applique">
-					✓ Code <?php echo esc_html( strtoupper( $code ) ); ?> appliqué ·
-					<a class="woocommerce-remove-coupon pepe-promo__retirer" href="<?php echo esc_url( add_query_arg( 'remove_coupon', rawurlencode( $code ), wc_get_cart_url() ) ); ?>" data-coupon="<?php echo esc_attr( $code ); ?>">Retirer</a>
+					✓ Code <?php echo esc_html( strtoupper( $code ) ); ?> appliqué : <?php echo esc_html( $reduction ); ?> ·
+					<a class="woocommerce-remove-coupon pepe-promo__retirer" href="<?php echo esc_url( add_query_arg( 'remove_coupon', rawurlencode( $code ), wc_get_cart_url() ) ); ?>" data-coupon="<?php echo esc_attr( $code ); ?>">Retirer <span class="pepe-promo__croix" aria-hidden="true">✕</span></a>
 				</p>
 			<?php endforeach; ?>
 		</div>

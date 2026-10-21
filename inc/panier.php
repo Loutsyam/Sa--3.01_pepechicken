@@ -100,6 +100,7 @@ function pepe_choix_expedition() {
 /**
  * « Un petit plus ? » : 3 produits à ajouter (ventes croisées du panier,
  * sinon des sauces et des accompagnements qui ne sont pas déjà dans le panier).
+ * IT-13 : les ventes croisées réglées dans l'admin passent en premier.
  */
 function pepe_suggestions_panier() {
     $dans_le_panier = array();
