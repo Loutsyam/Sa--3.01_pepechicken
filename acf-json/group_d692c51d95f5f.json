@@ -1,0 +1,119 @@
+{
+    "key": "group_d692c51d95f5f",
+    "title": "Profil du membre",
+    "fields": [
+        {
+            "key": "field_afbdd9a8cdce9",
+            "label": "Poste",
+            "name": "membre_poste",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Ex. Chef de cuisine. Affiché sous le nom et dans le badge du profil.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "Chef de cuisine",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_b23b1c0fc9d34",
+            "label": "Chez Pepe depuis",
+            "name": "membre_depuis",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Année d'arrivée dans l'équipe.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 2000,
+            "max": 2030,
+            "allow_in_bindings": 0,
+            "placeholder": "2022",
+            "step": 1,
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_89ed5e217f28d",
+            "label": "Plat préféré",
+            "name": "membre_plat",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "Produit de la boutique. Un lien vers sa fiche est affiché sur le profil.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "product"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "return_format": "object",
+            "multiple": 0,
+            "allow_null": 1,
+            "allow_in_bindings": 0,
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_1731ac8c089c0",
+            "label": "Pourquoi ce plat ?",
+            "name": "membre_plat_texte",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Une phrase courte.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 3,
+            "placeholder": "Pour son pretzel bun et sa sauce fumée.",
+            "new_lines": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "membre"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Infos affichées sur la page d'un membre de l'équipe (la présentation va dans le contenu, la photo dans « Photo du membre »).",
+    "show_in_rest": 0,
+    "modified": 1792489705
+}

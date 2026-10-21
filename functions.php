@@ -19,6 +19,7 @@ require_once get_stylesheet_directory() . '/inc/compte.php';                 // 
 require_once get_stylesheet_directory() . '/inc/emails.php';                 // IT-8 : e-mails transactionnels
 require_once get_stylesheet_directory() . '/inc/suivi-commandes.php';        // IT-9 : suivi des commandes
 require_once get_stylesheet_directory() . '/inc/promotions.php';             // IT-10 : promotions
+require_once get_stylesheet_directory() . '/inc/equipe.php';                 // IT-11 : équipe
 
 
 /* ---------- Header et footer de Storefront ---------- */
@@ -92,7 +93,7 @@ function pepe_menu_par_defaut( $args ) {
     echo '<div class="' . esc_attr( $classe ) . '"><ul class="menu">';
     echo '<li class="menu-item"><a href="' . esc_url( home_url( '/' ) ) . '">Le concept</a></li>';
     echo '<li class="menu-item"><a href="' . esc_url( wc_get_page_permalink( 'shop' ) ) . '">Le menu</a></li>';
-    echo '<li class="menu-item"><a href="' . esc_url( pepe_url_page( 'a-propos' ) ) . '">À propos</a></li>';
+    echo '<li class="menu-item"><a href="' . esc_url( pepe_url_a_propos() ) . '">À propos</a></li>';
     echo '</ul></div>';
 }
 
@@ -109,6 +110,14 @@ function pepe_url_page( $slug ) {
     return '#';
 }
 
+// IT-11 : « À propos » = page de l'équipe (archive du type de contenu « membre »)
+function pepe_url_a_propos() {
+    if ( post_type_exists( 'membre' ) ) {
+        return get_post_type_archive_link( 'membre' );
+    }
+    return pepe_url_page( 'a-propos' );
+}
+
 function pepe_footer() {
     $cgv = wc_terms_and_conditions_page_id() ? get_permalink( wc_terms_and_conditions_page_id() ) : pepe_url_page( 'cgv' );
     $confidentialite = get_privacy_policy_url() ? get_privacy_policy_url() : '#';
@@ -118,7 +127,7 @@ function pepe_footer() {
         'Accès rapide' => array(
             'Le concept' => home_url( '/' ),
             'Le menu'    => wc_get_page_permalink( 'shop' ),
-            'À propos'   => pepe_url_page( 'a-propos' ),
+            'À propos'   => pepe_url_a_propos(),
             'Mon compte' => wc_get_page_permalink( 'myaccount' ),
             'FAQ'        => pepe_url_page( 'faq' ),
         ),
