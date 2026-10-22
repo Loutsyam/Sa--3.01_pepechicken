@@ -1,0 +1,112 @@
+{
+    "key": "group_9844a27e135b0",
+    "title": "Frais de préparation",
+    "fields": [
+        {
+            "key": "field_9dbecf2631b52",
+            "label": "Activer les frais",
+            "name": "frais_actif",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Ajouter les frais quand le panier est sous le seuil",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "Oui",
+            "ui_off_text": "Non"
+        },
+        {
+            "key": "field_73222aa07ccb9",
+            "label": "Montant des frais",
+            "name": "frais_montant",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "En euros, TTC.",
+            "required": 1,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 1,
+            "min": 0,
+            "max": "",
+            "step": 0.01,
+            "append": "€",
+            "prepend": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_6bf18a6d4dcf8",
+            "label": "Seuil",
+            "name": "frais_seuil",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Les frais s'appliquent quand le panier (après les codes promo, sans la livraison) est en dessous de ce montant.",
+            "required": 1,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 15,
+            "min": 0,
+            "max": "",
+            "step": 0.01,
+            "append": "€",
+            "prepend": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_dea6e4414db09",
+            "label": "Libellé",
+            "name": "frais_libelle",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Nom de la ligne dans le panier, la commande et les e-mails.",
+            "required": 1,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Frais de préparation",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "pepe-frais-preparation"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Montant et seuil des frais de préparation (IT-15).",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1792656459
+}

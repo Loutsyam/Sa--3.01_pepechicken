@@ -24,6 +24,7 @@ require_once get_stylesheet_directory() . '/inc/equipe.php';                 // 
 require_once get_stylesheet_directory() . '/inc/collections.php';            // IT-12 : collections
 require_once get_stylesheet_directory() . '/inc/ventes-croisees.php';        // IT-13 : ventes croisées
 require_once get_stylesheet_directory() . '/inc/avis.php';                   // IT-14 : avis clients
+require_once get_stylesheet_directory() . '/inc/frais.php';                  // IT-15 : frais de préparation
 
 
 /* ---------- Header et footer de Storefront ---------- */

@@ -1,0 +1,23 @@
+{
+    "key": "ui_options_page_df75db88c4c5c",
+    "title": "Frais de préparation",
+    "active": true,
+    "menu_order": 0,
+    "page_title": "Frais de préparation",
+    "menu_slug": "pepe-frais-preparation",
+    "parent_slug": "woocommerce",
+    "advanced_configuration": false,
+    "icon_url": "",
+    "menu_title": "Frais de préparation",
+    "position": "",
+    "redirect": false,
+    "description": "Frais ajoutés au panier quand son montant est sous le seuil (IT-15).",
+    "menu_icon": [],
+    "update_button": "Mettre à jour",
+    "updated_message": "Réglages enregistrés",
+    "capability": "manage_woocommerce",
+    "data_storage": "options",
+    "post_id": "",
+    "autoload": true,
+    "modified": 1792656459
+}
