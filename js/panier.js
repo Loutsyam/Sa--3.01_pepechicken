@@ -8,10 +8,11 @@
 jQuery( function ( $ ) {
 	var minuteur = null;
 
-	$( document.body ).on( 'click', '.pepe-quantite__bouton', function () {
-		var $champ = $( this ).closest( '.pepe-article__quantite' ).find( 'input.qty' );
+	$( document.body ).on( 'click', '.product-quantity .wc-block-components-quantity-selector__button', function () {
+		var $champ = $( this ).closest( '.product-quantity' ).find( 'input.qty' );
 		var quantite = parseInt( $champ.val(), 10 ) || 0;
-		var nouvelle = Math.max( 0, quantite + parseInt( $( this ).data( 'pepe-quantite' ), 10 ) );
+		var pas = $( this ).hasClass( 'wc-block-components-quantity-selector__button--minus' ) ? -1 : 1;
+		var nouvelle = Math.max( 0, quantite + pas );
 		var max = parseInt( $champ.attr( 'max' ), 10 );
 
 		if ( max > 0 && nouvelle > max ) {
@@ -23,16 +24,16 @@ jQuery( function ( $ ) {
 		// On attend un peu si on clique plusieurs fois de suite
 		clearTimeout( minuteur );
 		minuteur = setTimeout( function () {
-			$( '.pepe-panier__maj' ).prop( 'disabled', false ).trigger( 'click' );
+			$( '.woocommerce-cart-form [name="update_cart"]' ).prop( 'disabled', false ).trigger( 'click' );
 		}, 500 );
 	} );
 
-	// Après une mise à jour, on recompte les articles du titre
+	// Après une mise à jour, on recompte les articles affichés dans le titre « Mon panier »
 	$( document.body ).on( 'updated_wc_div', function () {
 		var total = 0;
-		$( '.pepe-article input.qty' ).each( function () {
+		$( '.woocommerce-cart-form input.qty' ).each( function () {
 			total += parseInt( $( this ).val(), 10 ) || 0;
 		} );
-		$( '.pepe-panier__nombre' ).text( total + ( total > 1 ? ' articles' : ' article' ) );
+		$( '.entry-title small' ).text( total + ( total > 1 ? ' articles' : ' article' ) );
 	} );
 } );

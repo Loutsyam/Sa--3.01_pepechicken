@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
 /* ---------- US-10.2 : badge « Promo » ---------- */
 
 function pepe_badge_promo( $html, $post, $produit ) {
-    return '<span class="onsale pepe-badge pepe-badge--promo">Promo</span>';
+    return '<span class="onsale">Promo</span>';
 }
 add_filter( 'woocommerce_sale_flash', 'pepe_badge_promo', 10, 3 );
 
@@ -28,7 +28,8 @@ function pepe_economie_panier() {
         return;
     }
 
-    echo '<tr class="pepe-recap__ligne pepe-recap__ligne--economie">';
+    // Ligne sous le total, même classe que les réductions de WooCommerce
+    echo '<tr class="cart-discount">';
     echo '<th scope="row">Tu économises</th>';
     echo '<td>' . wp_kses_post( wc_price( $economie ) ) . '</td>';
     echo '</tr>';

@@ -36,13 +36,15 @@ function pepe_champ_membre( $nom, $membre_id = null ) {
     return get_field( $nom, $membre_id ? $membre_id : get_the_ID() );
 }
 
-// Photo du membre, ou silhouette si aucune photo n'est choisie
-function pepe_photo_membre( $taille, $classe ) {
+// Photo du membre (div.post-thumbnail comme Storefront), ou silhouette si aucune photo n'est choisie
+function pepe_photo_membre( $taille ) {
+    echo '<div class="post-thumbnail">';
     if ( has_post_thumbnail() ) {
-        the_post_thumbnail( $taille, array( 'class' => $classe ) );
+        the_post_thumbnail( $taille );
     } else {
-        echo '<span class="' . esc_attr( $classe ) . ' ' . esc_attr( $classe ) . '--vide" aria-hidden="true">👤</span>';
+        echo '<span aria-hidden="true">👤</span>';
     }
+    echo '</div>';
 }
 
 // Fil d'Ariane : « À propos » au lieu du nom du type de contenu

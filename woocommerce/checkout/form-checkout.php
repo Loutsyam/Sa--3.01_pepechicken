@@ -2,15 +2,16 @@
 /**
  * Page de validation de commande (IT-6) – surcharge de checkout/form-checkout.php
  *
- * Mêmes actions WooCommerce que le template d'origine, rangées comme la maquette :
- * coordonnées, retrait et paiement à gauche, « Ma commande » à droite.
+ * Même HTML que le template de WooCommerce (#customer_details col2-set, #order_review_heading,
+ * #order_review, #payment, place-order) : Storefront met les coordonnées à gauche et « Ma commande »
+ * à droite. Différences (maquette) : retrait et paiement à gauche, bouton sous « Ma commande ».
  *
  * @version 9.4.0
  */
 
 defined( 'ABSPATH' ) || exit;
 
-do_action( 'woocommerce_before_checkout_form', $checkout );
+do_action( 'woocommerce_before_checkout_form', $checkout ); // étapes de la commande (inc/commande.php)
 
 // Si un compte est obligatoire pour commander et que le visiteur n'est pas connecté
 if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_required() && ! is_user_logged_in() ) {
@@ -19,79 +20,46 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 }
 ?>
 
-<div class="pepe-commande">
+<form name="checkout" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data" aria-label="Validation de la commande">
 
-	<header class="pepe-panier__entete">
-		<h1 class="pepe-panier__titre">Finaliser ma commande</h1>
-		<nav aria-label="Étapes de la commande">
-			<ol class="pepe-etapes">
-				<li class="pepe-etapes__item">1 · Panier</li>
-				<li class="pepe-etapes__item pepe-etapes__item--actif" aria-current="step">2 · Retrait &amp; paiement</li>
-				<li class="pepe-etapes__item">3 · Confirmation</li>
-			</ol>
-		</nav>
-	</header>
+	<?php if ( $checkout->get_checkout_fields() ) : ?>
 
-	<form name="checkout" method="post" class="checkout woocommerce-checkout pepe-commande__contenu" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data" aria-label="Validation de la commande">
+		<?php do_action( 'woocommerce_checkout_before_customer_details' ); ?>
 
-		<div class="pepe-commande__gauche">
+		<div class="col2-set" id="customer_details">
+			<div class="col-1">
+				<?php do_action( 'woocommerce_checkout_billing' ); ?>
+			</div>
 
-			<?php if ( $checkout->get_checkout_fields() ) : ?>
-
-				<?php do_action( 'woocommerce_checkout_before_customer_details' ); ?>
-
-				<section class="pepe-commande__carte" id="customer_details">
-					<h2 class="pepe-commande__titre">Mes coordonnées</h2>
-
-					<?php do_action( 'woocommerce_checkout_billing' ); ?>
-					<?php do_action( 'woocommerce_checkout_shipping' ); ?>
-
-					<?php if ( ! is_user_logged_in() ) : ?>
-						<p class="pepe-commande__connexion">Déjà client ? <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>">Se connecter</a></p>
-					<?php endif; ?>
-				</section>
-
-				<?php do_action( 'woocommerce_checkout_after_customer_details' ); ?>
-
-			<?php endif; ?>
-
-			<?php woocommerce_checkout_payment(); ?>
-
+			<div class="col-2">
+				<?php do_action( 'woocommerce_checkout_shipping' ); ?>
+			</div>
 		</div>
 
-		<aside class="pepe-commande__droite" aria-label="Ma commande">
-			<?php do_action( 'woocommerce_checkout_before_order_review_heading' ); ?>
+		<?php do_action( 'woocommerce_checkout_after_customer_details' ); ?>
 
-			<div id="order_review" class="woocommerce-checkout-review-order pepe-commande__carte">
-				<h2 class="pepe-commande__titre" id="order_review_heading">Ma commande</h2>
+	<?php endif; ?>
 
-				<?php do_action( 'woocommerce_checkout_before_order_review' ); ?>
-				<?php do_action( 'woocommerce_checkout_order_review' ); ?>
-			</div>
+	<?php do_action( 'woocommerce_checkout_before_order_review_heading' ); ?>
 
-			<?php do_action( 'woocommerce_checkout_after_order_review' ); ?>
+	<h2 id="order_review_heading">Ma commande</h2>
 
-			<?php // Bouton « Passer la commande » sous le récapitulatif (maquette) ?>
-			<div class="form-row place-order pepe-paiement__valider">
-				<noscript>
-					Votre navigateur n'exécute pas JavaScript : cliquez sur « Mettre à jour le total » avant de commander.
-					<br><button type="submit" class="button alt" name="woocommerce_checkout_update_totals" value="Mettre à jour le total">Mettre à jour le total</button>
-				</noscript>
+	<?php do_action( 'woocommerce_checkout_before_order_review' ); ?>
 
-				<?php wc_get_template( 'checkout/terms.php' ); ?>
+	<div id="order_review" class="woocommerce-checkout-review-order">
+		<?php do_action( 'woocommerce_checkout_order_review' ); ?>
+	</div>
 
-				<?php do_action( 'woocommerce_review_order_before_submit' ); ?>
+	<?php do_action( 'woocommerce_checkout_after_order_review' ); ?>
 
-				<?php $order_button_text = apply_filters( 'woocommerce_order_button_text', __( 'Place order', 'woocommerce' ) ); ?>
-				<?php echo apply_filters( 'woocommerce_order_button_html', '<button type="submit" class="button alt" name="woocommerce_checkout_place_order" id="place_order" value="' . esc_attr( $order_button_text ) . '" data-value="' . esc_attr( $order_button_text ) . '">' . esc_html( $order_button_text ) . '</button>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+	<?php
+	// Retrait et paiement : écrits après « Ma commande » pour que les floats de Storefront
+	// laissent « Ma commande » en haut à droite ; ils s'affichent à gauche, sous les coordonnées.
+	// Le bouton « Passer la commande » est dans #order_review, comme dans WooCommerce (inc/commande.php)
+	pepe_bloc_retrait();
+	woocommerce_checkout_payment();
+	?>
 
-				<?php do_action( 'woocommerce_review_order_after_submit' ); ?>
-
-				<?php wp_nonce_field( 'woocommerce-process_checkout', 'woocommerce-process-checkout-nonce' ); ?>
-			</div>
-		</aside>
-
-	</form>
-</div>
+</form>
 
 <?php do_action( 'woocommerce_after_checkout_form', $checkout ); ?>

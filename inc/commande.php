@@ -119,35 +119,30 @@ function pepe_bloc_retrait() {
 
     $retrait = pepe_est_retrait();
     $prix    = (float) $methode->get_cost() > 0 ? wp_strip_all_tags( wc_price( $methode->get_cost() ) ) : 'gratuit';
+    $lieu    = $retrait ? 'Pepe Chicken ' . get_option( 'woocommerce_store_city' ) : 'À l\'adresse indiquée ci-dessus';
 
-    echo '<section class="pepe-commande__carte pepe-retrait">';
-    echo '<h2 class="pepe-commande__titre">' . ( $retrait ? 'Retrait en restaurant' : 'Livraison à domicile' ) . '</h2>';
+    // Même bloc que l'adresse de livraison de WooCommerce (woocommerce-shipping-fields)
+    echo '<div class="woocommerce-shipping-fields">';
+    echo '<h2>' . ( $retrait ? 'Retrait en restaurant' : 'Livraison à domicile' ) . '</h2>';
 
-    echo '<div class="pepe-retrait__mode">';
-    echo '<div>';
-    if ( $retrait ) {
-        $ville = get_option( 'woocommerce_store_city' );
-        echo '<p class="pepe-retrait__nom">Pepe Chicken ' . esc_html( $ville ) . '</p>';
-    } else {
-        echo '<p class="pepe-retrait__nom">À l\'adresse indiquée ci-dessus</p>';
-    }
-    echo '<p class="pepe-retrait__detail">' . esc_html( $methode->get_label() . ' · ' . $prix ) . '</p>';
-    echo '</div>';
-    echo '<a class="pepe-retrait__modifier" href="' . esc_url( wc_get_cart_url() ) . '">Modifier</a>';
-    echo '</div>';
+    echo '<p>';
+    echo '<strong>' . esc_html( $lieu ) . '</strong>';
+    echo '<small>' . esc_html( $methode->get_label() . ' · ' . $prix ) . '</small>';
+    echo '<a href="' . esc_url( wc_get_cart_url() ) . '">Modifier</a>';
+    echo '</p>';
 
-    // US-6.1 : le texte vient de la page d'options « Instructions retrait »
+    // US-6.1 : le texte vient de la page d'options « Instructions retrait » (message « info » de WooCommerce)
     $instructions = pepe_instructions_retrait();
     if ( $retrait && $instructions ) {
-        echo '<div class="pepe-instructions">';
-        echo '<h3 class="pepe-instructions__titre">Instructions pour le retrait</h3>';
-        echo '<p class="pepe-instructions__texte">' . wp_kses_post( $instructions ) . '</p>';
+        echo '<div class="woocommerce-info">';
+        echo '<strong>Instructions pour le retrait</strong><br>';
+        echo wp_kses_post( $instructions );
         echo '</div>';
     }
 
-    echo '</section>';
+    echo '</div>';
 }
-add_action( 'woocommerce_checkout_after_customer_details', 'pepe_bloc_retrait' );
+// Affiché par woocommerce/checkout/form-checkout.php, sous les coordonnées
 
 
 /* ---------- Paiement et bouton ---------- */
@@ -155,23 +150,53 @@ add_action( 'woocommerce_checkout_after_customer_details', 'pepe_bloc_retrait' )
 // Le paiement est affiché à gauche (form-checkout.php), pas sous le récapitulatif
 remove_action( 'woocommerce_checkout_order_review', 'woocommerce_checkout_payment', 20 );
 
+// À sa place, sous « Ma commande » : le bouton (même bloc place-order que checkout/payment.php)
+function pepe_bloc_bouton_commande() {
+    ?>
+    <div class="form-row place-order">
+        <noscript>
+            Votre navigateur n'exécute pas JavaScript : cliquez sur « Mettre à jour le total » avant de commander.
+            <br><button type="submit" class="button alt" name="woocommerce_checkout_update_totals" value="Mettre à jour le total">Mettre à jour le total</button>
+        </noscript>
+
+        <?php wc_get_template( 'checkout/terms.php' ); ?>
+
+        <?php do_action( 'woocommerce_review_order_before_submit' ); ?>
+
+        <?php $order_button_text = apply_filters( 'woocommerce_order_button_text', __( 'Place order', 'woocommerce' ) ); ?>
+        <?php echo apply_filters( 'woocommerce_order_button_html', '<button type="submit" class="button alt" name="woocommerce_checkout_place_order" id="place_order" value="' . esc_attr( $order_button_text ) . '" data-value="' . esc_attr( $order_button_text ) . '">' . esc_html( $order_button_text ) . '</button>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+
+        <?php do_action( 'woocommerce_review_order_after_submit' ); ?>
+
+        <?php wp_nonce_field( 'woocommerce-process_checkout', 'woocommerce-process-checkout-nonce' ); ?>
+    </div>
+    <?php
+}
+add_action( 'woocommerce_checkout_order_review', 'pepe_bloc_bouton_commande', 20 );
+
 // Bouton jaune « Passer la commande 32,85 € »
 // (le texte est aussi dans data-value : le script de WooCommerce le remet à chaque mise à jour)
 function pepe_bouton_commande( $html ) {
     $texte = 'Passer la commande ' . html_entity_decode( wp_strip_all_tags( WC()->cart->get_total() ) );
 
-    return '<button type="submit" class="button alt pepe-commande__payer" name="woocommerce_checkout_place_order" id="place_order" value="' . esc_attr( $texte ) . '" data-value="' . esc_attr( $texte ) . '">' . esc_html( $texte ) . '</button>';
+    return '<button type="submit" class="button alt" name="woocommerce_checkout_place_order" id="place_order" value="' . esc_attr( $texte ) . '" data-value="' . esc_attr( $texte ) . '">' . esc_html( $texte ) . '</button>';
 }
 add_filter( 'woocommerce_order_button_html', 'pepe_bouton_commande' );
 
 
-/* ---------- Titre de la page ---------- */
+/* ---------- Titre de la page et étapes ---------- */
 
-// Le titre « Validation de la commande » est remplacé par « Finaliser ma commande »
-function pepe_cacher_titre_commande( $titre, $id = 0 ) {
+// Titre de Storefront (entry-title) : « Finaliser ma commande »
+function pepe_titre_commande( $titre, $id = 0 ) {
     if ( is_checkout() && ! is_wc_endpoint_url() && in_the_loop() && wc_get_page_id( 'checkout' ) === $id ) {
-        return '';
+        return 'Finaliser ma commande';
     }
     return $titre;
 }
-add_filter( 'the_title', 'pepe_cacher_titre_commande', 10, 2 );
+add_filter( 'the_title', 'pepe_titre_commande', 10, 2 );
+
+// Étapes de la commande sous le titre (fonction dans inc/panier.php), étape 2
+function pepe_etapes_validation() {
+    pepe_etapes_commande( 2 );
+}
+add_action( 'woocommerce_before_checkout_form', 'pepe_etapes_validation', 5 );

@@ -6,7 +6,7 @@
  *           indépendante des catégories ; menu Produits > Collections dans l'admin
  * US-12.3 : page de chaque collection (/collection/nom/) avec la grille de ses produits
  *           (template woocommerce/taxonomy-collection.php), liens depuis la Boutique
- *           et depuis la fiche produit
+ *           et depuis la fiche produit (bloc « méta » de WooCommerce)
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -28,7 +28,8 @@ function pepe_collections() {
     return $collections;
 }
 
-// Pilules « Nos collections » (Boutique et page d'une collection)
+// « Nos collections » (Boutique et page d'une collection) : même HTML que le widget
+// « Nuage d'étiquettes produits » de WooCommerce (widget_product_tag_cloud, tagcloud, tag-cloud-link)
 function pepe_liens_collections() {
     $collections = pepe_collections();
     if ( empty( $collections ) ) {
@@ -37,19 +38,16 @@ function pepe_liens_collections() {
 
     $courante = is_tax( 'collection' ) ? get_queried_object_id() : 0;
 
-    echo '<nav class="pepe-categories pepe-categories--collections" aria-label="Collections">';
-    echo '<span class="pepe-categories__intro">Nos collections :</span>';
+    echo '<nav class="widget woocommerce widget_product_tag_cloud" aria-label="Collections">';
+    echo '<span class="gamma widget-title">Nos collections :</span>';
+    echo '<div class="tagcloud">';
 
     foreach ( $collections as $collection ) {
-        $url = get_term_link( $collection );
-
-        if ( $courante === $collection->term_id ) {
-            echo '<a class="pepe-categories__lien pepe-categories__lien--actif" href="' . esc_url( $url ) . '" aria-current="page">' . esc_html( $collection->name ) . '</a>';
-        } else {
-            echo '<a class="pepe-categories__lien" href="' . esc_url( $url ) . '">' . esc_html( $collection->name ) . '</a>';
-        }
+        $actif = ( $courante === $collection->term_id );
+        echo '<a class="tag-cloud-link" href="' . esc_url( get_term_link( $collection ) ) . '"' . ( $actif ? ' aria-current="page"' : '' ) . '>' . esc_html( $collection->name ) . '</a>';
     }
 
+    echo '</div>';
     echo '</nav>';
 }
 
@@ -70,24 +68,14 @@ function pepe_titre_collection( $titre ) {
 }
 add_filter( 'woocommerce_page_title', 'pepe_titre_collection' );
 
-// Fiche produit : collections du produit, sous le titre
+// Fiche produit : collections du produit dans le bloc « méta » de WooCommerce,
+// à côté de la catégorie (même HTML : <span class="posted_in"> avec des liens rel="tag")
 function pepe_collections_du_produit() {
     if ( ! taxonomy_exists( 'collection' ) ) {
         return;
     }
 
-    $collections = get_the_terms( get_the_ID(), 'collection' );
-    if ( empty( $collections ) || is_wp_error( $collections ) ) {
-        return;
-    }
-
-    $libelle = ( count( $collections ) > 1 ) ? 'Collections : ' : 'Collection : ';
-    echo '<p class="pepe-collections-produit">' . esc_html( $libelle );
-    $liens = array();
-    foreach ( $collections as $collection ) {
-        $liens[] = '<a class="pepe-collections-produit__lien" href="' . esc_url( get_term_link( $collection ) ) . '">' . esc_html( $collection->name ) . '</a>';
-    }
-    echo implode( ' ', $liens ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-    echo '</p>';
+    $libelle = ( count( (array) get_the_terms( get_the_ID(), 'collection' ) ) > 1 ) ? 'Collections : ' : 'Collection : ';
+    echo get_the_term_list( get_the_ID(), 'collection', '<span class="posted_in">' . esc_html( $libelle ), ', ', '</span>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
-add_action( 'woocommerce_single_product_summary', 'pepe_collections_du_produit', 6 );
+add_action( 'woocommerce_product_meta_end', 'pepe_collections_du_produit' );

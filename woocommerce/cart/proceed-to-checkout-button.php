@@ -8,6 +8,6 @@
 
 defined( 'ABSPATH' ) || exit;
 ?>
-<a href="<?php echo esc_url( wc_get_checkout_url() ); ?>" class="checkout-button button alt wc-forward pepe-btn pepe-btn--rouge pepe-recap__valider">
+<a href="<?php echo esc_url( wc_get_checkout_url() ); ?>" class="checkout-button button alt wc-forward">
 	Valider ma commande
 </a>

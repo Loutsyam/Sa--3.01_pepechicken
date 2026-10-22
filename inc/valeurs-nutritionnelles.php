@@ -44,7 +44,7 @@ function pepe_afficher_nutrition() {
         $valeur = (float) $champ['value'];
         $decimales = ( floor( $valeur ) == $valeur ) ? 0 : 1;
 
-        $lignes[] = array(
+        $lignes[ $nom ] = array(
             'nom'    => $champ['label'],
             'valeur' => number_format_i18n( $valeur, $decimales ) . ' ' . $unite,
         );
@@ -56,26 +56,28 @@ function pepe_afficher_nutrition() {
         return; // rien à afficher pour ce produit
     }
 
-    echo '<div class="pepe-nutrition">';
-
+    // Même HTML que le tableau « Informations complémentaires » de WooCommerce
+    // (woocommerce-product-attributes / shop_attributes, une ligne --nom par valeur),
+    // affiché en petites cartes en CSS
+    echo '<table class="woocommerce-product-attributes shop_attributes">';
     if ( $lignes ) {
-        echo '<p class="pepe-nutrition__titre">Valeurs nutritionnelles <span class="pepe-nutrition__portion">pour une portion</span></p>';
-        echo '<ul class="pepe-nutrition__liste">';
-        foreach ( $lignes as $ligne ) {
-            echo '<li class="pepe-nutrition__item">';
-            echo '<span class="pepe-nutrition__valeur">' . esc_html( $ligne['valeur'] ) . '</span>';
-            echo '<span class="pepe-nutrition__nom">' . esc_html( $ligne['nom'] ) . '</span>';
-            echo '</li>';
-        }
-        echo '</ul>';
+        echo '<caption>Valeurs nutritionnelles <small>pour une portion</small></caption>';
+    }
+
+    foreach ( $lignes as $nom => $ligne ) {
+        echo '<tr class="woocommerce-product-attributes-item woocommerce-product-attributes-item--' . esc_attr( $nom ) . '">';
+        echo '<th class="woocommerce-product-attributes-item__label" scope="row">' . esc_html( $ligne['nom'] ) . '</th>';
+        echo '<td class="woocommerce-product-attributes-item__value">' . esc_html( $ligne['valeur'] ) . '</td>';
+        echo '</tr>';
     }
 
     if ( $allergenes ) {
-        echo '<p class="pepe-nutrition__allergenes">';
-        echo '<strong>Allergènes :</strong> ' . esc_html( implode( ', ', $allergenes ) );
-        echo '</p>';
+        echo '<tr class="woocommerce-product-attributes-item woocommerce-product-attributes-item--allergenes">';
+        echo '<th class="woocommerce-product-attributes-item__label" scope="row">Allergènes :</th>';
+        echo '<td class="woocommerce-product-attributes-item__value">' . esc_html( implode( ', ', $allergenes ) ) . '</td>';
+        echo '</tr>';
     }
 
-    echo '</div>';
+    echo '</table>';
 }
 add_action( 'woocommerce_single_product_summary', 'pepe_afficher_nutrition', 7 );

@@ -4,7 +4,8 @@
  *
  * US-14.1 : bloc « Avis clients » de la maquette sous « Ça va bien avec »
  *           (note moyenne, nombre d'avis, bouton « Laisser un avis », cartes des avis)
- *           template : woocommerce/single-product-reviews.php
+ *           templates : woocommerce/single-product-reviews.php et single-product/review-meta.php
+ *           (HTML des avis de WooCommerce)
  * US-14.2 : réglages WooCommerce > Réglages > Produits > « Avis » : avis et notes activés,
  *           seulement par les clients qui ont acheté le produit (vérifié aussi par WooCommerce
  *           à l'envoi du formulaire)
@@ -41,34 +42,17 @@ function pepe_nom_avis( $nom ) {
     return $morceaux[0] . ' ' . mb_substr( end( $morceaux ), 0, 1 ) . '.';
 }
 
-// Une carte d'avis (appelée par wp_list_comments, le <li> est fermé par WordPress)
-function pepe_carte_avis( $avis, $args, $profondeur ) {
-    $note    = intval( get_comment_meta( $avis->comment_ID, 'rating', true ) );
-    $verifie = wc_review_is_from_verified_owner( $avis->comment_ID );
-    ?>
-    <li id="li-comment-<?php comment_ID(); ?>" <?php comment_class( 'pepe-avis__carte' ); ?>>
-        <article id="comment-<?php comment_ID(); ?>">
-            <header class="pepe-avis__entete">
-                <strong class="pepe-avis__auteur"><?php echo esc_html( pepe_nom_avis( get_comment_author( $avis ) ) ); ?></strong>
-                <?php if ( $note && wc_review_ratings_enabled() ) : ?>
-                    <?php echo wc_get_rating_html( $note ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-                <?php endif; ?>
-            </header>
-
-            <?php if ( '0' === $avis->comment_approved ) : ?>
-                <p class="pepe-avis__attente">Merci ! Ton avis sera visible dès qu'il aura été validé.</p>
-            <?php endif; ?>
-
-            <div class="pepe-avis__texte"><?php comment_text(); ?></div>
-
-            <p class="pepe-avis__infos">
-                <?php
-                if ( $verifie ) {
-                    echo 'Achat vérifié · ';
-                }
-                echo 'il y a ' . esc_html( human_time_diff( get_comment_date( 'U', $avis ), time() ) );
-                ?>
-            </p>
-        </article>
-    <?php
+// Sur le site, le nom des auteurs d'avis est raccourci (« Prénom N. »)
+function pepe_nom_auteur_avis( $nom, $comment_id, $comment ) {
+    if ( ! is_admin() && $comment && 'review' === $comment->comment_type ) {
+        return pepe_nom_avis( $nom );
+    }
+    return $nom;
 }
+add_filter( 'get_comment_author', 'pepe_nom_auteur_avis', 10, 3 );
+
+// Pas de photo (gravatar) à côté des avis, comme sur la maquette
+remove_action( 'woocommerce_review_before', 'woocommerce_review_display_gravatar', 10 );
+
+// Pas d'étoiles sous le titre du produit : la note est dans le bloc « Avis clients » (maquette)
+remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 10 );

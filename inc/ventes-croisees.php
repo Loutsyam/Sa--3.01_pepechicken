@@ -51,11 +51,12 @@ function pepe_ca_va_bien_avec() {
         return;
     }
 
-    echo '<section class="pepe-complements" aria-labelledby="pepe-complements-titre">';
-    echo '<h2 class="pepe-complements__titre" id="pepe-complements-titre">Ça va bien avec</h2>';
+    // Même HTML que les « Produits apparentés » de WooCommerce (section related products)
+    echo '<section class="related products">';
+    echo '<h2>Ça va bien avec</h2>';
 
     // Mêmes cartes que la Boutique (content-product.php), 4 par ligne
-    wc_set_loop_prop( 'name', 'complements' );
+    wc_set_loop_prop( 'name', 'related' );
     wc_set_loop_prop( 'columns', 4 );
     woocommerce_product_loop_start();
 

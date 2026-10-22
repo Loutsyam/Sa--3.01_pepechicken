@@ -2,8 +2,8 @@
 /**
  * IT-7 : espace client (Mon compte)
  *
- * Templates dans woocommerce/myaccount/ : my-account.php, dashboard.php
- * Le reste (connexion, inscription, commandes, adresses…) est stylé en CSS.
+ * Template dans woocommerce/myaccount/ : dashboard.php (mêmes classes que WooCommerce).
+ * Le reste (menu, connexion, commandes, adresses…) garde le HTML de WooCommerce, stylé en CSS.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -26,14 +26,24 @@ function pepe_numero_commande( $numero ) {
 }
 add_filter( 'woocommerce_order_number', 'pepe_numero_commande' );
 
-// Connecté : le titre « Mon compte » est remplacé par « Bonjour … » (my-account.php)
-function pepe_cacher_titre_compte( $titre, $id = 0 ) {
+// Connecté : le titre « Mon compte » devient « Bonjour Prénom 👋 » comme la maquette
+// (on garde le titre de la page de Storefront, h1.entry-title)
+function pepe_titre_compte( $titre, $id = 0 ) {
     if ( is_account_page() && is_user_logged_in() && in_the_loop() && wc_get_page_id( 'myaccount' ) === $id ) {
-        return '';
+        // Prénom du compte, sinon celui de la dernière commande, sinon le nom affiché
+        $client = wp_get_current_user();
+        $prenom = $client->first_name;
+        if ( ! $prenom ) {
+            $prenom = get_user_meta( $client->ID, 'billing_first_name', true );
+        }
+        if ( ! $prenom ) {
+            $prenom = $client->display_name;
+        }
+        return 'Bonjour ' . esc_html( $prenom ) . ' 👋';
     }
     return $titre;
 }
-add_filter( 'the_title', 'pepe_cacher_titre_compte', 10, 2 );
+add_filter( 'the_title', 'pepe_titre_compte', 10, 2 );
 
 // Statut affiché au client
 function pepe_statut_commande( $commande ) {

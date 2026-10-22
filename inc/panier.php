@@ -8,17 +8,45 @@
 
 defined( 'ABSPATH' ) || exit;
 
-/* Le titre « Panier » de la page est remplacé par celui du template (« Mon panier ») */
-function pepe_cacher_titre_panier( $titre, $id = 0 ) {
+/* Titre de la page (titre de Storefront, entry-title) : « Mon panier » + nombre d'articles */
+function pepe_titre_panier( $titre, $id = 0 ) {
     if ( is_cart() && in_the_loop() && wc_get_page_id( 'cart' ) === $id && WC()->cart && ! WC()->cart->is_empty() ) {
-        return '';
+        $nombre = WC()->cart->get_cart_contents_count();
+        return 'Mon panier <small>' . $nombre . ( $nombre > 1 ? ' articles' : ' article' ) . '</small>';
     }
     return $titre;
 }
-add_filter( 'the_title', 'pepe_cacher_titre_panier', 10, 2 );
+add_filter( 'the_title', 'pepe_titre_panier', 10, 2 );
 
-/* « Un petit plus ? » est affiché sous les articles : on l'enlève de la colonne de droite */
+/*
+ * Étapes de la commande (panier, retrait et paiement, confirmation) sous le titre :
+ * même HTML que le fil d'Ariane de WooCommerce (woocommerce-breadcrumb, breadcrumb-separator)
+ */
+function pepe_etapes_commande( $etape ) {
+    $etapes = array( 1 => '1 · Panier', 2 => '2 · Retrait &amp; paiement', 3 => '3 · Confirmation' );
+
+    echo '<nav class="woocommerce-breadcrumb" aria-label="Étapes de la commande">';
+    foreach ( $etapes as $numero => $texte ) {
+        if ( $numero > 1 ) {
+            echo '<span class="breadcrumb-separator"> › </span>';
+        }
+        if ( $numero === $etape ) {
+            echo '<strong aria-current="step">' . $texte . '</strong>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        } else {
+            echo '<span>' . $texte . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        }
+    }
+    echo '</nav>';
+}
+
+function pepe_etapes_panier() {
+    pepe_etapes_commande( 1 );
+}
+add_action( 'woocommerce_before_cart', 'pepe_etapes_panier', 5 );
+
+/* « Un petit plus ? » est affiché sous les articles (à la place des ventes croisées de la colonne de droite) */
 remove_action( 'woocommerce_cart_collaterals', 'woocommerce_cross_sell_display' );
+add_action( 'woocommerce_before_cart_collaterals', 'pepe_suggestions_panier' );
 
 /* Script des boutons − / + de quantité */
 function pepe_script_panier() {
@@ -65,36 +93,33 @@ function pepe_choix_expedition() {
     $paquets = WC()->shipping()->get_packages();
     $choisis = WC()->session ? (array) WC()->session->get( 'chosen_shipping_methods' ) : array();
 
-    echo '<fieldset class="pepe-recap__bloc pepe-expedition">';
-    echo '<legend class="pepe-recap__sous-titre">Mode de récupération</legend>';
+    echo '<h3>Mode de récupération</h3>';
 
     foreach ( $paquets as $index => $paquet ) {
         $methodes = $paquet['rates'];
 
         if ( empty( $methodes ) ) {
-            echo '<p class="pepe-expedition__vide">Aucun mode de récupération disponible pour cette adresse.</p>';
+            echo '<p class="woocommerce-shipping-contents">Aucun mode de récupération disponible pour cette adresse.</p>';
             continue;
         }
 
         $choisi = isset( $choisis[ $index ] ) && isset( $methodes[ $choisis[ $index ] ] ) ? $choisis[ $index ] : key( $methodes );
 
+        // Même liste que cart/cart-shipping.php de WooCommerce (#shipping_method, woocommerce-shipping-methods)
+        echo '<ul id="shipping_method" class="woocommerce-shipping-methods">';
         foreach ( $methodes as $methode ) {
             $id_champ = 'shipping_method_' . $index . '_' . sanitize_title( $methode->get_id() );
             $prix     = (float) $methode->get_cost() > 0 ? wp_strip_all_tags( wc_price( $methode->get_cost() ) ) : 'Gratuit';
             $retrait  = 'local_pickup' === $methode->get_method_id();
             $detail   = $retrait ? 'Retrait en restaurant · ' . $prix : 'À domicile · ' . $prix;
 
-            echo '<label class="pepe-expedition__choix" for="' . esc_attr( $id_champ ) . '">';
-            echo '<input type="radio" class="shipping_method pepe-expedition__radio" name="shipping_method[' . absint( $index ) . ']" data-index="' . absint( $index ) . '" id="' . esc_attr( $id_champ ) . '" value="' . esc_attr( $methode->get_id() ) . '" ' . checked( $methode->get_id(), $choisi, false ) . '>';
-            echo '<span class="pepe-expedition__texte">';
-            echo '<span class="pepe-expedition__nom">' . esc_html( $methode->get_label() ) . '</span>';
-            echo '<span class="pepe-expedition__detail">' . esc_html( $detail ) . '</span>';
-            echo '</span>';
-            echo '</label>';
+            echo '<li>';
+            echo '<input type="radio" class="shipping_method" name="shipping_method[' . absint( $index ) . ']" data-index="' . absint( $index ) . '" id="' . esc_attr( $id_champ ) . '" value="' . esc_attr( $methode->get_id() ) . '" ' . checked( $methode->get_id(), $choisi, false ) . '>';
+            echo '<label for="' . esc_attr( $id_champ ) . '">' . esc_html( $methode->get_label() ) . '<small>' . esc_html( $detail ) . '</small></label>';
+            echo '</li>';
         }
+        echo '</ul>';
     }
-
-    echo '</fieldset>';
 }
 
 /**
@@ -138,9 +163,10 @@ function pepe_suggestions_panier() {
         return;
     }
 
-    echo '<section class="pepe-suggestions">';
-    echo '<h2 class="pepe-suggestions__titre">Un petit plus ?</h2>';
-    echo '<ul class="pepe-suggestions__liste">';
+    // Même HTML que les ventes croisées (cross-sells) et la liste du widget produits de WooCommerce
+    echo '<div class="cross-sells">';
+    echo '<h2>Un petit plus ?</h2>';
+    echo '<ul class="product_list_widget">';
 
     foreach ( $ids as $id ) {
         $produit = wc_get_product( $id );
@@ -148,16 +174,16 @@ function pepe_suggestions_panier() {
             continue;
         }
 
-        echo '<li class="pepe-suggestion">';
-        echo '<span class="pepe-suggestion__image">' . $produit->get_image( 'woocommerce_gallery_thumbnail' ) . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-        echo '<span class="pepe-suggestion__infos">';
-        echo '<a class="pepe-suggestion__nom" href="' . esc_url( $produit->get_permalink() ) . '">' . esc_html( $produit->get_name() ) . '</a>';
-        echo '<span class="pepe-suggestion__prix">' . wp_kses_post( $produit->get_price_html() ) . '</span>';
-        echo '</span>';
-        echo '<a class="pepe-suggestion__ajouter" href="' . esc_url( $produit->add_to_cart_url() ) . '" aria-label="' . esc_attr( 'Ajouter ' . $produit->get_name() . ' au panier' ) . '">+</a>';
+        echo '<li>';
+        echo '<a href="' . esc_url( $produit->get_permalink() ) . '">';
+        echo $produit->get_image( 'woocommerce_gallery_thumbnail' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo '<span class="product-title">' . esc_html( $produit->get_name() ) . '</span>';
+        echo '</a>';
+        echo wp_kses_post( $produit->get_price_html() );
+        echo '<a class="button add_to_cart_button" href="' . esc_url( $produit->add_to_cart_url() ) . '" aria-label="' . esc_attr( 'Ajouter ' . $produit->get_name() . ' au panier' ) . '">+</a>';
         echo '</li>';
     }
 
     echo '</ul>';
-    echo '</section>';
+    echo '</div>';
 }

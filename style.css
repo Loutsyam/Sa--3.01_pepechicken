@@ -3,7 +3,7 @@ Theme Name:   Pepe Chicken
 Description:  Thème enfant Storefront – Click & collect Pepe Chicken (SAÉ 3.01)
 Author:       Sanchez--Perrault Loutsyam
 Template:     storefront
-Version:      1.4.0
+Version:      1.5.0
 Text Domain:  pepe-chicken
 */
 
@@ -19,8 +19,13 @@ Text Domain:  pepe-chicken
                                            18. Footer
                                            19. Mobile
 
-  Classes « pepe- » : celles du thème (BEM). Les autres viennent de Storefront
-  ou de WooCommerce. Pas de !important : on écrit un sélecteur plus précis.
+  On reprend le HTML et les classes de Storefront et de WooCommerce
+  (site-title, button alt, shop_table, cart_totals, woocommerce-MyAccount-*, hentry,
+  entry-title, storefront-product-section, commentlist…) et on les style ici.
+  Classes « pepe- » (BEM) seulement quand rien n'existe : les options (pepe-choix,
+  pepe-option), la bande « C'est validé ! » (pepe-valide) et le sondage (pepe-sondage).
+  Pas de !important : on écrit un sélecteur au moins aussi précis que celui de Storefront
+  (notre style.css est chargé après le sien).
 */
 
 /* 1. Polices */
@@ -143,8 +148,7 @@ a:focus {
 /* Tous les boutons : jaunes, en pilule */
 button,
 .button,
-input[type="submit"],
-.pepe-btn {
+input[type="submit"] {
   font-family: var(--ff-titre);
   font-weight: normal;
   border: 0;
@@ -163,32 +167,24 @@ input[type="submit"]:hover {
   color: var(--color-brun);
 }
 
-/* Bloc pepe-btn et ses variantes de couleur */
-.pepe-btn {
-  display: inline-block;
-  text-decoration: none;
-}
-
-.pepe-btn--rouge {
+/* Bouton « alt » de WooCommerce / Storefront : rouge */
+.button.alt {
   background: var(--color-rouge);
   color: var(--color-beige);
 }
 
-.pepe-btn--rouge:hover,
-.pepe-btn--rouge:focus {
+.button.alt:hover,
+.button.alt:focus {
   background: var(--color-rouge-hover);
   color: var(--color-beige);
 }
 
-.pepe-btn--beige {
-  background: var(--color-beige);
-  color: var(--color-rouge);
-}
-
-.pepe-btn--beige:hover,
-.pepe-btn--beige:focus {
-  background: var(--color-beige-hover);
-  color: var(--color-rouge);
+/* Bouton désactivé (ex. « Ajouter au panier » tant qu'aucune formule n'est choisie) :
+   Storefront le met à moitié transparent (opacity: 0.5 avec !important, qu'on garde),
+   un bouton rouge disparaîtrait sur le fond rouge : fond brun, qui donne un rouge foncé */
+.button.alt.disabled,
+.button.alt:disabled {
+  background: var(--color-brun);
 }
 
 /* 5. Header : menu à gauche, logo au centre, boutons à droite */
@@ -236,35 +232,83 @@ input[type="submit"]:hover {
   margin: 0;
 }
 
-.pepe-header__actions {
+/* Menu secondaire de Storefront : Commander, compte et panier à droite
+   (Storefront le cache sur mobile et le met en float : on l'affiche en ligne) */
+.site-header .secondary-navigation {
   grid-column: 3;
   grid-row: 1;
   justify-self: end;
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
+  width: auto;
+  float: none;
+  margin: 0;
 }
 
-/* Logo (bloc pepe-logo) */
-.pepe-logo {
-  text-align: center;
+.site-header .secondary-navigation ul {
+  margin: 0;
+  list-style: none;
 }
 
-.pepe-logo__lien {
-  display: inline-flex;
-  flex-direction: column;
+.site-header .secondary-navigation .menu {
+  display: flex;
   align-items: center;
+  gap: var(--spacing-md);
+  float: none;
+  font-size: var(--fs-texte);
+}
+
+.site-header .secondary-navigation .button.alt {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  color: var(--color-beige);
+  line-height: 1.618;
+}
+
+/* Le panier est dans le menu secondaire : on annule les styles de menu de Storefront
+   (éléments en ligne, interligne 1, ::before cachés) */
+.site-header .secondary-navigation .site-header-cart {
+  display: block;
+}
+
+.site-header .secondary-navigation .site-header-cart > li {
+  display: block;
+}
+
+.site-header .secondary-navigation .site-header-cart .cart-contents {
+  line-height: 1.618;
+  white-space: nowrap;
+}
+
+.site-header .secondary-navigation .site-header-cart .cart-contents::before {
+  display: inline;
+}
+
+/* Logo : titre et description du site de Storefront, sur 2 lignes */
+.site-header .site-branding,
+.site-footer .site-branding {
+  text-align: center;
   line-height: 0.9;
+}
+
+.site-branding .site-title {
+  margin: 0;
+  font-family: var(--ff-titre);
+  font-size: 2.6rem;
+  line-height: 0.9;
+  letter-spacing: 0;
+}
+
+.site-branding .site-title a,
+.site-footer .site-branding .site-title a {
+  font-weight: normal;
+  color: var(--color-rouge);
   text-decoration: none;
 }
 
-.pepe-logo__pepe {
-  font-family: var(--ff-titre);
-  font-size: 2.6rem;
-  color: var(--color-rouge);
-}
-
-.pepe-logo__chicken {
+.site-branding .site-description {
+  display: block;
+  margin: 0;
   font-family: var(--ff-titre);
   font-size: 1.1rem;
   color: var(--color-rouge);
@@ -296,7 +340,8 @@ input[type="submit"]:hover {
 }
 
 /* Bouton compte (connexion / Mon compte) */
-.pepe-header__compte {
+.site-header .secondary-navigation .my-account a {
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -308,13 +353,13 @@ input[type="submit"]:hover {
   color: var(--color-rouge);
 }
 
-.pepe-header__compte:hover,
-.pepe-header__compte:focus {
+.site-header .secondary-navigation .my-account a:hover,
+.site-header .secondary-navigation .my-account a:focus {
   background: var(--color-beige-hover);
   color: var(--color-rouge);
 }
 
-.pepe-header__icone {
+.site-header .secondary-navigation .my-account svg {
   fill: currentColor;
 }
 
@@ -457,49 +502,92 @@ input[type="submit"]:hover {
   line-height: 1.1;
 }
 
-/* Onglets de catégories (bloc pepe-categories) */
-.pepe-categories {
+/* Onglets des catégories : liste du widget « Catégories de produits » de WooCommerce */
+.woocommerce-products-header .widget_product_categories {
+  margin: var(--spacing-xl) 0 0;
+}
+
+.woocommerce-products-header .product-categories {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: var(--spacing-xs);
-  margin-top: var(--spacing-xl);
+  margin: 0;
+  list-style: none;
 }
 
-.pepe-categories__lien {
-  font-family: var(--ff-titre);
+.woocommerce-products-header .product-categories .cat-item {
+  margin: 0;
+  padding: 0;
+}
+
+.woocommerce-products-header .product-categories .cat-item::before {
+  content: none;
+}
+
+.woocommerce-products-header .product-categories a {
+  display: block;
   padding: var(--spacing-xs) var(--spacing-md);
   border: 2px solid var(--color-beige);
   border-radius: var(--radius-pilule);
   color: var(--color-beige);
+  font-family: var(--ff-titre);
   text-decoration: none;
 }
 
-.pepe-categories__lien:hover {
+.woocommerce-products-header .product-categories a:hover {
   background: var(--color-rouge-hover);
   color: var(--color-beige);
 }
 
-.pepe-categories__lien--actif {
+.woocommerce-products-header .product-categories .current-cat a {
   background: var(--color-beige);
   color: var(--color-rouge);
 }
 
-/* IT-12 : pilules des collections (même bloc, plus petites) */
-.pepe-categories--collections {
+/* IT-12 : collections = nuage d'étiquettes de WooCommerce (tagcloud), pilules plus petites */
+.woocommerce-products-header .widget_product_tag_cloud {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
-  margin-top: var(--spacing-md);
+  gap: var(--spacing-xs);
+  margin: var(--spacing-md) 0 0;
 }
 
-.pepe-categories__intro {
+.woocommerce-products-header .widget_product_tag_cloud .widget-title {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-family: var(--ff-texte);
   font-size: var(--fs-petit);
   font-weight: 600;
   color: var(--color-beige);
 }
 
-.pepe-categories--collections .pepe-categories__lien {
+.woocommerce-products-header .tagcloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.woocommerce-products-header .tagcloud a {
+  margin: 0;
   padding: var(--spacing-xxs) var(--spacing-sm);
+  border: 2px solid var(--color-beige);
+  border-radius: var(--radius-pilule);
+  background: none;
+  color: var(--color-beige);
+  font-family: var(--ff-titre);
   font-size: var(--fs-petit);
+  font-weight: normal;
+  text-decoration: none;
+}
+
+.woocommerce-products-header .tagcloud a:hover,
+.woocommerce-products-header .tagcloud a[aria-current] {
+  background: var(--color-beige);
+  color: var(--color-rouge);
 }
 
 /* Description d'une collection */
@@ -509,15 +597,15 @@ input[type="submit"]:hover {
   color: var(--color-beige);
 }
 
-/* Une section par catégorie (bloc pepe-section) */
-.pepe-section {
+/* Une section par catégorie : sections de la page d'accueil de Storefront */
+.storefront-product-section {
   margin-bottom: var(--spacing-4xl);
 }
 
-.pepe-section__titre {
+.storefront-product-section .section-title {
+  margin-bottom: var(--spacing-xl);
   text-align: center;
   font-size: var(--fs-h2);
-  margin-bottom: var(--spacing-xl);
 }
 
 .woocommerce-result-count,
@@ -710,28 +798,6 @@ input[type="submit"]:hover {
   text-transform: none;
 }
 
-/* IT-12 : collections du produit, sous le titre */
-.pepe-collections-produit {
-  margin: 0 0 var(--spacing-sm);
-  font-size: var(--fs-petit);
-  color: var(--color-beige);
-}
-
-.pepe-collections-produit__lien {
-  display: inline-block;
-  padding: var(--spacing-xxs) var(--spacing-sm);
-  border: 2px solid var(--color-beige);
-  border-radius: var(--radius-pilule);
-  color: var(--color-beige);
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.pepe-collections-produit__lien:hover {
-  background: var(--color-beige);
-  color: var(--color-rouge);
-}
-
 /* Quantité + bouton « Ajouter au panier » sur la même ligne */
 .single-product div.product form.cart {
   display: flex;
@@ -823,29 +889,29 @@ input[type="submit"]:hover {
   font-size: var(--fs-h2);
 }
 
-/* IT-13 : « Ça va bien avec » (ventes croisées), 4 cartes sur une ligne */
-.single-product .pepe-complements {
-  grid-column: 1 / -1;
+/* IT-13 : « Ça va bien avec » (section related products de WooCommerce), 4 cartes sur une ligne */
+.single-product .related.products {
   margin-top: var(--spacing-3xl);
 }
 
-.pepe-complements__titre {
+.single-product .related.products > h2 {
   margin-bottom: var(--spacing-xl);
-  font-size: var(--fs-h2);
 }
 
-.site-main .pepe-complements ul.products {
+.site-main .related.products ul.products {
   grid-template-columns: repeat(4, 1fr);
   gap: var(--spacing-xl);
   max-width: none;
 }
 
-/* IT-14 : bloc « Avis clients » (carte beige, résumé à gauche, avis à droite) */
-.single-product .pepe-avis {
+/* IT-14 : avis clients = HTML de WooCommerce (#reviews, commentlist, comment-text…)
+   carte beige : à gauche le titre et la note moyenne, à droite les avis et le formulaire */
+.single-product #reviews {
   display: grid;
   grid-column: 1 / -1;
   grid-template-columns: 16rem 1fr;
-  gap: var(--spacing-xl);
+  align-items: start;
+  gap: var(--spacing-md) var(--spacing-xl);
   margin-top: var(--spacing-3xl);
   padding: var(--spacing-xl);
   border-radius: var(--radius-xl);
@@ -853,13 +919,25 @@ input[type="submit"]:hover {
   color: var(--color-brun);
 }
 
-.pepe-avis__titre {
-  margin: 0 0 var(--spacing-sm);
+/* #comments disparaît : ses enfants vont dans la grille de #reviews */
+.single-product #reviews #comments {
+  display: contents;
+}
+
+.single-product #reviews .woocommerce-Reviews-title {
+  grid-column: 1;
+  margin: 0;
   font-size: var(--fs-h3);
   color: var(--color-brun);
 }
 
-.pepe-avis__moyenne {
+.single-product #reviews .woocommerce-product-rating {
+  grid-column: 1;
+  grid-row: 2 / span 2;
+  margin: 0;
+}
+
+.single-product #reviews .woocommerce-product-rating .average {
   margin: 0;
   font-family: var(--ff-titre);
   font-size: var(--fs-h1);
@@ -867,127 +945,167 @@ input[type="submit"]:hover {
   color: var(--color-rouge);
 }
 
-.pepe-avis__nombre {
-  margin: var(--spacing-xxs) 0 var(--spacing-md);
-  font-size: var(--fs-petit);
+.single-product #reviews .woocommerce-product-rating .star-rating {
+  float: none;
+  margin: var(--spacing-xxs) 0;
 }
 
-.pepe-avis .pepe-avis__bouton {
-  display: inline-block;
-  padding: var(--spacing-xs) var(--spacing-lg);
-  border-radius: var(--radius-pilule);
-  background: var(--color-rouge);
-  color: var(--color-beige);
-  font-family: var(--ff-titre);
+.single-product #reviews .woocommerce-product-rating .button.alt {
   text-decoration: none;
 }
 
-.pepe-avis .pepe-avis__bouton:hover {
-  background: var(--color-rouge-hover);
-  color: var(--color-beige);
+.single-product #reviews .woocommerce-review-link {
+  display: block;
+  margin-bottom: var(--spacing-md);
+  font-size: var(--fs-petit);
 }
 
-/* Étoiles jaunes (Storefront les colore en violet : sélecteurs plus précis) */
-.single-product .pepe-avis .star-rating {
+.single-product #reviews .commentlist,
+.single-product #reviews .woocommerce-noreviews,
+.single-product #reviews #review_form_wrapper,
+.single-product #reviews .woocommerce-verification-required {
+  grid-column: 2;
   margin: 0;
 }
 
-.single-product .pepe-avis .star-rating::before {
-  color: var(--color-beige-hover);
-}
-
-.single-product .pepe-avis .star-rating span::before,
-.single-product .pepe-avis p.stars:hover a::before,
-.single-product .pepe-avis p.stars.selected a.active::before,
-.single-product .pepe-avis p.stars.selected a:not(.active)::before {
-  color: var(--color-jaune);
-}
-
-/* Liens du bloc en rouge (le site les met en beige) */
-.single-product .pepe-avis__info a,
-.single-product .pepe-avis .must-log-in a {
-  color: var(--color-rouge);
-}
-
-/* Cartes des avis */
-.pepe-avis .pepe-avis__cartes {
+.single-product #reviews .commentlist {
+  grid-row: 1 / span 2;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
-  margin: 0;
   padding: 0;
   list-style: none;
 }
 
-#reviews .pepe-avis__cartes .pepe-avis__carte {
+/* Étoiles jaunes (Storefront les colore en violet : sélecteurs plus précis) */
+.single-product #reviews .star-rating::before {
+  color: var(--color-beige-hover);
+}
+
+.single-product #reviews .star-rating span::before,
+.single-product #reviews p.stars:hover a::before,
+.single-product #reviews p.stars.selected a.active::before,
+.single-product #reviews p.stars.selected a:not(.active)::before {
+  color: var(--color-jaune);
+}
+
+/* Un avis : carte blanche (Storefront met une marge et une photo à gauche) */
+.single-product #reviews .commentlist li.review {
   margin: 0;
   padding: var(--spacing-md) var(--spacing-lg);
   border-radius: var(--radius-lg);
   background: var(--color-blanc);
 }
 
-.pepe-avis__entete {
-  display: flex;
-  justify-content: space-between;
+.single-product #reviews .commentlist li.review .comment_container .comment-text {
+  display: grid;
+  grid-template-columns: auto auto auto 1fr;
   align-items: center;
-  gap: var(--spacing-sm);
-  margin-bottom: var(--spacing-xs);
+  gap: var(--spacing-xs) var(--spacing-xxs);
+  width: auto;
+  float: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
-.pepe-avis__texte p {
+/* Le paragraphe .meta disparaît : nom en haut, « Achat vérifié · il y a … » en bas */
+.single-product #reviews .commentlist li .comment-text p.meta {
+  display: contents;
+}
+
+.single-product #reviews .woocommerce-review__author {
+  grid-column: 1 / 4;
+  grid-row: 1;
+}
+
+.single-product #reviews .commentlist li .comment_container .comment-text .star-rating {
+  grid-column: 4;
+  grid-row: 1;
+  justify-self: end;
+  float: none;
   margin: 0;
 }
 
-.pepe-avis__infos,
-.pepe-avis__attente {
-  margin: var(--spacing-xs) 0 0;
+.single-product #reviews .commentlist .description {
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+.single-product #reviews .commentlist .description p {
+  margin: 0;
+}
+
+.single-product #reviews .woocommerce-review__verified,
+.single-product #reviews .woocommerce-review__dash,
+.single-product #reviews .woocommerce-review__published-date,
+.single-product #reviews .woocommerce-review__awaiting-approval {
+  grid-row: 3;
   font-size: var(--fs-petit);
+  font-style: normal;
   opacity: 0.7;
 }
 
-.pepe-avis__vide,
-.pepe-avis__info {
-  margin: 0;
+/* Storefront remplace « Achat vérifié » par une icône et cache le « · » : on garde le texte */
+.single-product #reviews .commentlist li p.meta .verified {
+  display: inline;
+  width: auto;
+  height: auto;
+  text-indent: 0;
+}
+
+.single-product #reviews .commentlist li p.meta .verified::before {
+  content: none;
+}
+
+.single-product #reviews .commentlist li p.meta .woocommerce-review__dash {
+  display: inline;
+}
+
+.single-product #reviews .commentlist li p.meta time {
+  display: inline;
 }
 
 /* Formulaire « Laisser un avis » */
-.pepe-avis__formulaire {
-  margin-top: var(--spacing-lg);
+.single-product #reviews #review_form_wrapper {
   padding: var(--spacing-lg);
   border-radius: var(--radius-lg);
   background: var(--color-blanc);
 }
 
-/* Storefront cache ce titre et met un fond gris au formulaire (#reviews, #respond) */
-#reviews .pepe-avis__formulaire #respond {
+/* Storefront cache ce titre et met un fond gris au formulaire */
+.single-product #reviews #respond {
   padding: 0;
   background: none;
 }
 
-#reviews .pepe-avis__formulaire .pepe-avis__sous-titre {
+.single-product #reviews .comment-reply-title {
   display: block;
   margin: 0 0 var(--spacing-sm);
+  font-family: var(--ff-titre);
   font-size: var(--fs-h3);
   color: var(--color-brun);
 }
 
-.pepe-avis .comment-form label {
+.single-product #reviews .comment-form label {
   display: block;
   margin-bottom: var(--spacing-xxs);
   font-weight: 600;
 }
 
-.pepe-avis .comment-form p.stars a {
-  color: var(--color-jaune);
-}
-
-.pepe-avis .comment-form textarea,
-.pepe-avis .comment-form input[type="text"],
-.pepe-avis .comment-form input[type="email"] {
+.single-product #reviews .comment-form textarea,
+.single-product #reviews .comment-form input[type="text"],
+.single-product #reviews .comment-form input[type="email"] {
   width: 100%;
   border: 2px solid var(--color-beige-hover);
   border-radius: var(--radius-sm);
   background: var(--color-blanc);
+}
+
+/* Liens du bloc en rouge (le site les met en beige) */
+.single-product #reviews .woocommerce-verification-required a,
+.single-product #reviews .must-log-in a {
+  color: var(--color-rouge);
 }
 
 /* 10. Options (pilules du Design System) */
@@ -1136,69 +1254,95 @@ input[type="submit"]:hover {
   outline-offset: 0.125rem;
 }
 
-/* Quantité + bouton sur une ligne, sous les options */
-.single-product div.product .pepe-achat {
-  display: flex;
-  flex: 1 0 100%;
-  align-items: center;
-  gap: var(--spacing-md);
-}
-
-.single-product div.product .pepe-achat .single_add_to_cart_button {
+/* Quantité + bouton : sur la même ligne, sous les options (le bouton prend la place restante) */
+.single-product div.product form.cart .single_add_to_cart_button {
   flex: 1;
 }
 
-/* 11. Valeurs nutritionnelles */
-.pepe-nutrition {
-  margin-bottom: var(--spacing-md);
+/* 11. Valeurs nutritionnelles : tableau « Informations complémentaires » de WooCommerce
+   (shop_attributes), affiché en petites cartes : la valeur, puis le nom */
+.single-product .summary .shop_attributes {
+  display: block;
+  margin: 0 0 var(--spacing-md);
+  border: 0;
 }
 
-.pepe-nutrition__titre {
+.single-product .summary .shop_attributes caption {
+  font-weight: 400;
+  display: block;
   margin-bottom: var(--spacing-xs);
+  padding: 0;
   font-family: var(--ff-titre);
   font-size: var(--fs-texte);
+  text-align: left;
   color: var(--color-beige);
 }
 
-.pepe-nutrition__portion {
+.single-product .summary .shop_attributes caption small {
   font-family: var(--ff-texte);
   font-size: var(--fs-petit);
 }
 
-.pepe-nutrition__liste {
+.single-product .summary .shop_attributes tbody {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-xs);
-  margin: 0 0 var(--spacing-sm);
-  list-style: none;
 }
 
-/* Petite carte : la valeur, puis le nom */
-.pepe-nutrition__item {
+.single-product .summary .shop_attributes tr {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   align-items: center;
   min-width: 5.5rem;
   padding: var(--spacing-xs) var(--spacing-sm);
+  border: 0;
   border-radius: var(--radius-md);
   background: var(--color-beige);
   color: var(--color-brun);
   text-align: center;
 }
 
-.pepe-nutrition__valeur {
-  font-weight: 700;
+.single-product .summary .shop_attributes th,
+.single-product .summary .shop_attributes td {
+  width: auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-style: normal;
 }
 
-.pepe-nutrition__nom {
+.single-product .summary .shop_attributes th {
   font-size: var(--fs-petit);
+  font-weight: 400;
   line-height: 1.2;
 }
 
-.pepe-nutrition__allergenes {
+.single-product .summary .shop_attributes td {
+  font-weight: 700;
+}
+
+.single-product .summary .shop_attributes td p {
   margin: 0;
-  font-size: var(--fs-petit);
+}
+
+/* Allergènes : une simple ligne de texte, sans carte */
+.single-product .summary .shop_attributes .woocommerce-product-attributes-item--allergenes {
+  flex: 1 0 100%;
+  flex-direction: row;
+  gap: var(--spacing-xxs);
+  padding: 0;
+  background: none;
   color: var(--color-beige);
+  font-size: var(--fs-petit);
+  text-align: left;
+}
+
+.single-product .summary .shop_attributes .woocommerce-product-attributes-item--allergenes th {
+  font-weight: 700;
+}
+
+.single-product .summary .shop_attributes .woocommerce-product-attributes-item--allergenes td {
+  font-weight: 400;
 }
 
 /* Variations (Burger seul / Menu) : même aspect que les options */
@@ -1284,61 +1428,101 @@ input[type="submit"]:hover {
   gap: var(--spacing-md);
 }
 
-/* 12. Panier */
-.pepe-panier__entete {
-  margin-bottom: var(--spacing-lg);
+/* 12. Panier : HTML de WooCommerce (woocommerce-cart-form, table.cart, cart-collaterals…)
+   mis en page comme la maquette : articles en cartes à gauche, récapitulatif à droite */
+
+/* Titre de Storefront « Mon panier » + nombre d'articles, à gauche
+   (pareil pour « Finaliser ma commande » et « Bonjour Prénom » du compte) */
+.woocommerce-cart .hentry .entry-header,
+.woocommerce-checkout .hentry .entry-header,
+.woocommerce-account .hentry .entry-header {
+  margin: 0 0 var(--spacing-sm);
+  padding: 0;
+  border: 0;
+  text-align: left;
 }
 
-.pepe-panier__titre {
-  margin-bottom: var(--spacing-sm);
+.woocommerce-cart .entry-header .entry-title,
+.woocommerce-checkout .entry-header .entry-title,
+.woocommerce-account .entry-header .entry-title {
+  margin: 0;
   font-size: var(--fs-h1);
-  color: var(--color-beige);
 }
 
-.pepe-panier__nombre {
+.woocommerce-cart .entry-title small,
+.woocommerce-checkout .entry-title small {
   font-family: var(--ff-texte);
   font-size: var(--fs-petit);
   vertical-align: middle;
 }
 
-.pepe-etapes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-sm);
-  margin: 0;
-  list-style: none;
+/* Étapes de la commande : fil d'Ariane de WooCommerce */
+.woocommerce-cart .entry-content .woocommerce-breadcrumb,
+.woocommerce-checkout .entry-content .woocommerce-breadcrumb {
+  margin: 0 0 var(--spacing-lg);
+  padding: 0;
   font-size: var(--fs-petit);
   color: var(--color-beige);
 }
 
-.pepe-etapes__item + .pepe-etapes__item::before {
-  content: "›";
-  margin-right: var(--spacing-sm);
-}
-
-.pepe-etapes__item--actif {
-  font-weight: 700;
+.woocommerce-cart .entry-content .woocommerce-breadcrumb strong,
+.woocommerce-checkout .entry-content .woocommerce-breadcrumb strong {
   color: var(--color-jaune);
 }
 
-/* Articles à gauche, récapitulatif à droite */
-.pepe-panier__contenu {
+/* Grille : formulaire et « Un petit plus ? » à gauche, récapitulatif à droite */
+.woocommerce-cart .entry-content .woocommerce {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 22rem;
-  gap: var(--spacing-lg);
+  grid-template-rows: auto auto auto 1fr; /* messages, étapes, articles, « Un petit plus ? » */
   align-items: start;
+  gap: 0 var(--spacing-lg);
 }
 
-.pepe-panier__liste {
+.woocommerce-cart .entry-content .woocommerce > * {
+  grid-column: 1 / -1;
+}
+
+.woocommerce-cart .entry-content .woocommerce > .woocommerce-cart-form,
+.woocommerce-cart .entry-content .woocommerce > .cross-sells {
+  grid-column: 1;
+}
+
+.woocommerce-cart .entry-content .woocommerce > .cart-collaterals {
+  grid-column: 2;
+  grid-row: 3 / span 2;
+}
+
+/* Storefront met les .cart_totals en float avec une largeur en % : annulé */
+.woocommerce-cart .cart-collaterals::before,
+.woocommerce-cart .cart-collaterals::after {
+  display: none;
+}
+
+.woocommerce-cart .cart-collaterals .cart_totals {
+  width: auto;
+  float: none;
+}
+
+/* Le tableau des articles devient une liste de cartes */
+.woocommerce-cart .woocommerce-cart-form table.cart {
+  display: block;
+  margin: 0;
+  border: 0;
+}
+
+.woocommerce-cart .woocommerce-cart-form table.cart thead {
+  display: none;
+}
+
+.woocommerce-cart .woocommerce-cart-form table.cart tbody {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
-  margin: 0;
-  list-style: none;
 }
 
-/* Carte d'un article */
-.pepe-article {
+/* Carte d'un article : image | nom | − 1 + | prix | × */
+.woocommerce-cart .woocommerce-cart-form table.cart tr.cart_item {
   display: grid;
   grid-template-columns: 5rem 1fr auto auto auto;
   align-items: center;
@@ -1349,40 +1533,53 @@ input[type="submit"]:hover {
   color: var(--color-brun);
 }
 
-.pepe-article__image img {
+.woocommerce-cart .woocommerce-cart-form table.cart td {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+}
+
+/* Pas d'étiquette « Produit : » (tableau responsive de Storefront sur mobile) */
+.woocommerce-cart .woocommerce-cart-form table.cart td::before {
+  content: none;
+}
+
+.woocommerce-cart .woocommerce-cart-form table.cart .product-thumbnail img {
   display: block;
   width: 5rem;
+  max-width: none;
   height: 5rem;
+  margin: 0;
   object-fit: cover;
   border-radius: var(--radius-md);
 }
 
-.pepe-article__infos {
+.woocommerce-cart .woocommerce-cart-form table.cart td.product-name {
   min-width: 0;
 }
 
-.pepe-article__nom {
-  margin: 0 0 var(--spacing-xxs);
+.woocommerce-cart .woocommerce-cart-form table.cart td.product-name > a {
+  display: block;
+  margin-bottom: var(--spacing-xxs);
+  font-family: var(--ff-titre);
   font-size: var(--fs-h3);
-}
-
-.pepe-panier .pepe-article .pepe-article__nom a {
   color: var(--color-brun);
   text-decoration: none;
 }
 
-.pepe-article__details {
+.woocommerce-cart .woocommerce-cart-form table.cart td.product-name .variation {
   margin: 0 0 var(--spacing-xxs);
   font-size: var(--fs-petit);
 }
 
-.pepe-article__modifier {
-  font-size: var(--fs-petit);
+.woocommerce-cart .woocommerce-cart-form table.cart td.product-name small a {
   color: var(--color-rouge);
 }
 
 /* Quantité − 1 + */
-.pepe-article__quantite {
+.woocommerce-cart .woocommerce-cart-form table.cart td.product-quantity {
   display: flex;
   align-items: center;
   padding: var(--spacing-xxs);
@@ -1390,8 +1587,9 @@ input[type="submit"]:hover {
   background: var(--color-blanc);
 }
 
-.pepe-article__quantite .quantity .qty {
+.woocommerce-cart .woocommerce-cart-form table.cart td.product-quantity .qty {
   width: 2.5rem;
+  max-width: none;
   padding: 0;
   border: 0;
   background: none;
@@ -1402,13 +1600,13 @@ input[type="submit"]:hover {
   -moz-appearance: textfield;
 }
 
-.pepe-article__quantite .qty::-webkit-outer-spin-button,
-.pepe-article__quantite .qty::-webkit-inner-spin-button {
+.woocommerce-cart .woocommerce-cart-form table.cart td.product-quantity .qty::-webkit-outer-spin-button,
+.woocommerce-cart .woocommerce-cart-form table.cart td.product-quantity .qty::-webkit-inner-spin-button {
   margin: 0;
   -webkit-appearance: none;
 }
 
-.pepe-article .pepe-quantite__bouton {
+.woocommerce-cart .woocommerce-cart-form .wc-block-components-quantity-selector__button {
   width: 2rem;
   height: 2rem;
   padding: 0;
@@ -1420,29 +1618,36 @@ input[type="submit"]:hover {
   font-weight: 700;
 }
 
-.pepe-article .pepe-quantite__bouton:hover {
+.woocommerce-cart .woocommerce-cart-form .wc-block-components-quantity-selector__button:hover {
   background: var(--color-beige);
 }
 
-.pepe-article__prix {
-  margin: 0;
+.woocommerce-cart .woocommerce-cart-form table.cart td.product-subtotal {
   font-family: var(--ff-titre);
   font-size: var(--fs-h3);
   color: var(--color-rouge);
   white-space: nowrap;
 }
 
-/* Croix simple (au lieu de l'icône de Storefront) */
-.pepe-article .pepe-article__supprimer .remove::before {
+/* Croix simple (Storefront met une icône dans une bordure) */
+.woocommerce-cart .woocommerce-cart-form table.cart td.product-remove {
+  border: 0;
+}
+
+.woocommerce-cart .woocommerce-cart-form table.cart td.product-remove a.remove {
+  position: static;
+  font-size: 1.5rem;
+}
+
+.woocommerce-cart .woocommerce-cart-form table.cart td.product-remove a.remove::before {
   content: "×";
   font-family: var(--ff-texte);
-  font-size: 1.5rem;
   font-weight: 400;
   color: var(--color-brun);
 }
 
-/* Bouton caché, cliqué par le script des − / + */
-.pepe-panier__maj {
+/* Ligne des actions : le bouton « Mettre à jour » est caché, cliqué par le script des − / + */
+.woocommerce-cart .woocommerce-cart-form table.cart tr:has(td.actions) {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -1450,17 +1655,17 @@ input[type="submit"]:hover {
   clip: rect(0 0 0 0);
 }
 
-/* « Un petit plus ? » */
-.pepe-suggestions {
+/* « Un petit plus ? » : ventes croisées en petites cartes (liste du widget produits) */
+.woocommerce-cart .cross-sells {
   margin-top: var(--spacing-lg);
 }
 
-.pepe-suggestions__titre {
+.woocommerce-cart .cross-sells h2 {
   font-size: var(--fs-h2);
   color: var(--color-beige);
 }
 
-.pepe-suggestions__liste {
+.woocommerce-cart .cross-sells .product_list_widget {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--spacing-sm);
@@ -1468,179 +1673,181 @@ input[type="submit"]:hover {
   list-style: none;
 }
 
-.pepe-suggestion {
-  display: flex;
+.woocommerce-cart .cross-sells .product_list_widget li {
+  display: grid;
+  grid-template-columns: 1fr auto;
   align-items: center;
-  gap: var(--spacing-xs);
+  gap: 0 var(--spacing-xs);
+  margin: 0;
   padding: var(--spacing-xs);
+  border: 0;
   border-radius: var(--radius-md);
   background: var(--color-beige);
-}
-
-.pepe-suggestion__image img {
-  display: block;
-  width: 3rem;
-  height: 3rem;
-  object-fit: cover;
-  border-radius: var(--radius-sm);
-}
-
-.pepe-suggestion__infos {
-  display: flex;
-  flex: 1;
-  min-width: 0;
-  flex-direction: column;
   font-size: var(--fs-petit);
 }
 
-.pepe-panier .pepe-suggestions .pepe-suggestion__nom {
+.woocommerce-cart .cross-sells .product_list_widget li > a:first-child {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  min-width: 0;
   font-family: var(--ff-titre);
   color: var(--color-brun);
   text-decoration: none;
 }
 
-.pepe-suggestion__prix {
+.woocommerce-cart .cross-sells .product_list_widget li img {
+  width: 3rem;
+  max-width: none;
+  height: 3rem;
+  margin: 0;
+  float: none;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+}
+
+.woocommerce-cart .cross-sells .product_list_widget .price,
+.woocommerce-cart .cross-sells .product_list_widget li > .amount,
+.woocommerce-cart .cross-sells .product_list_widget li > del,
+.woocommerce-cart .cross-sells .product_list_widget li > ins {
+  grid-column: 1;
+  padding-left: 3.5rem;
   color: var(--color-rouge);
   font-weight: 700;
 }
 
-.pepe-panier .pepe-suggestions .pepe-suggestion__ajouter {
+.woocommerce-cart .cross-sells .product_list_widget .add_to_cart_button {
+  grid-column: 2;
+  grid-row: 1 / span 2;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 2rem;
   height: 2rem;
+  padding: 0;
   border-radius: 50%;
-  background: var(--color-jaune);
-  box-shadow: var(--shadow-cartoon);
-  color: var(--color-brun);
   font-weight: 700;
   text-decoration: none;
 }
 
-/* Récapitulatif */
-.pepe-recap {
+/* Récapitulatif : carte beige */
+.woocommerce-cart .cart_totals {
   padding: var(--spacing-lg);
   border-radius: var(--radius-xl);
   background: var(--color-beige);
   color: var(--color-brun);
 }
 
-.pepe-recap__titre {
+.woocommerce-cart .cart_totals h2 {
+  padding: 0;
+  border: 0;
   font-size: var(--fs-h2);
   color: var(--color-brun);
 }
 
-.pepe-recap__bloc {
-  margin: 0 0 var(--spacing-md);
-  padding: 0;
-  border: 0;
-  background: none;
-}
-
-.pepe-recap .pepe-recap__sous-titre {
-  display: block;
+.woocommerce-cart .cart_totals h3 {
   margin: 0 0 var(--spacing-xs);
-  padding: 0;
-  background: none;
-  font-weight: 700;
+  font-family: var(--ff-texte);
   font-size: var(--fs-petit);
+  font-weight: 700;
+  color: var(--color-brun);
 }
 
-/* Mode de récupération */
-.pepe-expedition__choix {
+.woocommerce-cart .cart_totals h3 label {
+  font-weight: 700;
+}
+
+/* Mode de récupération : liste des modes d'expédition de WooCommerce, en cartes */
+.woocommerce-cart .cart_totals .woocommerce-shipping-methods {
+  margin: 0 0 var(--spacing-md);
+  list-style: none;
+}
+
+.woocommerce-cart .cart_totals .woocommerce-shipping-methods li {
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
-  margin-bottom: var(--spacing-xs);
+  margin: 0 0 var(--spacing-xs);
   padding: var(--spacing-sm);
   border: 0.125rem solid var(--color-beige-hover);
   border-radius: var(--radius-md);
   background: var(--color-blanc);
-  cursor: pointer;
 }
 
-.pepe-expedition__choix:has(.pepe-expedition__radio:checked) {
+.woocommerce-cart .cart_totals .woocommerce-shipping-methods li:has(.shipping_method:checked) {
   border-color: var(--color-rouge);
 }
 
-.pepe-expedition__radio {
+.woocommerce-cart .cart_totals .woocommerce-shipping-methods .shipping_method {
   accent-color: var(--color-rouge);
 }
 
-.pepe-expedition__texte {
+.woocommerce-cart .cart_totals .woocommerce-shipping-methods label {
   display: flex;
   flex-direction: column;
-}
-
-.pepe-expedition__nom {
   font-family: var(--ff-titre);
+  font-weight: 400;
+  cursor: pointer;
 }
 
-.pepe-expedition__detail {
+.woocommerce-cart .cart_totals .woocommerce-shipping-methods label small {
+  font-family: var(--ff-texte);
   font-size: var(--fs-petit);
 }
 
-/* Code promo */
-.pepe-promo {
+/* Code promo (bloc .coupon de WooCommerce) */
+.woocommerce-cart .cart_totals .coupon {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--spacing-xs);
+  margin: 0 0 var(--spacing-md);
 }
 
-.pepe-promo .pepe-promo__champ {
+.woocommerce-cart .cart_totals .coupon h3 {
+  flex: 1 0 100%;
+}
+
+.woocommerce-cart .cart_totals .coupon .input-text {
   flex: 1;
   min-width: 0;
   border-radius: var(--radius-sm);
   background: var(--color-blanc);
 }
 
-.pepe-recap .pepe-promo__bouton {
+.woocommerce-cart .cart_totals .coupon .button {
   border: 0.125rem solid var(--color-rouge);
   background: var(--color-blanc);
   color: var(--color-rouge);
 }
 
-.pepe-promo__applique {
-  margin: var(--spacing-xs) 0 0;
+.woocommerce-cart .cart_totals .coupon p {
+  flex: 1 0 100%;
+  margin: 0;
   font-size: var(--fs-petit);
 }
 
 /* « Retirer ✕ » : police des menus et boutons, sans soulignement */
-.pepe-recap .pepe-promo__retirer {
+.woocommerce-cart .cart_totals .woocommerce-remove-coupon {
   font-family: var(--ff-titre);
-  font-weight: 400;
   color: var(--color-rouge);
   text-decoration: none;
 }
 
-.pepe-recap .pepe-promo__retirer:hover {
+.woocommerce-cart .cart_totals .woocommerce-remove-coupon:hover {
   text-decoration: underline;
 }
 
-.pepe-promo__croix {
-  font-family: var(--ff-texte);
-  font-size: 0.85em;
-}
-
-/* IT-10 : « Tu économises … » sous le total */
-.pepe-recap .pepe-recap__totaux .pepe-recap__ligne--economie th,
-.pepe-recap .pepe-recap__totaux .pepe-recap__ligne--economie td {
-  padding-top: 0;
-  font-size: var(--fs-petit);
-  font-weight: 700;
-  color: var(--color-rouge);
-}
-
-/* Totaux */
-.pepe-recap__totaux {
+/* Totaux (Storefront met des lignes grises et cache les th sur mobile) */
+.woocommerce-cart .cart_totals table.shop_table {
   width: 100%;
   margin-bottom: var(--spacing-md);
+  border: 0;
   border-collapse: collapse;
 }
 
-/* 3 classes pour passer devant les lignes grises de Storefront */
-.pepe-recap .pepe-recap__totaux .pepe-recap__ligne th,
-.pepe-recap .pepe-recap__totaux .pepe-recap__ligne td {
+.woocommerce-cart .cart_totals table.shop_table tr th,
+.woocommerce-cart .cart_totals table.shop_table tr td {
+  display: table-cell;
   padding: var(--spacing-xxs) 0;
   border: 0;
   background: none;
@@ -1648,46 +1855,61 @@ input[type="submit"]:hover {
   font-weight: 400;
 }
 
-.pepe-recap .pepe-recap__totaux .pepe-recap__ligne td {
+.woocommerce-cart .cart_totals table.shop_table tr td {
   text-align: right;
 }
 
-.pepe-recap .pepe-recap__totaux .pepe-recap__ligne--total th,
-.pepe-recap .pepe-recap__totaux .pepe-recap__ligne--total td {
+.woocommerce-cart .cart_totals table.shop_table tr td::before {
+  content: none;
+}
+
+.woocommerce-cart .cart_totals table.shop_table tr.order-total th,
+.woocommerce-cart .cart_totals table.shop_table tr.order-total td {
   padding-top: var(--spacing-sm);
   border-top: 1px solid var(--color-beige-hover);
   font-family: var(--ff-titre);
   font-size: var(--fs-h3);
 }
 
-.pepe-recap .pepe-recap__totaux .pepe-recap__ligne--total td {
+.woocommerce-cart .cart_totals table.shop_table tr.order-total td {
   color: var(--color-rouge);
 }
 
-/* Bouton rouge (Storefront le met en gris avec une flèche) */
-.pepe-recap .wc-proceed-to-checkout .pepe-recap__valider {
+/* IT-10 : « Tu économises … » sous le total */
+.woocommerce-cart .cart_totals table.shop_table tr.order-total + tr.cart-discount th,
+.woocommerce-cart .cart_totals table.shop_table tr.order-total + tr.cart-discount td {
+  font-weight: 700;
+  color: var(--color-rouge);
+}
+
+/* IT-15 : phrase sous les frais de préparation */
+.woocommerce-cart .cart_totals table.shop_table tr.fee td[colspan] {
+  text-align: left;
+}
+
+/* Bouton rouge « Valider ma commande » (Storefront ajoute une flèche) */
+.woocommerce-cart .cart_totals .wc-proceed-to-checkout {
+  padding: 0;
+  text-align: center;
+}
+
+.woocommerce-cart .cart_totals .wc-proceed-to-checkout .checkout-button {
   display: block;
   width: 100%;
   margin: 0;
   padding: var(--spacing-sm);
-  border-radius: var(--radius-pilule);
-  background: var(--color-rouge);
-  box-shadow: var(--shadow-cartoon);
-  color: var(--color-beige);
-  font-family: var(--ff-titre);
   font-size: var(--fs-texte);
-  text-align: center;
 }
 
-.pepe-recap .wc-proceed-to-checkout .pepe-recap__valider:hover {
-  background: var(--color-rouge-hover);
-}
-
-.pepe-recap .wc-proceed-to-checkout .pepe-recap__valider::after {
+.woocommerce-cart .cart_totals .wc-proceed-to-checkout .checkout-button::after {
   content: none;
 }
 
-/* Pas de fil d'Ariane ni de titre de page sur le panier, la commande et le compte */
+.woocommerce-cart .cart_totals .wc-proceed-to-checkout p {
+  margin: var(--spacing-xs) 0 0;
+}
+
+/* Pas de fil d'Ariane de Storefront sur le panier, la commande et le compte ; pas de titre vide */
 .woocommerce-cart .storefront-breadcrumb,
 .woocommerce-checkout .storefront-breadcrumb,
 .woocommerce-account .storefront-breadcrumb,
@@ -1697,153 +1919,170 @@ input[type="submit"]:hover {
   display: none;
 }
 
-.pepe-recap__note {
-  margin: var(--spacing-xs) 0 0;
-  font-size: var(--fs-petit);
-  text-align: center;
+/* 13. Commande (checkout) : HTML de WooCommerce. Storefront met déjà #customer_details en float
+   à gauche et #order_review_heading / #order_review à droite : on garde ses floats, avec les
+   largeurs de la maquette, et on range le retrait et le paiement à gauche, le bouton à droite */
+@media (min-width: 768px) {
+  .woocommerce-checkout form.checkout .col2-set,
+  .woocommerce-checkout form.checkout > .woocommerce-shipping-fields,
+  .woocommerce-checkout form.checkout #payment {
+    width: calc(100% - 22rem - var(--spacing-lg));
+    float: left;
+    clear: left;
+    margin-right: 0;
+  }
+
+  .woocommerce-checkout form.checkout #order_review_heading,
+  .woocommerce-checkout form.checkout #order_review {
+    width: 22rem;
+    float: right;
+    clear: right;
+  }
 }
 
-/* 13. Commande (checkout) */
-.pepe-commande__contenu {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 22rem;
-  gap: var(--spacing-lg);
-  align-items: start;
+/* Sur mobile, les blocs les uns sous les autres dans l'ordre de la maquette */
+@media (max-width: 767px) {
+  .woocommerce-checkout form.checkout {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .woocommerce-checkout form.checkout > .woocommerce-shipping-fields {
+    order: 1;
+  }
+
+  .woocommerce-checkout form.checkout #payment {
+    order: 2;
+  }
+
+  .woocommerce-checkout form.checkout #order_review_heading {
+    order: 3;
+  }
+
+  .woocommerce-checkout form.checkout #order_review {
+    order: 4;
+  }
 }
 
-.pepe-commande__gauche {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-}
-
-/* Les ::before / ::after de Storefront prendraient une case de la grille : on les cache */
-.pepe-commande form.pepe-commande__contenu::before,
-.pepe-commande form.pepe-commande__contenu::after {
-  display: none;
-}
-
-/* Pays : champ caché (toujours la France) */
-.pepe-commande #billing_country_field {
-  display: none;
-}
-
-/* Les colonnes en float de Storefront (#customer_details, #order_review) : annulées */
-.pepe-commande #customer_details,
-.pepe-commande #order_review,
-.pepe-commande #order_review_heading {
-  width: auto;
-  float: none;
-  margin: 0;
-}
-
-.pepe-commande #order_review {
-  background: var(--color-beige);
-}
-
-/* Carte beige */
-.pepe-commande__carte {
+/* Une carte beige par bloc */
+.woocommerce-checkout form.checkout .col2-set,
+.woocommerce-checkout form.checkout > .woocommerce-shipping-fields,
+.woocommerce-checkout form.checkout #payment {
+  margin-bottom: var(--spacing-md);
   padding: var(--spacing-lg);
   border-radius: var(--radius-xl);
   background: var(--color-beige);
   color: var(--color-brun);
 }
 
-.pepe-commande .pepe-commande__titre {
+/* « Ma commande » : le titre et le tableau forment une seule carte */
+.woocommerce-checkout form.checkout #order_review_heading {
+  margin: 0;
+  padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-sm);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  background: var(--color-beige);
+}
+
+.woocommerce-checkout form.checkout #order_review {
+  background: none;
+  color: var(--color-brun);
+}
+
+/* Pas de ligne sur deux en couleur (tableaux de Storefront) */
+.woocommerce-checkout table.woocommerce-checkout-review-order-table tbody tr td {
+  background: none;
+}
+
+/* Titres des blocs (h2 : juste sous le h1 de la page, comme le demande le validateur W3C) */
+.woocommerce-checkout form.checkout h2,
+.woocommerce-checkout form.checkout h3 {
   margin: 0 0 var(--spacing-sm);
   font-size: var(--fs-h3);
   color: var(--color-brun);
 }
 
-/* Mes coordonnées */
-.pepe-commande .woocommerce-billing-fields > h3 {
+/* Pas d'adresse de livraison séparée : la 2e colonne de WooCommerce est vide */
+.woocommerce-checkout #customer_details .col-2 {
   display: none;
 }
 
-.pepe-commande .woocommerce-billing-fields label {
+.woocommerce-checkout #customer_details .col-1 {
+  margin: 0;
+}
+
+/* Pays : champ caché (toujours la France) */
+.woocommerce-checkout #billing_country_field {
+  display: none;
+}
+
+.woocommerce-checkout .woocommerce-billing-fields label {
   font-size: var(--fs-petit);
   color: var(--color-brun);
 }
 
-.pepe-commande .woocommerce-billing-fields .input-text {
+.woocommerce-checkout .woocommerce-billing-fields .input-text {
   border-radius: var(--radius-sm);
   background: var(--color-blanc);
 }
 
-.pepe-commande__connexion {
+.woocommerce-checkout .woocommerce-billing-fields .woocommerce-form-login-toggle {
   margin: 0;
   font-size: var(--fs-petit);
 }
 
-.pepe-commande__connexion a {
+.woocommerce-checkout .woocommerce-billing-fields .woocommerce-form-login-toggle a {
   font-weight: 700;
   color: var(--color-rouge);
 }
 
-/* Retrait en restaurant */
-.pepe-retrait__mode {
-  display: flex;
+/* Retrait en restaurant : le mode choisi dans une carte blanche à bord rouge */
+.woocommerce-checkout form.checkout > .woocommerce-shipping-fields > p {
+  display: grid;
+  grid-template-columns: 1fr auto;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--spacing-sm);
+  gap: 0 var(--spacing-sm);
+  margin: 0;
   padding: var(--spacing-sm);
   border: 0.125rem solid var(--color-rouge);
   border-radius: var(--radius-md);
   background: var(--color-blanc);
 }
 
-.pepe-retrait__nom {
-  margin: 0;
+.woocommerce-checkout form.checkout > .woocommerce-shipping-fields > p strong {
   font-family: var(--ff-titre);
+  font-weight: 400;
 }
 
-.pepe-retrait__detail {
-  margin: 0;
+.woocommerce-checkout form.checkout > .woocommerce-shipping-fields > p small {
+  grid-column: 1;
   font-size: var(--fs-petit);
 }
 
-.pepe-retrait__modifier {
+.woocommerce-checkout form.checkout > .woocommerce-shipping-fields > p a {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  font-size: var(--fs-petit);
   font-weight: 700;
-  font-size: var(--fs-petit);
   color: var(--color-rouge);
 }
 
-/* Instructions pour le retrait (texte réglé dans l'admin) */
-.pepe-instructions {
-  margin-top: var(--spacing-sm);
-  padding: var(--spacing-sm);
-  border: 0.125rem solid var(--color-jaune);
-  border-radius: var(--radius-md);
-  background: var(--color-blanc);
-}
-
-.pepe-commande .pepe-instructions__titre {
-  margin: 0 0 var(--spacing-xxs);
-  font-size: var(--fs-texte);
-  color: var(--color-brun);
-}
-
-.pepe-instructions__texte {
-  margin: 0;
+/* Instructions pour le retrait : message « info » de WooCommerce dans le bloc */
+.woocommerce-checkout form.checkout > .woocommerce-shipping-fields .woocommerce-info {
+  margin: var(--spacing-sm) 0 0;
   font-size: var(--fs-petit);
 }
 
-/* Paiement : #payment dans le sélecteur pour passer devant Storefront */
-#payment.pepe-paiement {
-  background: none;
+/* Paiement : moyens de paiement de WooCommerce en cartes à bouton radio
+   (#payment dans le sélecteur pour passer devant Storefront) */
+.woocommerce-checkout #payment {
+  background: var(--color-beige);
 }
 
-#payment .pepe-paiement__liste {
-  margin: 0;
-  padding: 0;
+.woocommerce-checkout #payment .payment_methods {
   border: 0;
-  list-style: none;
 }
 
-/* .pepe-commande + #payment : plus précis que les styles de Storefront */
-.pepe-commande #payment .pepe-paiement__liste .pepe-paiement__choix {
-  display: flex;
-  align-items: center;
+.woocommerce-checkout #payment .payment_methods li.wc_payment_method {
   margin-bottom: var(--spacing-xs);
   padding: var(--spacing-sm);
   border: 0.125rem solid var(--color-beige-hover);
@@ -1851,34 +2090,32 @@ input[type="submit"]:hover {
   background: var(--color-blanc);
 }
 
-.pepe-commande #payment .pepe-paiement__liste .pepe-paiement__choix:last-child {
+.woocommerce-checkout #payment .payment_methods li.wc_payment_method:last-child {
   margin-bottom: 0;
   padding-bottom: var(--spacing-sm);
 }
 
-.pepe-commande #payment .pepe-paiement__liste .pepe-paiement__choix:has(.pepe-paiement__radio:checked) {
+.woocommerce-checkout #payment .payment_methods li.wc_payment_method:has(.input-radio:checked) {
   border-color: var(--color-rouge);
 }
 
-/* Le rond est dessiné par Storefront devant le nom (label::before) */
-.pepe-commande #payment .pepe-paiement__choix .pepe-paiement__texte {
+/* Storefront dessine le rond devant le titre (label::before) */
+.woocommerce-checkout #payment .payment_methods > .wc_payment_method > label {
   display: block;
   margin: 0;
   padding: 0;
-  cursor: pointer;
-}
-
-.pepe-paiement__nom {
   font-family: var(--ff-titre);
 }
 
-.pepe-paiement__description {
+.woocommerce-checkout #payment .payment_methods > .wc_payment_method > label small {
   display: block;
   padding-left: 1.75rem;
+  font-family: var(--ff-texte);
   font-size: var(--fs-petit);
 }
 
-.pepe-commande .pepe-paiement__valider {
+/* Bouton jaune « Passer la commande 32,85 € » sous « Ma commande » */
+.woocommerce-checkout #order_review .place-order {
   margin: var(--spacing-md) 0 0;
   padding: 0;
   background: none;
@@ -1886,35 +2123,46 @@ input[type="submit"]:hover {
   font-size: var(--fs-petit);
 }
 
-.pepe-commande .pepe-paiement__valider a {
+.woocommerce-checkout #order_review .place-order a {
   color: var(--color-beige);
 }
 
-/* Bouton jaune « Passer la commande 32,85 € » */
-.pepe-commande .pepe-paiement__valider .pepe-commande__payer {
+.woocommerce-checkout #order_review .place-order #place_order {
   width: 100%;
   padding: var(--spacing-sm);
-  border-radius: var(--radius-pilule);
   background: var(--color-jaune);
-  box-shadow: var(--shadow-cartoon);
   color: var(--color-brun);
-  font-family: var(--ff-titre);
   font-size: var(--fs-texte);
 }
 
-.pepe-commande .pepe-paiement__valider .pepe-commande__payer:hover {
+.woocommerce-checkout #order_review .place-order #place_order:hover {
   background: var(--color-jaune-hover);
 }
 
-/* Ma commande */
-.pepe-resume {
-  width: 100%;
+/* « Ma commande » : tableau de WooCommerce sans lignes grises ni en-tête */
+/* Le tableau est le bas de la carte « Ma commande » (le bouton reste sur le fond rouge) */
+.woocommerce-checkout .woocommerce-checkout-review-order-table {
+  display: block;
   margin: 0;
+  padding: 0 var(--spacing-lg) var(--spacing-lg);
+  border: 0;
+  border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+  background: var(--color-beige);
+}
+
+.woocommerce-checkout .woocommerce-checkout-review-order-table tbody,
+.woocommerce-checkout .woocommerce-checkout-review-order-table tfoot {
+  display: table;
+  width: 100%;
   border-collapse: collapse;
 }
 
-.pepe-commande .pepe-resume .pepe-resume__ligne th,
-.pepe-commande .pepe-resume .pepe-resume__ligne td {
+.woocommerce-checkout .woocommerce-checkout-review-order-table thead {
+  display: none;
+}
+
+.woocommerce-checkout .woocommerce-checkout-review-order-table th,
+.woocommerce-checkout .woocommerce-checkout-review-order-table td {
   padding: var(--spacing-xxs) 0;
   border: 0;
   background: none;
@@ -1923,75 +2171,85 @@ input[type="submit"]:hover {
   vertical-align: top;
 }
 
-.pepe-commande .pepe-resume .pepe-resume__ligne td {
+.woocommerce-checkout .woocommerce-checkout-review-order-table td.product-total,
+.woocommerce-checkout .woocommerce-checkout-review-order-table tfoot td {
   text-align: right;
   white-space: nowrap;
 }
 
-.pepe-resume__details {
-  display: block;
+.woocommerce-checkout .woocommerce-checkout-review-order-table .product-quantity {
+  font-weight: 400;
+}
+
+.woocommerce-checkout .woocommerce-checkout-review-order-table .variation {
+  margin: 0;
   opacity: 0.8;
 }
 
-.pepe-commande .pepe-resume .pepe-resume__ligne--separation th,
-.pepe-commande .pepe-resume .pepe-resume__ligne--separation td {
+.woocommerce-checkout .woocommerce-checkout-review-order-table tr.cart-subtotal th,
+.woocommerce-checkout .woocommerce-checkout-review-order-table tr.cart-subtotal td,
+.woocommerce-checkout .woocommerce-checkout-review-order-table tr.order-total th,
+.woocommerce-checkout .woocommerce-checkout-review-order-table tr.order-total td {
   padding-top: var(--spacing-sm);
   border-top: 1px solid var(--color-beige-hover);
 }
 
-.pepe-commande .pepe-resume .pepe-resume__ligne--total th,
-.pepe-commande .pepe-resume .pepe-resume__ligne--total td {
-  padding-top: var(--spacing-sm);
-  border-top: 1px solid var(--color-beige-hover);
+.woocommerce-checkout .woocommerce-checkout-review-order-table tr.order-total th,
+.woocommerce-checkout .woocommerce-checkout-review-order-table tr.order-total td {
   font-family: var(--ff-titre);
   font-size: var(--fs-h3);
 }
 
-.pepe-commande .pepe-resume .pepe-resume__ligne--total td {
+.woocommerce-checkout .woocommerce-checkout-review-order-table tr.order-total td {
   color: var(--color-rouge);
 }
 
-/* 14. Compte client */
-.pepe-compte__titre {
-  margin-bottom: var(--spacing-lg);
-  font-size: var(--fs-h1);
-  color: var(--color-beige);
+.woocommerce-checkout .woocommerce-checkout-review-order-table tr.fee td[colspan] {
+  text-align: left;
+  white-space: normal;
 }
 
-/* Menu à gauche, page à droite */
-.pepe-compte__contenu {
+/* 14. Compte client
+   HTML de WooCommerce : nav.woocommerce-MyAccount-navigation et div.woocommerce-MyAccount-content.
+   Le titre de la page (h1.entry-title de Storefront) affiche « Bonjour Prénom » (inc/compte.php). */
+
+/* Menu à gauche, page à droite (body.logged-in : la connexion garde sa propre mise en page) */
+.woocommerce-account.logged-in .entry-content > .woocommerce {
   display: grid;
   grid-template-columns: 14rem minmax(0, 1fr);
   gap: var(--spacing-lg);
   align-items: start;
 }
 
+/* Storefront met des traits entre les liens du menu : sélecteurs aussi précis que les siens
+   (.hentry .entry-content …) pour les remplacer */
+
 /* Storefront met le menu et la page en float avec une largeur en % : annulé
    (.woocommerce-account devant : plus précis que le sélecteur de Storefront) */
-.woocommerce-account .pepe-compte .woocommerce-MyAccount-navigation,
-.woocommerce-account .pepe-compte .woocommerce-MyAccount-content {
+.woocommerce-account .woocommerce-MyAccount-navigation,
+.woocommerce-account .woocommerce-MyAccount-content {
   width: auto;
   float: none;
   margin: 0;
 }
 
-.woocommerce-account .pepe-compte .woocommerce-MyAccount-navigation {
+.woocommerce-account .woocommerce-MyAccount-navigation {
   padding: var(--spacing-sm);
   border-radius: var(--radius-xl);
   background: var(--color-beige);
 }
 
-.woocommerce-account .pepe-compte .woocommerce-MyAccount-navigation ul {
+.woocommerce-account .entry-content .woocommerce-MyAccount-navigation ul {
   margin: 0;
   border: 0;
   list-style: none;
 }
 
-.woocommerce-account .pepe-compte .woocommerce-MyAccount-navigation ul li {
+.woocommerce-account .entry-content .woocommerce-MyAccount-navigation ul li {
   border: 0;
 }
 
-.woocommerce-account .pepe-compte .woocommerce-MyAccount-navigation ul li a {
+.woocommerce-account .entry-content .woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link a {
   display: block;
   padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: var(--radius-md);
@@ -2002,49 +2260,53 @@ input[type="submit"]:hover {
 }
 
 /* Storefront ajoute une icône devant chaque lien : on l'enlève */
-.woocommerce-account .pepe-compte .woocommerce-MyAccount-navigation ul li a::before {
+.woocommerce-account .entry-content .woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link a::before {
   content: none;
 }
 
-.woocommerce-account .pepe-compte .woocommerce-MyAccount-navigation ul li.is-active a {
+.woocommerce-account .entry-content .woocommerce-MyAccount-navigation ul li.is-active a {
   background: var(--color-rouge);
   color: var(--color-beige);
 }
 
 /* Contenu : cartes beiges */
-.pepe-compte .woocommerce-MyAccount-content {
+.woocommerce-account .woocommerce-MyAccount-content {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
   color: var(--color-brun);
 }
 
-.pepe-compte__carte,
-.pepe-compte .woocommerce-MyAccount-content > form,
-.pepe-compte .woocommerce-MyAccount-content > .woocommerce-orders-table,
-.pepe-compte .woocommerce-MyAccount-content > .woocommerce-Addresses,
-.pepe-compte .woocommerce-MyAccount-content > .woocommerce-order-details,
-.pepe-compte .woocommerce-MyAccount-content > .woocommerce-customer-details {
+.woocommerce-MyAccount-content > section,
+.woocommerce-MyAccount-content > form,
+.woocommerce-MyAccount-content > .woocommerce-orders-table,
+.woocommerce-MyAccount-content > .woocommerce-Addresses,
+.woocommerce-MyAccount-content > .woocommerce-order-details,
+.woocommerce-MyAccount-content > .woocommerce-customer-details {
   padding: var(--spacing-lg);
   border-radius: var(--radius-xl);
   background: var(--color-beige);
   color: var(--color-brun);
 }
 
-.pepe-compte .woocommerce-MyAccount-content > p {
+.woocommerce-MyAccount-content > p {
   color: var(--color-beige);
 }
 
-.pepe-compte .pepe-compte__sous-titre,
-.pepe-compte .woocommerce-MyAccount-content h2,
-.pepe-compte .woocommerce-MyAccount-content h3 {
+/* Zone des messages de WooCommerce vide : pas d'espace en trop en haut */
+.woocommerce-MyAccount-content > .woocommerce-notices-wrapper:empty {
+  display: none;
+}
+
+.woocommerce-MyAccount-content h2,
+.woocommerce-MyAccount-content h3 {
   margin: 0 0 var(--spacing-sm);
   font-size: var(--fs-h3);
   color: var(--color-brun);
 }
 
-/* Commande en cours */
-.pepe-suivi__entete {
+/* Commande en cours : le statut à droite du titre */
+.woocommerce-MyAccount-content .woocommerce-order h2 {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -2052,62 +2314,64 @@ input[type="submit"]:hover {
   gap: var(--spacing-sm);
 }
 
-.pepe-suivi__entete .pepe-compte__sous-titre {
-  margin: 0;
-}
-
-.pepe-badge {
+/* Statut (mark.order-status de WooCommerce) en pastille jaune */
+.woocommerce-MyAccount-content mark.order-status {
   padding: var(--spacing-xxs) var(--spacing-sm);
   border-radius: var(--radius-pilule);
   background: var(--color-jaune);
   color: var(--color-brun);
+  font-family: var(--ff-texte);
   font-size: var(--fs-petit);
   font-weight: 700;
 }
 
-.pepe-suivi__detail {
-  margin: var(--spacing-xs) 0 var(--spacing-sm);
-  font-size: var(--fs-petit);
+.woocommerce-MyAccount-content .woocommerce-order p {
+  margin: 0 0 var(--spacing-sm);
 }
 
-/* Barre de progression en 4 morceaux */
-.pepe-suivi__etapes {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--spacing-xs);
-  margin: 0;
-  list-style: none;
-}
-
-.pepe-suivi__etape {
+/* Barre d'avancement (balise progress) : rouge sur beige foncé, en 4 morceaux */
+.woocommerce-MyAccount-content progress {
+  appearance: none;
+  display: block;
+  width: 100%;
   height: 0.375rem;
+  border: 0;
   border-radius: var(--radius-pilule);
+  background: var(--color-beige-hover);
+  color: var(--color-rouge);
+  /* le masque découpe la barre en 4 morceaux séparés par un petit espace */
+  mask-image: repeating-linear-gradient(90deg, #000 0, #000 calc(25% - 0.5rem), transparent calc(25% - 0.5rem), transparent 25%);
+}
+
+/* Partie remplie : un sélecteur par navigateur (Chrome/Safari, puis Firefox) */
+.woocommerce-MyAccount-content progress::-webkit-progress-bar {
   background: var(--color-beige-hover);
 }
 
-.pepe-suivi__etape--faite {
+.woocommerce-MyAccount-content progress::-webkit-progress-value {
   background: var(--color-rouge);
 }
 
-/* IT-9 : lien pour annuler la commande */
-.pepe-suivi__annuler {
+.woocommerce-MyAccount-content progress::-moz-progress-bar {
+  background: var(--color-rouge);
+}
+
+/* IT-9 : bouton pour annuler la commande, à droite */
+.woocommerce-MyAccount-content .woocommerce-order p:last-child {
   margin: var(--spacing-sm) 0 0;
-  font-size: var(--fs-petit);
   text-align: right;
 }
 
 /* Tableau des commandes */
-.pepe-commandes,
-.pepe-compte .woocommerce-orders-table {
+.woocommerce-account .woocommerce-orders-table {
   width: 100%;
   margin: 0;
   border-collapse: collapse;
 }
 
-.pepe-compte .pepe-commandes th,
-.pepe-compte .pepe-commandes td,
-.pepe-compte .woocommerce-orders-table th,
-.pepe-compte .woocommerce-orders-table td {
+.woocommerce-account table.woocommerce-orders-table th,
+.woocommerce-account table.woocommerce-orders-table td,
+.woocommerce-account table.woocommerce-orders-table tbody tr td {
   padding: var(--spacing-xs) 0;
   border: 0;
   border-bottom: 1px solid var(--color-beige-hover);
@@ -2115,42 +2379,73 @@ input[type="submit"]:hover {
   font-size: var(--fs-petit);
   text-align: left;
 }
+/* (tbody tr td : aussi précis que les lignes une sur deux de Storefront, pour les enlever) */
 
-.pepe-compte .pepe-commandes thead th {
+.woocommerce-account table.woocommerce-orders-table thead th {
   font-weight: 400;
 }
 
-.pepe-compte .pepe-commandes tbody th {
+.woocommerce-account table.woocommerce-orders-table tbody th {
   font-family: var(--ff-titre);
 }
 
-.pepe-commandes__lien,
-.pepe-compte .woocommerce-orders-table a {
+/* « Voir » et « Annuler » : liens rouges plutôt que de gros boutons */
+.woocommerce-account .woocommerce-MyAccount-content .woocommerce-button.button {
+  padding: 0;
+  background: none;
+  color: var(--color-rouge);
+  font-family: var(--ff-texte);
+  font-size: var(--fs-petit);
   font-weight: 700;
+  text-decoration: underline;
+  box-shadow: none;
+}
+
+/* Page « Mes commandes » : le tableau est lui-même la carte
+   (border-collapse: separate pour que le padding de la carte marche sur un tableau) */
+.woocommerce-MyAccount-content > .woocommerce-orders-table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+/* Tableaux du détail d'une commande : pas de fonds gris/blancs de Storefront, liens rouges */
+.woocommerce-MyAccount-content table.shop_table,
+.woocommerce-MyAccount-content table.shop_table th,
+.woocommerce-MyAccount-content table.shop_table td,
+.woocommerce-MyAccount-content table.shop_table tbody tr td {
+  background: none;
+}
+
+.woocommerce-MyAccount-content table a {
   color: var(--color-rouge);
 }
 
+/* Storefront ajoute une icône « œil » après « Voir » : on l'enlève */
+.woocommerce-account .my_account_orders .button.view::after {
+  content: none;
+}
+
 /* Adresses : deux colonnes en grille (Storefront les met en float avec une largeur en %) */
-.woocommerce-account .pepe-compte .woocommerce-Addresses.col2-set {
+.woocommerce-account .woocommerce-Addresses.col2-set {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--spacing-lg);
 }
 
-.woocommerce-account .pepe-compte .woocommerce-Addresses.col2-set::before,
-.woocommerce-account .pepe-compte .woocommerce-Addresses.col2-set::after {
+.woocommerce-account .woocommerce-Addresses.col2-set::before,
+.woocommerce-account .woocommerce-Addresses.col2-set::after {
   display: none;
 }
 
-.woocommerce-account .pepe-compte .woocommerce-Addresses.col2-set .col-1,
-.woocommerce-account .pepe-compte .woocommerce-Addresses.col2-set .col-2 {
+.woocommerce-account .woocommerce-Addresses.col2-set .col-1,
+.woocommerce-account .woocommerce-Addresses.col2-set .col-2 {
   width: auto;
   float: none;
   margin: 0;
 }
 
 /* Champs des formulaires (adresses, détails du compte) */
-.pepe-compte .woocommerce-MyAccount-content .input-text {
+.woocommerce-MyAccount-content .input-text {
   border-radius: var(--radius-sm);
   background: var(--color-blanc);
 }
@@ -2214,46 +2509,56 @@ input[type="submit"]:hover {
   color: var(--color-rouge);
 }
 
-/* 16. À propos et équipe (IT-11) */
-.pepe-a-propos {
+/* 16. À propos et équipe (IT-11)
+   HTML de Storefront (archive-membre.php, single-membre.php) : page-header, page-title,
+   article hentry, post-thumbnail, entry-header, entry-title, entry-content, more-link */
+
+/* Page « À propos » : titre, puis les deux sections */
+.post-type-archive-membre .site-main {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-4xl);
   padding-bottom: var(--spacing-4xl);
 }
 
-.pepe-a-propos__titre {
+.post-type-archive-membre .page-header {
+  margin: 0;
+}
+
+.post-type-archive-membre .page-title {
   margin: 0;
   font-size: var(--fs-h1);
   text-align: center;
 }
 
-.pepe-a-propos__section {
+.post-type-archive-membre .section-title {
+  margin: 0;
+  font-size: var(--fs-h2);
+}
+
+.post-type-archive-membre .site-main > section > p {
+  margin: 0;
+}
+
+/* Carte « Où nous trouver » */
+.post-type-archive-membre .site-main > section:first-of-type {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-lg);
 }
 
-.pepe-a-propos__sous-titre {
-  margin: 0;
-  font-size: var(--fs-h2);
-}
-
-.pepe-a-propos__intro {
-  margin: 0;
-}
-
-/* Carte « Où nous trouver » */
-.pepe-restaurant {
+.post-type-archive-membre .site-main > section:first-of-type .hentry {
   display: flex;
   gap: var(--spacing-xl);
+  margin: 0;
   padding: var(--spacing-lg);
   border-radius: var(--radius-xl);
   background: var(--color-beige);
   color: var(--color-brun);
 }
 
-.pepe-restaurant__plan {
+/* Emplacement du plan */
+.post-type-archive-membre .site-main > section:first-of-type .post-thumbnail {
   display: flex;
   flex: 0 0 35rem;
   align-items: center;
@@ -2264,38 +2569,48 @@ input[type="submit"]:hover {
   font-size: var(--fs-h1);
 }
 
-.pepe-restaurant__infos {
+.post-type-archive-membre .site-main > section:first-of-type .entry-content {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
 }
 
-.pepe-restaurant__infos p {
+.post-type-archive-membre .site-main > section:first-of-type .entry-content > * {
   margin: 0;
 }
 
-.pepe-restaurant__nom {
-  margin: 0;
+.post-type-archive-membre .site-main > section:first-of-type .entry-title {
   font-size: var(--fs-h3);
   color: var(--color-brun);
 }
 
-.pepe-restaurant__retrait {
+.post-type-archive-membre .site-main > section:first-of-type address {
+  font-style: normal;
+}
+
+.post-type-archive-membre .site-main > section:first-of-type strong {
   font-size: var(--fs-petit);
-  font-weight: 700;
   color: var(--color-rouge);
 }
 
-/* Grille des membres */
-.pepe-equipe {
+/* L'équipe : titre et texte sur toute la largeur, puis une carte par membre */
+.post-type-archive-membre #equipe {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 23rem));
-  gap: var(--spacing-3xl);
-  margin: 0;
-  list-style: none;
+  gap: var(--spacing-lg) var(--spacing-3xl);
 }
 
-.pepe-membre__lien {
+.post-type-archive-membre #equipe > h2,
+.post-type-archive-membre #equipe > p {
+  grid-column: 1 / -1;
+}
+
+.post-type-archive-membre .membre.hentry {
+  margin: 0;
+}
+
+/* La carte entière est un lien */
+.post-type-archive-membre .membre.hentry > a {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
@@ -2308,91 +2623,146 @@ input[type="submit"]:hover {
   transition: transform 0.2s;
 }
 
-.pepe-membre__lien:hover,
-.pepe-membre__lien:focus {
+.post-type-archive-membre .membre.hentry > a:hover,
+.post-type-archive-membre .membre.hentry > a:focus {
   color: var(--color-brun);
   transform: translateY(-0.25rem);
 }
 
-.pepe-membre__photo {
-  display: block;
-  width: 100%;
-  height: 17.5rem;
-  border-radius: var(--radius-xl);
-  background: var(--color-blanc);
-  object-fit: cover;
-}
-
-.pepe-membre__photo--vide,
-.pepe-profil__photo--vide {
+/* Photo des cartes (img de WordPress, ou silhouette quand il n'y a pas de photo) */
+.post-type-archive-membre .membre .post-thumbnail img,
+.post-type-archive-membre .membre .post-thumbnail span {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 17.5rem;
+  margin: 0;
+  border-radius: var(--radius-xl);
+  background: var(--color-blanc);
+  object-fit: cover;
   font-size: var(--fs-h1);
+}
+
+/* Silhouette quand il n'y a pas de photo : plus claire */
+.post-type-archive-membre .membre .post-thumbnail span,
+.single-membre .membre .post-thumbnail span {
   opacity: 0.4;
 }
 
-.pepe-membre__nom {
+/* Storefront met un trait et une marge sous l'en-tête d'un article */
+.post-type-archive-membre .membre .entry-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin: 0;
+  border: 0;
+}
+
+.post-type-archive-membre .membre .entry-title {
   margin: 0;
   font-size: var(--fs-h3);
   color: var(--color-brun);
 }
 
-.pepe-membre__poste {
+.post-type-archive-membre .membre .entry-header p {
   margin: 0;
   font-size: var(--fs-petit);
   color: var(--color-rouge);
 }
 
-.pepe-membre__voir {
+.post-type-archive-membre .membre .more-link {
   font-weight: 700;
   color: var(--color-rouge);
 }
 
-/* Page d'un membre */
-.pepe-profil {
+/* Page d'un membre : lien retour, puis photo à gauche et texte à droite */
+.single-membre .site-main {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xl);
   padding-bottom: var(--spacing-4xl);
 }
 
-.pepe-profil__retour {
+.single-membre .site-main > p {
+  margin: 0;
   font-size: var(--fs-petit);
+}
+
+.single-membre .site-main > p a {
   text-decoration: none;
 }
 
-.pepe-profil__contenu {
+.single-membre .membre.hentry {
   display: flex;
   gap: var(--spacing-4xl);
+  margin: 0;
 }
 
-.pepe-profil__photo {
+.single-membre .membre .post-thumbnail {
   flex: 0 0 30rem;
-  width: 30rem;
+}
+
+.single-membre .membre .post-thumbnail img,
+.single-membre .membre .post-thumbnail span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
   height: 32.5rem;
+  margin: 0;
   border-radius: var(--radius-xl);
   background: var(--color-beige);
   object-fit: cover;
+  font-size: var(--fs-h1);
 }
 
-.pepe-profil__infos {
+.single-membre .membre .entry-content {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: var(--spacing-lg);
 }
 
-.pepe-profil__nom {
+.single-membre .membre .entry-content p {
+  margin: 0;
+}
+
+/* Storefront met un ::before / ::after vide (clearfix) dans entry-content :
+   en flex ils prendraient une place avec un espace (gap) en trop */
+.single-membre .membre .entry-content::before,
+.single-membre .membre .entry-content::after,
+.post-type-archive-membre .site-main > section:first-of-type .entry-content::before,
+.post-type-archive-membre .site-main > section:first-of-type .entry-content::after {
+  display: none;
+}
+
+.single-membre .membre .entry-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-lg);
+  margin: 0;
+  border: 0;
+}
+
+/* Poste du membre : pastille jaune */
+.single-membre .membre .entry-header mark {
+  padding: var(--spacing-xxs) var(--spacing-sm);
+  border-radius: var(--radius-pilule);
+  background: var(--color-jaune);
+  color: var(--color-brun);
+  font-size: var(--fs-petit);
+  font-weight: 700;
+}
+
+.single-membre .membre .entry-title {
   margin: 0;
   font-size: var(--fs-h1);
 }
 
-.pepe-profil__bio p {
-  margin: 0 0 var(--spacing-xs);
-}
-
-.pepe-profil__plat {
+/* « Son plat préféré » : carte beige */
+.single-membre .membre .entry-content aside {
   align-self: stretch;
   padding: var(--spacing-lg);
   border-radius: var(--radius-lg);
@@ -2400,153 +2770,156 @@ input[type="submit"]:hover {
   color: var(--color-brun);
 }
 
-.pepe-profil__plat p {
-  margin: var(--spacing-xs) 0 0;
-}
-
-.pepe-profil__plat-titre {
+.single-membre .membre .entry-content aside h2 {
   margin: 0;
   font-size: var(--fs-h3);
   color: var(--color-brun);
 }
 
-.pepe-profil__plat-titre a {
-  color: var(--color-rouge);
+.single-membre .membre .entry-content aside p {
+  margin: var(--spacing-xs) 0 0;
 }
 
-.pepe-profil__depuis {
-  margin: 0;
+.single-membre .membre .entry-content aside a {
+  color: var(--color-rouge);
+  text-decoration: none;
+}
+
+.single-membre .membre .entry-content small {
   font-size: var(--fs-petit);
 }
 
-/* 17. Page d'accueil (IT-2 – US-2.2) */
-.pepe-accueil {
+/* 17. Page d'accueil (IT-2 – US-2.2)
+   HTML de Storefront / WooCommerce (front-page.php) : entry-header, storefront-product-section,
+   section-title, ul.products, product, summary, price, hentry, post-thumbnail, commentlist… */
+.home .site-main {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-4xl);
 }
 
-.pepe-accueil__titre {
-  margin-bottom: var(--spacing-xl);
-  text-align: center;
-  font-size: var(--fs-h2);
+/* Les sections ont déjà un espace entre elles (gap) */
+.home .storefront-product-section {
+  margin: 0;
 }
 
-.pepe-accueil__action {
-  margin: var(--spacing-xl) 0 0;
-  text-align: center;
-}
-
-.pepe-accueil .pepe-accueil__bouton {
-  display: inline-block;
-  padding: var(--spacing-xs) var(--spacing-lg);
-  border-radius: var(--radius-pilule);
-  background: var(--color-jaune);
-  color: var(--color-brun);
-  font-family: var(--ff-titre);
-  text-decoration: none;
-  box-shadow: var(--shadow-cartoon);
-}
-
-.pepe-accueil .pepe-accueil__bouton:hover {
-  background: var(--color-jaune-hover);
-}
-
-/* En-tête : texte à gauche, image à droite */
-.pepe-une {
+/* En-tête : texte à gauche, image à droite (titre de page de Storefront) */
+.home .site-main > .entry-header {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: var(--spacing-xl);
 }
 
-.pepe-une__titre {
+.home .site-main > .entry-header .entry-title {
   margin-bottom: var(--spacing-md);
   font-size: var(--fs-h1);
   line-height: 1.1;
 }
 
-.pepe-une__intro {
+.home .site-main > .entry-header p {
   max-width: 28rem;
   margin-bottom: var(--spacing-sm);
 }
 
-.pepe-une__petit {
-  margin-bottom: var(--spacing-lg);
+.home .site-main > .entry-header small {
   font-size: var(--fs-petit);
   opacity: 0.8;
 }
 
-.pepe-accueil .pepe-une__bouton {
-  display: inline-block;
+/* Bouton de l'en-tête : contour beige (le bouton jaune est pour commander) */
+.home .site-main > .entry-header .button {
+  margin-top: var(--spacing-md);
   padding: var(--spacing-xs) var(--spacing-lg);
   border: 2px solid var(--color-beige);
   border-radius: var(--radius-sm);
+  background: none;
   color: var(--color-beige);
-  font-family: var(--ff-titre);
+  box-shadow: none;
   text-decoration: none;
 }
 
-.pepe-accueil .pepe-une__bouton:hover {
+.home .site-main > .entry-header .button:hover {
   background: var(--color-beige);
   color: var(--color-rouge);
 }
 
-.pepe-une__image {
+.home .site-main > .entry-header img {
   justify-self: end;
   max-height: 28rem;
   width: auto;
 }
 
-/* Découvre nos classiques : cartes qui défilent */
-.pepe-classiques__cadre {
-  position: relative;
+/* Découvre nos classiques : grille titre / cartes (+ flèche par-dessus) / bouton */
+.storefront-product-categories {
+  display: grid;
 }
 
-.pepe-classiques__liste {
+.storefront-product-categories > .woocommerce,
+.storefront-product-categories > button {
+  grid-row: 2;
+  grid-column: 1;
+}
+
+.storefront-product-categories > p {
+  grid-row: 3;
+  margin: var(--spacing-xl) 0 0;
+  text-align: center;
+}
+
+/* Les catégories ([product_categories]) défilent sur une ligne au lieu de la grille */
+.site-main .storefront-product-categories ul.products {
   display: flex;
   gap: var(--spacing-lg);
-  margin: 0;
-  padding: 0 0 var(--spacing-xs);
+  max-width: none;
+  padding-bottom: var(--spacing-xs);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  list-style: none;
 }
 
-.pepe-classiques__carte {
+/* (sélecteur plus précis que celui des cartes produit de la section 8) */
+.site-main .storefront-product-categories ul.products[class*="columns-"] li.product-category {
+  display: block;
   flex: 0 0 calc((100% - 3 * var(--spacing-lg)) / 3.4);
   margin: 0;
   scroll-snap-align: start;
 }
 
-.pepe-classiques__lien {
+.storefront-product-categories ul.products li.product-category a {
   display: block;
   color: var(--color-beige);
-  text-align: center;
   text-decoration: none;
 }
 
-.pepe-classiques__image {
-  width: 100%;
+.site-main .storefront-product-categories ul.products li.product img {
   aspect-ratio: 1;
-  object-fit: cover;
+  margin: 0;
   border: 4px solid var(--color-beige);
   border-radius: var(--radius-lg);
   background: var(--color-blanc);
 }
 
-.pepe-classiques__nom {
-  display: block;
-  margin-top: var(--spacing-sm);
+.storefront-product-categories .woocommerce-loop-category__title {
+  margin: var(--spacing-sm) 0 0;
   font-family: var(--ff-titre);
+  font-size: var(--fs-texte);
+  color: var(--color-beige);
 }
 
-.pepe-accueil .pepe-classiques__suivant {
-  position: absolute;
-  top: 40%;
-  right: calc(-1 * var(--spacing-md));
+/* Nombre de produits « (3) » de WooCommerce : pas sur la maquette */
+.storefront-product-categories .woocommerce-loop-category__title .count {
+  display: none;
+}
+
+/* Flèche ronde à droite des cartes (z-index : au-dessus des cartes, qui sont en position relative) */
+.storefront-product-categories > button {
+  position: relative;
+  z-index: 1;
+  align-self: center;
+  justify-self: end;
   width: 2.5rem;
   height: 2.5rem;
+  margin-right: calc(-1 * var(--spacing-md));
   padding: 0;
   border-radius: 50%;
   background: var(--color-beige);
@@ -2555,8 +2928,12 @@ input[type="submit"]:hover {
   line-height: 1;
 }
 
-/* Produit à la une : grande carte beige */
-.pepe-vedette {
+.storefront-product-categories > p .button {
+  padding: var(--spacing-xs) var(--spacing-lg);
+}
+
+/* Produit à la une : grande carte beige (HTML d'une fiche produit) */
+.storefront-featured-products .product {
   display: grid;
   grid-template-columns: 2fr 3fr;
   align-items: center;
@@ -2569,17 +2946,19 @@ input[type="submit"]:hover {
   color: var(--color-brun);
 }
 
-.pepe-vedette__visuel {
+.storefront-featured-products .images {
   position: relative;
 }
 
-.pepe-vedette__image {
+.storefront-featured-products .images img {
   width: 100%;
   border: 2px solid var(--color-rouge);
   border-radius: var(--radius-lg);
 }
 
-.pepe-vedette__numero {
+/* « #1 » posé sur la photo : texte ajouté en CSS (décoratif) */
+.storefront-featured-products .images::before {
+  content: "#1";
   position: absolute;
   top: var(--spacing-sm);
   left: calc(-1 * var(--spacing-sm));
@@ -2591,44 +2970,55 @@ input[type="submit"]:hover {
   font-size: var(--fs-h3);
 }
 
-.pepe-vedette__nom {
+/* Badge jaune, comme le badge « Promo » */
+.storefront-featured-products .onsale {
+  padding: var(--spacing-xxs) var(--spacing-sm);
+  border: 0;
+  border-radius: var(--radius-pilule);
+  background: var(--color-jaune);
+  color: var(--color-brun);
+  font-size: var(--fs-petit);
+  font-weight: 700;
+  text-transform: none;
+}
+
+.storefront-featured-products .product_title {
   margin: var(--spacing-sm) 0;
   font-size: var(--fs-h2);
   color: var(--color-brun);
 }
 
-.pepe-vedette__achat {
+.storefront-featured-products .price {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--spacing-md);
   margin: var(--spacing-md) 0 0;
-}
-
-.pepe-vedette__prix {
   font-family: var(--ff-titre);
   font-size: var(--fs-h3);
   color: var(--color-rouge);
 }
 
-.pepe-accueil .pepe-vedette__bouton {
+.storefront-featured-products .price .button {
   padding: var(--spacing-xxs) var(--spacing-md);
-  border-radius: var(--radius-pilule);
-  background: var(--color-rouge);
-  color: var(--color-beige);
-  font-family: var(--ff-titre);
-  text-decoration: none;
+  font-size: var(--fs-texte);
+  box-shadow: none;
 }
 
 /* Le concept : bande beige sur toute la largeur avec une vague en haut */
-.pepe-concept {
+.home #concept {
   position: relative;
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  align-items: center;
+  gap: var(--spacing-3xl);
   margin: 0 calc(50% - 50vw);
   padding: var(--spacing-4xl) calc(50vw - 50%) var(--spacing-3xl);
   background: var(--color-beige);
   color: var(--color-brun);
 }
 
-.pepe-concept__vague {
+.home #concept > svg {
   position: absolute;
   top: 0;
   left: 0;
@@ -2637,137 +3027,150 @@ input[type="submit"]:hover {
   fill: var(--color-rouge);
 }
 
-.pepe-concept__contenu {
-  display: grid;
-  grid-template-columns: 2fr 3fr;
-  align-items: center;
-  gap: var(--spacing-3xl);
-}
-
 /* Photo en forme de flamme (forme SVG #pepe-flamme dans front-page.php) */
-.pepe-concept__photo {
+.home #concept .post-thumbnail {
   justify-self: center;
   width: 100%;
   max-width: 26rem;
+  margin: 0;
+}
+
+.home #concept .post-thumbnail img,
+.home #concept .post-thumbnail span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
   aspect-ratio: 3 / 4;
   object-fit: cover;
   clip-path: url(#pepe-flamme);
 }
 
-.pepe-concept__forme {
-  position: absolute;
-  width: 0;
-  height: 0;
-}
-
-.pepe-concept__photo--vide {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Pas de photo choisie : flamme rouge avec un emoji */
+.home #concept .post-thumbnail span {
   background: var(--color-rouge);
   font-size: 4rem;
 }
 
-.pepe-concept__titre {
+.home #concept .entry-title {
   margin-bottom: var(--spacing-md);
   font-size: var(--fs-h2);
   color: var(--color-brun);
 }
 
-.pepe-accueil .pepe-concept__lien {
+.home #concept .more-link {
   font-family: var(--ff-titre);
   color: var(--color-rouge);
   text-decoration: none;
 }
 
-/* C'est validé ! : bande jaune, grille d'avis et de photos */
+/* C'est validé ! : bande jaune, grille d'avis, de photos et le sondage */
 .pepe-valide {
-  margin: calc(-1 * var(--spacing-4xl)) calc(50% - 50vw) calc(-1 * var(--spacing-4xl));
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-lg);
+  margin: calc(-1 * var(--spacing-4xl)) calc(50% - 50vw);
   padding: var(--spacing-3xl) calc(50vw - 50%);
   background: var(--color-jaune);
 }
 
-.pepe-valide__titre {
-  margin-bottom: var(--spacing-xl);
+.pepe-valide .section-title {
+  grid-column: 1 / -1;
+  margin: 0 0 var(--spacing-md);
   text-align: center;
   font-size: var(--fs-h2);
   color: var(--color-rouge);
 }
 
-.pepe-valide__grille {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--spacing-lg);
+/* La liste disparaît : les avis et les photos vont dans la grille */
+.pepe-valide .commentlist {
+  display: contents;
 }
 
-.pepe-valide__avis {
+.pepe-valide .commentlist li {
   margin: 0;
+  list-style: none;
+}
+
+/* Un avis : carte beige, la dernière en rouge (classe alt) */
+.pepe-valide .commentlist li.review {
   padding: var(--spacing-md);
   border-radius: var(--radius-lg);
   background: var(--color-beige);
   color: var(--color-brun);
 }
 
-.pepe-valide__avis--rouge {
+.pepe-valide .commentlist li.review.alt {
   background: var(--color-rouge);
   color: var(--color-beige);
 }
 
-.pepe-valide__client {
-  display: flex;
-  flex-wrap: wrap;
+/* Photo et nom sur une ligne, puis les étoiles, puis la citation
+   (.comment-text et .meta disparaissent : leurs enfants vont dans la grille) */
+.pepe-valide .comment_container {
+  display: grid;
+  grid-template-columns: auto 1fr;
   align-items: center;
   gap: var(--spacing-xs);
-  margin-bottom: var(--spacing-sm);
 }
 
-.pepe-valide__photo-client {
+.pepe-valide .comment-text,
+.pepe-valide .comment-text .meta {
+  display: contents;
+}
+
+.pepe-valide .avatar {
   border-radius: 50%;
 }
 
-.pepe-valide__nom {
+.pepe-valide .woocommerce-review__author {
+  grid-row: 1;
+  grid-column: 2;
   font-family: var(--ff-titre);
+  font-weight: 400;
 }
 
-.pepe-accueil .pepe-valide .star-rating {
-  flex-basis: 100%;
+.pepe-valide .star-rating {
+  grid-column: 1 / -1;
   margin: 0;
 }
 
-.pepe-accueil .pepe-valide .star-rating span::before {
+/* Étoiles jaunes (Storefront les colore avec sa couleur principale) */
+.pepe-valide .star-rating span::before {
   color: var(--color-jaune);
 }
 
-.pepe-valide__citation {
+.pepe-valide .description {
+  grid-column: 1 / -1;
+}
+
+.pepe-valide .description p {
   margin: 0;
-  padding: 0;
-  border: 0;
   font-family: var(--ff-titre);
   font-size: var(--fs-h3);
-  font-style: normal;
   line-height: 1.2;
   color: var(--color-rouge);
 }
 
-.pepe-valide__avis--rouge .pepe-valide__citation {
+.pepe-valide .alt .description p {
   color: var(--color-beige);
 }
 
-.pepe-valide__photo {
+.pepe-valide .commentlist li img:not(.avatar) {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: var(--radius-lg);
 }
 
-/* Sondage « Ton burger favori ? » */
-.pepe-valide__sondage {
+/* Sondage « Ton burger favori ? » (pas d'équivalent dans Storefront) */
+.pepe-valide > div {
   padding: var(--spacing-md);
   border-radius: var(--radius-lg);
   background: var(--color-beige);
 }
 
-.pepe-valide__question {
+.pepe-valide > div h3 {
   margin-bottom: var(--spacing-sm);
   font-size: var(--fs-h3);
   color: var(--color-rouge);
@@ -2782,13 +3185,14 @@ input[type="submit"]:hover {
   list-style: none;
 }
 
-.pepe-sondage__ligne {
+.pepe-sondage li {
   margin: 0;
   border: 2px solid var(--color-rouge);
   border-radius: var(--radius-pilule);
 }
 
-.pepe-sondage__barre {
+/* La barre : largeur = pourcentage (attribut style dans front-page.php) */
+.pepe-sondage span {
   display: flex;
   justify-content: space-between;
   gap: var(--spacing-xs);
@@ -2800,12 +3204,12 @@ input[type="submit"]:hover {
   font-weight: 700;
 }
 
-.pepe-sondage__ligne:nth-child(2) .pepe-sondage__barre {
+.pepe-sondage li:nth-child(2) span {
   background: var(--color-jaune-hover);
   color: var(--color-brun);
 }
 
-.pepe-sondage__ligne:nth-child(3) .pepe-sondage__barre {
+.pepe-sondage li:nth-child(3) span {
   background: var(--color-jaune);
   color: var(--color-brun);
 }
@@ -2817,58 +3221,74 @@ input[type="submit"]:hover {
   padding: var(--spacing-3xl) 0 var(--spacing-xl);
 }
 
-/* Bloc pepe-footer */
-.pepe-footer__colonnes {
+/* Widgets du footer de Storefront (footer-widgets) : 5 colonnes, le logo au milieu
+   (Storefront met les .block en float : annulé pour la grille) */
+.site-footer .footer-widgets {
   display: grid;
   grid-template-columns: repeat(5, auto);
   justify-content: space-between;
   gap: var(--spacing-xl);
+  padding: 0;
+  border: 0;
 }
 
-.pepe-footer__titre {
+.site-footer .footer-widgets::before,
+.site-footer .footer-widgets::after {
+  display: none;
+}
+
+.site-footer .footer-widgets .block {
+  width: auto;
+  float: none;
+  margin: 0;
+}
+
+.site-footer .widget {
+  margin: 0;
+}
+
+.site-footer .widget .widget-title {
+  margin: 0 0 var(--spacing-sm);
+  padding: 0;
+  border: 0;
   font-family: var(--ff-titre);
   font-size: 1rem;
   color: var(--color-brun);
-  margin: 0 0 var(--spacing-sm);
 }
 
-.pepe-footer__liste {
-  list-style: none;
+.site-footer .widget ul.menu {
   margin: 0;
+  list-style: none;
+}
+
+.site-footer .widget ul.menu li {
+  margin: 0 0 var(--spacing-xs);
   padding: 0;
 }
 
-.pepe-footer__element {
-  margin-bottom: var(--spacing-xs);
+.site-footer .widget ul.menu li::before {
+  content: none;
 }
 
-.pepe-footer__lien {
+.site-footer .widget ul.menu a {
   color: var(--color-brun);
   font-size: var(--fs-petit);
-  text-decoration: none;
 }
 
-.pepe-footer__lien:hover,
-.pepe-footer__lien:focus {
+.site-footer .widget ul.menu a:hover,
+.site-footer .widget ul.menu a:focus {
   color: var(--color-rouge);
 }
 
-.pepe-footer__logo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  line-height: 0.9;
-}
-
-.pepe-footer__sante {
-  margin: var(--spacing-2xl) 0 0;
+.site-footer .site-info {
+  padding: var(--spacing-2xl) 0 0;
   text-align: center;
   font-size: 0.75rem;
   color: var(--color-brun);
 }
 
-.pepe-footer__sante .pepe-footer__lien {
-  font-size: 0.75rem;
+.site-footer .site-info a {
+  color: var(--color-brun);
   text-decoration: underline;
 }
 
@@ -2880,118 +3300,135 @@ input[type="submit"]:hover {
 /* 19. Mobile (moins de 768 px) */
 @media (max-width: 767px) {
   /* Page d'accueil : tout en colonne */
-  .pepe-une,
-  .pepe-vedette,
-  .pepe-concept__contenu,
-  .pepe-valide__grille {
+  .home .site-main > .entry-header,
+  .storefront-featured-products .product,
+  .home #concept,
+  .pepe-valide {
     grid-template-columns: 1fr;
   }
 
-  .pepe-une__image {
+  .home .site-main > .entry-header img {
     justify-self: center;
     max-height: 18rem;
   }
 
-  .pepe-classiques__carte {
+  .site-main .storefront-product-categories ul.products[class*="columns-"] li.product-category {
     flex-basis: 70%;
   }
 
-  .pepe-accueil .pepe-classiques__suivant {
-    right: 0;
+  .storefront-product-categories > button {
+    margin-right: 0;
   }
 
-  .pepe-concept__photo {
+  .home #concept .post-thumbnail {
     max-width: 16rem;
-    justify-self: center;
   }
 
   /* À propos et membre : tout en colonne */
-  .pepe-a-propos {
+  .post-type-archive-membre .site-main {
     gap: var(--spacing-2xl);
   }
 
-  .pepe-restaurant,
-  .pepe-profil__contenu {
+  .post-type-archive-membre .site-main > section:first-of-type .hentry,
+  .single-membre .membre.hentry {
     flex-direction: column;
     gap: var(--spacing-md);
   }
 
-  .pepe-restaurant__plan {
+  .post-type-archive-membre .site-main > section:first-of-type .post-thumbnail {
     flex-basis: auto;
     height: 12.5rem;
   }
 
-  .pepe-equipe {
+  .post-type-archive-membre #equipe {
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--spacing-lg);
   }
 
-  .pepe-membre__photo {
+  .post-type-archive-membre .membre .post-thumbnail img,
+  .post-type-archive-membre .membre .post-thumbnail span {
     height: 13.75rem;
   }
 
-  .pepe-profil__photo {
+  .single-membre .membre .post-thumbnail {
     flex-basis: auto;
-    width: 100%;
+  }
+
+  .single-membre .membre .post-thumbnail img,
+  .single-membre .membre .post-thumbnail span {
     height: 22.5rem;
   }
 
   /* Compte : le menu au-dessus, puis la page */
-  .pepe-compte__contenu,
+  .woocommerce-account.logged-in .entry-content > .woocommerce,
   .woocommerce-account .u-columns.col2-set {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .pepe-compte .pepe-commandes thead {
+  .woocommerce-account table.woocommerce-orders-table thead {
     display: none;
   }
 
-  /* Commande : une seule colonne, « Ma commande » et le bouton à la fin */
-  .pepe-commande__contenu {
-    grid-template-columns: minmax(0, 1fr);
+  /* Storefront cache le numéro (tbody th) sur mobile et met les valeurs à droite */
+  .woocommerce-account table.woocommerce-orders-table tbody th {
+    display: block;
   }
+
+  .woocommerce-account table.woocommerce-orders-table tbody tr td {
+    text-align: right;
+  }
+
 
   /* Panier : une seule colonne, carte d'article sur 2 lignes */
-  .pepe-panier__contenu {
+  .woocommerce-cart .entry-content .woocommerce {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .pepe-article {
+  .woocommerce-cart .entry-content .woocommerce {
+    grid-template-rows: none;
+  }
+
+  .woocommerce-cart .entry-content .woocommerce > .cart-collaterals {
+    grid-column: 1;
+    grid-row: auto;
+    margin-top: var(--spacing-lg);
+  }
+
+  .woocommerce-cart .woocommerce-cart-form table.cart tr.cart_item {
     grid-template-columns: 4rem minmax(0, 1fr) auto;
     grid-template-areas:
-      "image infos    supprimer"
+      "image nom      retirer"
       "image quantite prix";
     gap: var(--spacing-xs) var(--spacing-sm);
   }
 
-  .pepe-article__image {
+  .woocommerce-cart .woocommerce-cart-form table.cart td.product-thumbnail {
     grid-area: image;
   }
 
-  .pepe-article__infos {
-    grid-area: infos;
+  .woocommerce-cart .woocommerce-cart-form table.cart td.product-name {
+    grid-area: nom;
   }
 
-  .pepe-article__supprimer {
-    grid-area: supprimer;
+  .woocommerce-cart .woocommerce-cart-form table.cart td.product-remove {
+    grid-area: retirer;
     align-self: start;
   }
 
-  .pepe-article__prix {
+  .woocommerce-cart .woocommerce-cart-form table.cart td.product-subtotal {
     grid-area: prix;
   }
 
-  .pepe-article__image img {
+  .woocommerce-cart .woocommerce-cart-form table.cart .product-thumbnail img {
     width: 4rem;
     height: 4rem;
   }
 
-  .pepe-article__quantite {
+  .woocommerce-cart .woocommerce-cart-form table.cart td.product-quantity {
     grid-area: quantite;
     justify-self: start;
   }
 
-  .pepe-suggestions__liste {
+  .woocommerce-cart .cross-sells .product_list_widget {
     grid-template-columns: 1fr;
   }
 
@@ -3018,19 +3455,20 @@ input[type="submit"]:hover {
     justify-self: center;
   }
 
-  .pepe-logo__pepe {
+  .site-branding .site-title {
     font-size: 1.9rem;
   }
 
-  .pepe-header__commander {
+  .site-header .secondary-navigation .menu-item:first-child {
     display: none;
   }
 
-  .pepe-header__actions {
+  .site-header .secondary-navigation,
+  .site-header .secondary-navigation .menu {
     gap: var(--spacing-xxs);
   }
 
-  .pepe-header__compte {
+  .site-header .secondary-navigation .my-account a {
     width: 2.5rem;
     height: 2.5rem;
   }
@@ -3041,13 +3479,22 @@ input[type="submit"]:hover {
 
   /* Cartes produit sur 2 colonnes */
   /* Avis : résumé au-dessus des avis */
-  .single-product .pepe-avis {
+  .single-product #reviews {
     grid-template-columns: 1fr;
     padding: var(--spacing-lg);
   }
 
+  .single-product #reviews .woocommerce-product-rating,
+  .single-product #reviews .commentlist,
+  .single-product #reviews .woocommerce-noreviews,
+  .single-product #reviews #review_form_wrapper,
+  .single-product #reviews .woocommerce-verification-required {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
   .site-main ul.products,
-  .site-main .pepe-complements ul.products {
+  .site-main .related.products ul.products {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--spacing-lg) var(--spacing-md);
   }
@@ -3069,12 +3516,12 @@ input[type="submit"]:hover {
   }
 
   /* Footer sur 1 colonne, logo en premier */
-  .pepe-footer__colonnes {
+  .site-footer .footer-widgets {
     grid-template-columns: 1fr;
   }
 
-  .pepe-footer__logo {
+  .site-footer .footer-widgets .site-branding {
     order: -1;
-    align-items: flex-start;
+    text-align: left;
   }
 }

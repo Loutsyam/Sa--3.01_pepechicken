@@ -29,10 +29,10 @@ function pepe_styles_emails( $css ) {
     #body_content { background-color: #ffffff; }
     #body_content_inner, #body_content_inner p, #body_content_inner td, #body_content_inner th { color: $brun; font-family: $texte; font-size: 15px; }
 
-    .pepe-email-logo { padding: 8px 0 20px; text-align: center; }
-    .pepe-email-logo a { text-decoration: none; }
-    .pepe-email-logo__pepe { font-family: $titre; font-size: 44px; font-weight: bold; line-height: 1; color: $rouge; }
-    .pepe-email-logo__chicken { font-family: $titre; font-size: 18px; line-height: 1; color: $rouge; }
+    #template_header_image { padding: 8px 0 20px; text-align: center; }
+    #template_header_image .email-logo-text { margin: 0; font-family: $titre; font-size: 44px; line-height: 1; text-align: center; }
+    #template_header_image .email-logo-text a { color: $rouge; font-weight: bold; line-height: 1; text-decoration: none; }
+    #template_header_image .email-logo-text small { display: block; font-size: 18px; font-weight: normal; line-height: 1; }
 
     #template_header { background-color: $rouge; border-radius: 0; }
     #header_wrapper { padding: 28px 40px; }
@@ -44,13 +44,13 @@ function pepe_styles_emails( $css ) {
     .order_item td { border-color: #f5dcc4; }
     tfoot .order-totals-total th, tfoot .order-totals-total td { color: $rouge; }
 
-    .pepe-email-retrait { margin: 0 0 24px; padding: 16px 20px; border-left: 4px solid $jaune; border-radius: 12px; background-color: $beige; }
-    .pepe-email-retrait h2 { margin: 0 0 8px; font-size: 20px; }
-    .pepe-email-retrait p { margin: 0 0 6px; }
+    .email-additional-content.pepe-retrait { margin: 0 0 24px; padding: 16px 20px; border-left: 4px solid $jaune; border-radius: 12px; background-color: $beige; }
+    .email-additional-content.pepe-retrait h2 { margin: 0 0 8px; font-size: 20px; }
+    .email-additional-content.pepe-retrait p { margin: 0 0 6px; text-align: left; }
 
     #template_footer { background-color: $brun; border-radius: 20px; }
     #template_footer #credit, #template_footer #credit p { color: $beige; font-family: $texte; font-size: 13px; text-align: center; }
-    #template_footer #credit .pepe-email-liens a { color: $jaune; font-weight: bold; text-decoration: none; }
+    #template_footer #credit a { color: $jaune; font-weight: bold; text-decoration: none; }
     ";
 
     return $css;
@@ -92,7 +92,8 @@ function pepe_retrait_dans_email( $commande, $pour_admin, $texte_brut, $email ) 
         return;
     }
 
-    echo '<div class="pepe-email-retrait">';
+    // email-additional-content : classe de WooCommerce pour un bloc de texte en plus dans l'e-mail
+    echo '<div class="email-additional-content pepe-retrait">';
     echo '<h2>Instructions pour le retrait</h2>';
     echo wp_kses_post( wpautop( $instructions ) );
     echo '</div>';

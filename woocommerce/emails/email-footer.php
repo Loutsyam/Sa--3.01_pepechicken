@@ -36,7 +36,7 @@ $texte_pied = apply_filters( 'woocommerce_email_footer_text', $texte_pied, $emai
 										<tr>
 											<td valign="top" id="credit">
 												<?php echo wp_kses_post( wpautop( wptexturize( $texte_pied ) ) ); ?>
-												<p class="pepe-email-liens">
+												<p>
 													<a href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>">Commander</a>
 													&nbsp;·&nbsp;
 													<a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>">Mon compte</a>

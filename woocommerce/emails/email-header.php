@@ -35,15 +35,13 @@ $img        = get_option( 'woocommerce_email_header_image' );
 									<!-- Logo Pepe Chicken (image réglée dans l'admin, sinon logo en texte comme sur le site) -->
 									<table border="0" cellpadding="0" cellspacing="0" width="100%" role="presentation">
 										<tr>
-											<td id="template_header_image" class="pepe-email-logo">
-												<a href="<?php echo esc_url( home_url( '/' ) ); ?>" target="_blank">
-													<?php if ( $img ) : ?>
-														<img src="<?php echo esc_url( $img ); ?>" alt="<?php echo esc_attr( $store_name ); ?>" />
-													<?php else : ?>
-														<span class="pepe-email-logo__pepe">PEPE</span><br>
-														<span class="pepe-email-logo__chicken">Chicken®</span>
-													<?php endif; ?>
-												</a>
+											<td id="template_header_image">
+												<?php if ( $img ) : ?>
+													<a href="<?php echo esc_url( home_url( '/' ) ); ?>" target="_blank"><img src="<?php echo esc_url( $img ); ?>" alt="<?php echo esc_attr( $store_name ); ?>" /></a>
+												<?php else : ?>
+													<?php // classe email-logo-text : logo en texte de WooCommerce ?>
+													<p class="email-logo-text"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" target="_blank">PEPE <small>Chicken®</small></a></p>
+												<?php endif; ?>
 											</td>
 										</tr>
 									</table>

@@ -66,16 +66,20 @@ function pepe_avis_accueil( $nombre ) {
     ) );
 }
 
-// Une carte d'avis de la page d'accueil
-function pepe_carte_avis_accueil( $avis, $classe ) {
-    echo '<figure class="pepe-valide__avis ' . esc_attr( $classe ) . '">';
-    echo '<figcaption class="pepe-valide__client">';
-    echo get_avatar( $avis, 40, '', '', array( 'class' => 'pepe-valide__photo-client' ) );
-    echo '<span class="pepe-valide__nom">' . esc_html( pepe_nom_avis( get_comment_author( $avis ) ) ) . '</span>';
+// Une carte d'avis de la page d'accueil : même HTML qu'un avis de WooCommerce
+// (li.review, comment_container, avatar, comment-text, star-rating, meta, description)
+// $alt = true : carte rouge (classe alt, comme les boutons rouges de WooCommerce)
+function pepe_carte_avis_accueil( $avis, $alt ) {
+    echo '<li class="review' . ( $alt ? ' alt' : '' ) . '">';
+    echo '<div class="comment_container">';
+    echo get_avatar( $avis, 40 );
+    echo '<div class="comment-text">';
     echo wc_get_rating_html( 5 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-    echo '</figcaption>';
-    echo '<blockquote class="pepe-valide__citation">' . esc_html( wp_trim_words( $avis->comment_content, 18 ) ) . '</blockquote>';
-    echo '</figure>';
+    echo '<p class="meta"><strong class="woocommerce-review__author">' . esc_html( pepe_nom_avis( get_comment_author( $avis ) ) ) . '</strong></p>';
+    echo '<div class="description"><p>' . esc_html( wp_trim_words( $avis->comment_content, 18 ) ) . '</p></div>';
+    echo '</div>';
+    echo '</div>';
+    echo '</li>';
 }
 
 // « Ton burger favori ? » : les 3 burgers les plus vendus, en pourcentage
